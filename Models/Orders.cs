@@ -1,0 +1,20 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Online_Restaurant.Models
+{
+    public class Orders
+    {
+        [Key]
+        public int OrderId { get; set; }
+        public int UserId { get; set; }
+        public DateTime Date { get; set; }
+        public decimal Price { get; set; }
+        public string Status { get; set; }
+        public string PaymentMethod { get; set; }
+        
+        public User User { get; set; } = null!;
+        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    }
+}
