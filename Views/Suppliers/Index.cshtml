@@ -3,16 +3,19 @@
 @{
     ViewData["Title"] = "Suppliers";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
-    var supplierToEdit = ViewBag.SupplierToEdit as Online_Restaurant.Models.Supplier;
+    var supplierToEdit =ViewBag.SupplierToEdit as Online_Restaurant.Models.Supplier;
 
     bool isEditing = supplierToEdit != null;
 }
 
 <div class="container-fluid">
 
+    <!-- ================= PAGE HEADER ================= -->
+
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
+            <h2 class="mb-1">Suppliers</h2>
 
             <p class="text-muted mb-0">
                 Manage restaurant suppliers
@@ -21,6 +24,8 @@
 
     </div>
 
+
+    <!-- ================= SUPPLIERS TABLE ================= -->
 
     <div class="card shadow-sm mb-4">
 
@@ -206,24 +211,17 @@
 
             @if (isEditing)
             {
-                <!-- ================= EDIT FORM ================= -->
-
-                <form asp-controller="Suppliers"
-                      asp-action="Edit"
-                      method="post">
+                <form action="/Suppliers/Edit" method="post">
 
                     @Html.AntiForgeryToken()
 
                     <input type="hidden"
-                           asp-for="@supplierToEdit.SupplierId" />
-
+                           name="SupplierId"
+                           value="@supplierToEdit.SupplierId" />
 
                     <div class="row">
 
-                        <!-- COMPANY NAME -->
-
                         <div class="col-md-6 mb-3">
-
                             <label class="form-label">
                                 Company Name
                             </label>
@@ -232,14 +230,9 @@
                                    value="@supplierToEdit.CompanyName"
                                    class="form-control"
                                    required />
-
                         </div>
 
-
-                        <!-- CONTACT PERSON -->
-
                         <div class="col-md-6 mb-3">
-
                             <label class="form-label">
                                 Contact Person
                             </label>
@@ -248,14 +241,9 @@
                                    value="@supplierToEdit.ContactPerson"
                                    class="form-control"
                                    required />
-
                         </div>
 
-
-                        <!-- PHONE -->
-
                         <div class="col-md-6 mb-3">
-
                             <label class="form-label">
                                 Phone
                             </label>
@@ -263,14 +251,9 @@
                             <input name="Phone"
                                    value="@supplierToEdit.Phone"
                                    class="form-control" />
-
                         </div>
 
-
-                        <!-- EMAIL -->
-
                         <div class="col-md-6 mb-3">
-
                             <label class="form-label">
                                 Email
                             </label>
@@ -279,14 +262,9 @@
                                    name="Email"
                                    value="@supplierToEdit.Email"
                                    class="form-control" />
-
                         </div>
 
-
-                        <!-- ADDRESS -->
-
                         <div class="col-12 mb-3">
-
                             <label class="form-label">
                                 Address
                             </label>
@@ -294,28 +272,20 @@
                             <textarea name="Address"
                                       class="form-control"
                                       rows="3">@supplierToEdit.Address</textarea>
-
                         </div>
 
                     </div>
-
 
                     <div class="d-flex gap-2">
 
                         <button type="submit"
                                 class="btn btn-success">
-
                             Save Changes
-
                         </button>
 
-
-                        <a asp-controller="Suppliers"
-                           asp-action="Index"
+                        <a href="/Suppliers/Index"
                            class="btn btn-secondary">
-
                             Cancel
-
                         </a>
 
                     </div>
