@@ -220,7 +220,7 @@
                 </a>
 
 
-                <a asp-controller="OrderStatuses"
+                <a asp-controller="OrderStatus"
                    asp-action="Index">
 
                     Order Statuses
@@ -344,6 +344,38 @@
                    asp-action="Index">
 
                     Supply Deliveries
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= ORDERS SETUP ================= -->
+
+            <a href="#ordersSetupMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Orders Setup
+
+            </a>
+
+
+            <div id="ordersSetupMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="PaymentMethod"
+                   asp-action="Index">
+
+                    Payment Methods
+
+                </a>
+
+
+                <a asp-controller="OrderStatus"
+                   asp-action="Index">
+
+                    Order Status
 
                 </a>
 
