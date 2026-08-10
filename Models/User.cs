@@ -13,7 +13,8 @@ namespace Online_Restaurant.Models
         public string Password { get; set; } 
         public string PhoneNumber { get; set; } 
         public string Role { get; set; }
-        
+        public string Address { get; set; }
+
         public ICollection<Orders> Orders { get; set; } = new List<Orders>();
     }
 }

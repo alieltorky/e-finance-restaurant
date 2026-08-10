@@ -11,10 +11,13 @@ namespace Online_Restaurant.Models
         public int UserId { get; set; }
         public DateTime Date { get; set; }
         public decimal Price { get; set; }
-        public string Status { get; set; }
-        public string PaymentMethod { get; set; }
-        
+        public int PaymentMethodId { get; set; }
+        public int OrderStatusId { get; set; }
+        public string MobileNumber {  get; set; }
+        public string Address {  get; set; }
         public User User { get; set; } = null!;
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public PaymentMethod PaymentMethod { get; set; } = null!;
+        public OrderStatus OrderStatus { get; set; } = null!;
     }
 }
