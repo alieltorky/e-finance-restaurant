@@ -1,0 +1,451 @@
+﻿<title>@ViewData["Title"] - Restaurant Dashboard</title>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+    }
+
+    body {
+        background-color: #f8f9fa;
+    }
+
+    /* ================= DASHBOARD WRAPPER ================= */
+
+    .dashboard-wrapper {
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+    }
+
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+        width: 250px;
+        min-width: 250px;
+        height: 100vh;
+        background-color: #212529;
+        color: white;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+    }
+
+
+    .sidebar-header {
+        padding: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        border-bottom: 1px solid #343a40;
+    }
+
+
+    .sidebar-menu {
+        padding: 15px 0;
+    }
+
+
+        .sidebar-menu a {
+            color: #dee2e6;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+
+
+            .sidebar-menu a:hover {
+                background-color: #343a40;
+                color: white;
+            }
+
+
+    .menu-title {
+        padding: 10px 20px;
+        color: #adb5bd;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+
+    .submenu a {
+        padding-left: 40px;
+        font-size: 14px;
+    }
+
+
+    /* ================= MAIN CONTENT ================= */
+
+    .main-content {
+        flex: 1;
+        min-width: 0;
+        min-height: 100vh;
+    }
+
+
+    /* ================= TOP NAVBAR ================= */
+
+    .top-navbar {
+        background-color: white;
+        border-bottom: 1px solid #dee2e6;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+
+    /* ================= CONTENT ================= */
+
+    .content-area {
+        padding: 25px;
+    }
+
+
+    /* ================= SIDEBAR SCROLLBAR ================= */
+
+    .sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+        background-color: #495057;
+        border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+        background-color: #212529;
+    }
+
+</style>
+
+
+<div class="dashboard-wrapper">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            Restaurant
+        </div>
+
+
+        <div class="sidebar-menu">
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <a asp-controller="Dashboard"
+               asp-action="Index">
+
+                Dashboard
+
+            </a>
+
+
+            <!-- ================= USERS ================= -->
+
+            <div class="menu-title">
+                Management
+            </div>
+
+
+            <a href="#usersMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Users
+
+            </a>
+
+
+            <div id="usersMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="Users"
+                   asp-action="Index">
+
+                    All Users
+
+                </a>
+
+
+                <a asp-controller="Users"
+                   asp-action="Create">
+
+                    Add User
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= ORDERS ================= -->
+
+            <a href="#ordersMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Orders
+
+            </a>
+
+
+            <div id="ordersMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="Orders"
+                   asp-action="Index">
+
+                    All Orders
+
+                </a>
+
+
+                <a asp-controller="OrderDetails"
+                   asp-action="Index">
+
+                    Order Details
+
+                </a>
+
+
+                <a asp-controller="OrderStatuses"
+                   asp-action="Index">
+
+                    Order Statuses
+
+                </a>
+
+
+                <a asp-controller="PaymentMethods"
+                   asp-action="Index">
+
+                    Payment Methods
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= MENU ================= -->
+
+            <a href="#menuMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Menu
+
+            </a>
+
+
+            <div id="menuMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="MenuItems"
+                   asp-action="Index">
+
+                    Menu Items
+
+                </a>
+
+
+                <a asp-controller="Categories"
+                   asp-action="Index">
+
+                    Categories
+
+                </a>
+
+
+                <a asp-controller="Ingredients"
+                   asp-action="Index">
+
+                    Ingredients
+
+                </a>
+
+
+                <a asp-controller="MenuIngredients"
+                   asp-action="Index">
+
+                    Menu Ingredients
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= INVENTORY ================= -->
+
+            <a href="#inventoryMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Inventory
+
+            </a>
+
+
+            <div id="inventoryMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="Inventory"
+                   asp-action="Index">
+
+                    Inventory
+
+                </a>
+
+
+                <a asp-controller="Ingredients"
+                   asp-action="Index">
+
+                    Ingredients
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= SUPPLIERS ================= -->
+
+            <a href="#suppliersMenu"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+
+                Suppliers
+
+            </a>
+
+
+            <div id="suppliersMenu"
+                 class="collapse submenu">
+
+                <a asp-controller="Suppliers"
+                   asp-action="Index">
+
+                    Suppliers
+
+                </a>
+
+
+                <a asp-controller="SupplyDeliveries"
+                   asp-action="Index">
+
+                    Supply Deliveries
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================= TOP NAVBAR ================= -->
+
+        <nav class="top-navbar">
+
+            <div>
+
+                <strong>
+                    @ViewData["Title"]
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <div class="dropdown">
+
+                    <button class="btn btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown">
+
+                        Admin
+
+                    </button>
+
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               asp-controller="Account"
+                               asp-action="Profile">
+
+                                Profile
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <hr class="dropdown-divider">
+
+                        </li>
+
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               asp-controller="Account"
+                               asp-action="Logout">
+
+                                Logout
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- ================= PAGE CONTENT ================= -->
+
+        <div class="content-area">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ================= BOOTSTRAP ================= -->
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+@await RenderSectionAsync("Scripts", required: false)
