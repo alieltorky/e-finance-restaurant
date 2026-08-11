@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
-using Online_Restaurant.Data;
-using Online_Restaurant.Models;
 
 public class SuppliersController : Controller
 {
@@ -78,7 +76,7 @@ public class SuppliersController : Controller
             return NotFound();
         }
 
-        // Update existing record
+        // Update existing data
         existingSupplier.CompanyName = supplier.CompanyName;
         existingSupplier.ContactPerson = supplier.ContactPerson;
         existingSupplier.Phone = supplier.Phone;

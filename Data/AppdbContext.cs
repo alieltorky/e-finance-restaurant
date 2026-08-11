@@ -13,7 +13,6 @@ namespace Online_Restaurant.Data
         public DbSet<Menu_Item> MenuItems { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Menu_Ingredient> MenuIngredients { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SupplyDelivery> SupplyDeliveries { get; set; }

@@ -3,8 +3,9 @@
 @{
     ViewData["Title"] = "Ingredients";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
-    var ingredientToEdit = ViewBag.IngredientToEdit as Online_Restaurant.Models.Ingredient;
-    var inventories = ViewBag.Inventories as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
+
+    var ingredientToEdit =
+        ViewBag.IngredientToEdit as Online_Restaurant.Models.Ingredient;
 
     bool isEditing = ingredientToEdit != null;
 }
@@ -16,11 +17,15 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h2 class="mb-1">Ingredients</h2>
+
+            <h2 class="mb-1">
+                Ingredients
+            </h2>
 
             <p class="text-muted mb-0">
-                Manage restaurant ingredients and inventory tracking
+                Manage restaurant ingredients
             </p>
+
         </div>
 
     </div>
@@ -60,10 +65,6 @@
                                 </th>
 
                                 <th>
-                                    Inventory
-                                </th>
-
-                                <th>
                                     Actions
                                 </th>
 
@@ -84,10 +85,6 @@
 
                                     <td>
                                         @ingredient.IngredientName
-                                    </td>
-
-                                    <td>
-                                        @(ingredient.Inventory != null ? ingredient.Inventory.InventoryName : "N/A")
                                     </td>
 
                                     <td>
@@ -189,6 +186,8 @@
 
             @if (isEditing)
             {
+                <!-- ================= EDIT FORM ================= -->
+
                 <form asp-controller="Ingredients"
                       asp-action="Edit"
                       method="post">
@@ -199,46 +198,37 @@
                            name="IngredientId"
                            value="@ingredientToEdit.IngredientId" />
 
-                    <div class="row">
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                Ingredient Name
-                            </label>
+                    <div class="mb-3">
 
-                            <input name="IngredientName"
-                                   value="@ingredientToEdit.IngredientName"
-                                   class="form-control"
-                                   required />
-                        </div>
+                        <label class="form-label">
+                            Ingredient Name
+                        </label>
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                Inventory
-                            </label>
-
-                            <select name="InventoryId"
-                                    asp-for="@ingredientToEdit.InventoryId"
-                                    asp-items="inventories"
-                                    class="form-select"
-                                    required>
-                                <option value="">-- Select Inventory --</option>
-                            </select>
-                        </div>
+                        <input name="IngredientName"
+                               value="@ingredientToEdit.IngredientName"
+                               class="form-control"
+                               required />
 
                     </div>
+
 
                     <div class="d-flex gap-2">
 
                         <button type="submit"
                                 class="btn btn-success">
+
                             Save Changes
+
                         </button>
+
 
                         <a asp-controller="Ingredients"
                            asp-action="Index"
                            class="btn btn-secondary">
+
                             Cancel
+
                         </a>
 
                     </div>
@@ -256,39 +246,16 @@
                     @Html.AntiForgeryToken()
 
 
-                    <div class="row">
+                    <div class="mb-3">
 
-                        <!-- INGREDIENT NAME -->
+                        <label class="form-label">
+                            Ingredient Name
+                        </label>
 
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Ingredient Name
-                            </label>
-
-                            <input name="IngredientName"
-                                   class="form-control"
-                                   placeholder="Enter ingredient name"
-                                   required />
-
-                        </div>
-
-                        <!-- INVENTORY DROPDOWN -->
-
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Inventory
-                            </label>
-
-                            <select name="InventoryId"
-                                    asp-items="inventories"
-                                    class="form-select"
-                                    required>
-                                <option value="">-- Select Inventory --</option>
-                            </select>
-
-                        </div>
+                        <input name="IngredientName"
+                               class="form-control"
+                               placeholder="Enter ingredient name"
+                               required />
 
                     </div>
 

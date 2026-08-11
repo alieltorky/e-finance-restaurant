@@ -1,0 +1,284 @@
+﻿@model IEnumerable<Online_Restaurant.Models.SupplyDelivery>
+
+@{
+    ViewData["Title"] = "Supply Deliveries";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            Supply Deliveries
+        </h2>
+
+        <p class="text-muted mb-0">
+            Manage supply orders sent to suppliers
+        </p>
+
+    </div>
+
+
+    <!-- ================= DELIVERY HISTORY ================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Delivery History
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>
+                                Delivery ID
+                            </th>
+
+                            <th>
+                                Supplier
+                            </th>
+
+                            <th>
+                                Ingredient
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var delivery in Model)
+                            {
+                                <tr>
+
+                                    <!-- DELIVERY ID -->
+
+                                    <td>
+                                        @delivery.DeliveryId
+                                    </td>
+
+
+                                    <!-- SUPPLIER -->
+
+                                    <td>
+                                        @delivery.Supplier.CompanyName
+                                    </td>
+
+
+                                    <!-- INGREDIENT -->
+
+                                    <td>
+                                        @delivery.Ingredient.IngredientName
+                                    </td>
+
+
+                                    <!-- QUANTITY -->
+
+                                    <td>
+                                        @delivery.QuantityDelivered
+                                    </td>
+
+
+                                    <!-- DATE -->
+
+                                    <td>
+                                        @delivery.DeliveryDate.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="5"
+                                    class="text-center text-muted py-4">
+
+                                    No supply deliveries found.
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CREATE SUPPLY ORDER ================= -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                Create Supply Order
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form asp-controller="SupplyDeliveries"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- ================= SUPPLIER ================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Supplier
+                    </label>
+
+                    <select name="SupplierId"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Select Supplier
+                        </option>
+
+
+                        @if (ViewBag.Suppliers != null)
+                        {
+                            foreach (var supplier in ViewBag.Suppliers)
+                            {
+                                <option value="@supplier.SupplierId">
+
+                                    @supplier.CompanyName
+
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+
+                <!-- ================= INGREDIENT ================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Ingredient
+                    </label>
+
+                    <select name="IngredientId"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Select Ingredient
+                        </option>
+
+
+                        @if (ViewBag.Ingredients != null)
+                        {
+                            foreach (var ingredient in ViewBag.Ingredients)
+                            {
+                                <option value="@ingredient.IngredientId">
+
+                                    @ingredient.IngredientName
+
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+
+                <!-- ================= AMOUNT ================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Amount
+                    </label>
+
+                    <input type="number"
+                           name="QuantityDelivered"
+                           class="form-control"
+                           min="0.01"
+                           step="0.01"
+                           placeholder="Enter amount"
+                           required />
+
+                </div>
+
+
+                <!-- ================= DATE ================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Date
+                    </label>
+
+                    <input type="date"
+                           name="DeliveryDate"
+                           class="form-control"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           required />
+
+                </div>
+
+
+                <!-- ================= PLACE ORDER ================= -->
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Place Supply Order
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

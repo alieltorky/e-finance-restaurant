@@ -51,38 +51,9 @@ namespace Online_Restaurant.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
                     b.HasKey("IngredientId");
 
-                    b.HasIndex("InventoryId");
-
                     b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("Online_Restaurant.Models.Inventory", b =>
-                {
-                    b.Property<int>("InventoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InventoryId"));
-
-                    b.Property<decimal>("CurrentQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("InventoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("InventoryId");
-
-                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Menu_Ingredient", b =>
@@ -304,7 +275,7 @@ namespace Online_Restaurant.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InventoryId")
+                    b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("QuantityDelivered")
@@ -315,7 +286,7 @@ namespace Online_Restaurant.Migrations
 
                     b.HasKey("DeliveryId");
 
-                    b.HasIndex("InventoryId");
+                    b.HasIndex("IngredientId");
 
                     b.HasIndex("SupplierId");
 
@@ -357,17 +328,6 @@ namespace Online_Restaurant.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Online_Restaurant.Models.Ingredient", b =>
-                {
-                    b.HasOne("Online_Restaurant.Models.Inventory", "Inventory")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Menu_Ingredient", b =>
@@ -448,9 +408,9 @@ namespace Online_Restaurant.Migrations
 
             modelBuilder.Entity("Online_Restaurant.Models.SupplyDelivery", b =>
                 {
-                    b.HasOne("Online_Restaurant.Models.Inventory", "Inventory")
+                    b.HasOne("Online_Restaurant.Models.Ingredient", "Ingredient")
                         .WithMany("SupplyDeliveries")
-                        .HasForeignKey("InventoryId")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -460,7 +420,7 @@ namespace Online_Restaurant.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Inventory");
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Supplier");
                 });
@@ -473,11 +433,6 @@ namespace Online_Restaurant.Migrations
             modelBuilder.Entity("Online_Restaurant.Models.Ingredient", b =>
                 {
                     b.Navigation("Menu_Ingredients");
-                });
-
-            modelBuilder.Entity("Online_Restaurant.Models.Inventory", b =>
-                {
-                    b.Navigation("Ingredients");
 
                     b.Navigation("SupplyDeliveries");
                 });
