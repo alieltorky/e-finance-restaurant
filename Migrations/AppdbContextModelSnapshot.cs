@@ -72,6 +72,10 @@ namespace Online_Restaurant.Migrations
                     b.Property<decimal>("CurrentQuantity")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("InventoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Unit")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
