@@ -1,8 +1,10 @@
 ﻿@model Online_Restaurant.Models.Menu_Item
+@using Online_Restaurant.Models
 
 @{
     ViewData["Title"] = "Edit Menu Item";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
+    var allIngredients = ViewBag.AllIngredients as List<Ingredient>;
 }
 
 <div class="container-fluid">
@@ -13,7 +15,7 @@
         </div>
     </div>
 
-    <div class="card shadow-sm" id="menuItemForm">
+    <div class="card shadow-sm mb-4" id="menuItemForm">
         <div class="card-header bg-white">
             <h5 class="mb-0">Edit @Model.Name</h5>
         </div>
@@ -61,4 +63,202 @@
             </form>
         </div>
     </div>
+
+    <!-- ================= INGREDIENTS (AJAX / jQuery) ================= -->
+
+    <form id="antiForgeryForm">
+        @Html.AntiForgeryToken()
+    </form>
+
+    <div id="alertBox" class="alert alert-danger d-none" role="alert"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Ingredients</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="ingredientsTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ingredientsBody">
+                        <!-- populated by AJAX -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="emptyMessage" class="text-center text-muted py-3 d-none">
+                No ingredients added to this menu item yet.
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Add Ingredient</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label">Ingredient</label>
+                    <select id="ingredientSelect" class="form-select">
+                        @if (allIngredients != null)
+                        {
+                            @foreach (var ing in allIngredients)
+                            {
+                                <option value="@ing.IngredientId">@ing.IngredientName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" step="0.01" min="0" id="quantityInput" class="form-control" placeholder="e.g. 50" />
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" id="addIngredientBtn" class="btn btn-primary w-100">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            const menuItemId = @Model.MenuItemId;
+            const token = $('#antiForgeryForm input[name="__RequestVerificationToken"]').val();
+
+            function showError(message) {
+                $('#alertBox').text(message).removeClass('d-none');
+                setTimeout(() => $('#alertBox').addClass('d-none'), 4000);
+            }
+
+            function buildRow(item) {
+                const $tr = $('<tr>').attr('data-id', item.menuIngredientId);
+
+                $tr.html(`
+                            <td>${item.ingredientName}</td>
+                            <td>
+                                <input type="number" step="0.01" min="0" class="form-control form-control-sm qty-input" style="width:100px" value="${item.quantity}" />
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-sm btn-success save-btn">Save</button>
+                                    <button type="button" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </div>
+                            </td>
+                        `);
+
+                $tr.find('.save-btn').on('click', function() {
+                    saveIngredient(item.menuIngredientId, $tr);
+                });
+
+                $tr.find('.delete-btn').on('click', function() {
+                    deleteIngredient(item.menuIngredientId, $tr);
+                });
+
+                return $tr;
+            }
+
+            function toggleEmptyMessage() {
+                $('#emptyMessage').toggleClass('d-none', $('#ingredientsBody tr').length > 0);
+            }
+
+            function loadIngredients() {
+                $.ajax({
+                    url: '/MenuItemsController1/GetMenuIngredients',
+                    type: 'GET',
+                    data: { menuItemId: menuItemId },
+                    success: function(data) {
+                        $('#ingredientsBody').empty();
+                        data.forEach(item => $('#ingredientsBody').append(buildRow(item)));
+                        toggleEmptyMessage();
+                    },
+                    error: function() {
+                        showError('Could not load ingredients.');
+                    }
+                });
+            }
+
+            function saveIngredient(id, $row) {
+                const quantity = $row.find('.qty-input').val();
+
+                $.ajax({
+                    url: '/MenuItemsController1/EditMenuIngredient',
+                    type: 'POST',
+                    data: { menuIngredientId: id, quantity: quantity, __RequestVerificationToken: token },
+                    success: function(data) {
+                        if (!data.success) showError(data.message || 'Could not update ingredient.');
+                    },
+                    error: function() {
+                        showError('Could not update ingredient.');
+                    }
+                });
+            }
+
+            function deleteIngredient(id, $row) {
+                if (!confirm('Remove this ingredient from the menu item?')) return;
+
+                $.ajax({
+                    url: '/MenuItemsController1/DeleteMenuIngredient',
+                    type: 'POST',
+                    data: { menuIngredientId: id, __RequestVerificationToken: token },
+                    success: function(data) {
+                        if (data.success) {
+                            $row.remove();
+                            toggleEmptyMessage();
+                        } else {
+                            showError(data.message || 'Could not delete ingredient.');
+                        }
+                    },
+                    error: function() {
+                        showError('Could not delete ingredient.');
+                    }
+                });
+            }
+
+            $('#addIngredientBtn').on('click', function() {
+                const ingredientId = $('#ingredientSelect').val();
+                const quantity = $('#quantityInput').val();
+
+                if (!ingredientId || !quantity) {
+                    showError('Please choose an ingredient and enter a quantity.');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/MenuItemsController1/AddMenuIngredient',
+                    type: 'POST',
+                    data: { menuItemId: menuItemId, ingredientId: ingredientId, quantity: quantity, __RequestVerificationToken: token },
+                    success: function(data) {
+                        if (data.success) {
+                            $('#ingredientsBody').append(buildRow(data));
+                            $('#quantityInput').val('');
+                            toggleEmptyMessage();
+                        } else {
+                            showError(data.message || 'Could not add ingredient.');
+                        }
+                    },
+                    error: function() {
+                        showError('Could not add ingredient.');
+                    }
+                });
+            });
+
+            loadIngredients();
+        });
+    </script>
+}

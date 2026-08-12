@@ -64,10 +64,23 @@
                     {
                         <div class="btn-group shadow-sm flex-fill" role="group">
                             <!-- Meal Details Button -->
-                            <button type="button" class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
-                                <span>@item.Name</span>
-                                <span class="badge bg-primary rounded-pill ms-3">$@item.Price</span>
-                            </button>
+                            @if (isAdmin)
+                            {
+                                <a asp-controller="MenuItemsController1"
+                                   asp-action="Ingredients"
+                                   asp-route-id="@item.MenuItemId"
+                                   class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
+                                    <span>@item.Name</span>
+                                    <span class="badge bg-primary rounded-pill ms-3">$@item.Price</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
+                                    <span>@item.Name</span>
+                                    <span class="badge bg-primary rounded-pill ms-3">$@item.Price</span>
+                                </button>
+                            }
 
                             @if (isAdmin)
                             {
