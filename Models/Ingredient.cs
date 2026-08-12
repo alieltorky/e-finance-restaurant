@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace Online_Restaurant.Models
 {
     public class Ingredient
@@ -12,7 +12,7 @@ namespace Online_Restaurant.Models
         public ICollection<Menu_Ingredient> Menu_Ingredients { get; set; }
             = new List<Menu_Ingredient>();
 
-        public ICollection<SupplyDelivery> SupplyDeliveries { get; set; }
-            = new List<SupplyDelivery>();
+        public ICollection<Inventory> Inventories { get; set; }
+            = new List<Inventory>();
     }
 }

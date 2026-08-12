@@ -24,7 +24,6 @@
         width: 100%;
     }
 
-
     /* ================= SIDEBAR ================= */
 
     .sidebar {
@@ -39,7 +38,6 @@
         overflow-y: auto;
     }
 
-
     .sidebar-header {
         padding: 20px;
         font-size: 22px;
@@ -47,25 +45,21 @@
         border-bottom: 1px solid #343a40;
     }
 
-
     .sidebar-menu {
         padding: 15px 0;
     }
 
+    .sidebar-menu a {
+        color: #dee2e6;
+        text-decoration: none;
+        display: block;
+        padding: 10px 20px;
+    }
 
-        .sidebar-menu a {
-            color: #dee2e6;
-            text-decoration: none;
-            display: block;
-            padding: 10px 20px;
-        }
-
-
-            .sidebar-menu a:hover {
-                background-color: #343a40;
-                color: white;
-            }
-
+    .sidebar-menu a:hover {
+        background-color: #343a40;
+        color: white;
+    }
 
     .menu-title {
         padding: 10px 20px;
@@ -74,12 +68,10 @@
         text-transform: uppercase;
     }
 
-
     .submenu a {
         padding-left: 40px;
         font-size: 14px;
     }
-
 
     /* ================= MAIN CONTENT ================= */
 
@@ -88,7 +80,6 @@
         min-width: 0;
         min-height: 100vh;
     }
-
 
     /* ================= TOP NAVBAR ================= */
 
@@ -104,13 +95,11 @@
         z-index: 1000;
     }
 
-
     /* ================= CONTENT ================= */
 
     .content-area {
         padding: 25px;
     }
-
 
     /* ================= SIDEBAR SCROLLBAR ================= */
 
@@ -153,12 +142,14 @@
             </a>
 
 
-            <!-- ================= USERS ================= -->
+            <!-- ================= MANAGEMENT ================= -->
 
             <div class="menu-title">
                 Management
             </div>
 
+
+            <!-- ================= USERS ================= -->
 
             <a href="#usersMenu"
                data-bs-toggle="collapse"
@@ -167,7 +158,6 @@
                 Users
 
             </a>
-
 
             <div id="usersMenu"
                  class="collapse submenu">
@@ -178,7 +168,6 @@
                     All Users
 
                 </a>
-
 
                 <a asp-controller="Users"
                    asp-action="Create">
@@ -200,7 +189,6 @@
 
             </a>
 
-
             <div id="ordersMenu"
                  class="collapse submenu">
 
@@ -211,7 +199,6 @@
 
                 </a>
 
-
                 <a asp-controller="OrderDetails"
                    asp-action="Index">
 
@@ -219,16 +206,14 @@
 
                 </a>
 
-
                 <a asp-controller="OrderStatus"
                    asp-action="Index">
 
-                    Order Statuses
+                    Order Status
 
                 </a>
 
-
-                <a asp-controller="PaymentMethods"
+                <a asp-controller="PaymentMethod"
                    asp-action="Index">
 
                     Payment Methods
@@ -248,18 +233,15 @@
 
             </a>
 
-
             <div id="menuMenu"
                  class="collapse submenu">
 
                 <a asp-controller="MenuItemsController1"
                    asp-action="AdminMenu">
-					
 
                     Menu Items
 
                 </a>
-
 
                 <a asp-controller="Categories"
                    asp-action="Index">
@@ -268,14 +250,12 @@
 
                 </a>
 
-
                 <a asp-controller="Ingredients"
                    asp-action="Index">
 
                     Ingredients
 
                 </a>
-
 
                 <a asp-controller="MenuIngredients"
                    asp-action="Index">
@@ -297,7 +277,6 @@
 
             </a>
 
-
             <div id="inventoryMenu"
                  class="collapse submenu">
 
@@ -307,7 +286,6 @@
                     Inventory
 
                 </a>
-
 
                 <a asp-controller="Ingredients"
                    asp-action="Index">
@@ -329,7 +307,6 @@
 
             </a>
 
-
             <div id="suppliersMenu"
                  class="collapse submenu">
 
@@ -340,29 +317,20 @@
 
                 </a>
 
-
-                <a asp-controller="SupplyDeliveries"
-                   asp-action="Index">
-
-                    Supply Deliveries
-
-                </a>
-
             </div>
 
 
-            <!-- ================= ORDERS SETUP ================= -->
+            <!-- ================= SETUP ================= -->
 
-            <a href="#ordersSetupMenu"
+            <a href="#setupMenu"
                data-bs-toggle="collapse"
                aria-expanded="false">
 
-                Orders Setup
+                System Setup
 
             </a>
 
-
-            <div id="ordersSetupMenu"
+            <div id="setupMenu"
                  class="collapse submenu">
 
                 <a asp-controller="PaymentMethod"
@@ -371,7 +339,6 @@
                     Payment Methods
 
                 </a>
-
 
                 <a asp-controller="OrderStatus"
                    asp-action="Index">
@@ -479,6 +446,5 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
 
 @await RenderSectionAsync("Scripts", required: false)

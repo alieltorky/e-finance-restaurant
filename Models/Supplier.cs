@@ -14,6 +14,6 @@ namespace Online_Restaurant.Models
         public string Email { get; set; } 
         public string Address { get; set; } 
 
-        public ICollection<SupplyDelivery> SupplyDeliveries { get; set; } = new List<SupplyDelivery>();
+        public ICollection<Inventory> SupplyDeliveries { get; set; } = new List<Inventory>();
     }
 }

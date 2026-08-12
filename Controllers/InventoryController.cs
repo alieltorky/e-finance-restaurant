@@ -5,28 +5,28 @@ using Online_Restaurant.Models;
 
 namespace Online_Restaurant.Controllers
 {
-    public class SupplyDeliveriesController : Controller
+    public class InventoryController : Controller
     {
         private readonly AppdbContext _context;
 
-        public SupplyDeliveriesController(AppdbContext context)
+        public InventoryController(AppdbContext context)
         {
             _context = context;
         }
 
 
         // =====================================================
-        // GET: SupplyDeliveries
+        // GET: Inventory
         // =====================================================
 
         public async Task<IActionResult> Index()
         {
-            // Get all supply deliveries
+            // Get all inventory records
             // and load their related Supplier and Ingredient
 
-            var deliveries = await _context.SupplyDeliveries
-                .Include(d => d.Supplier)
-                .Include(d => d.Ingredient)
+            var inventory = await _context.Inventories
+                .Include(i => i.Supplier)
+                .Include(i => i.Ingredient)
                 .ToListAsync();
 
 
@@ -42,18 +42,18 @@ namespace Online_Restaurant.Controllers
                 .ToListAsync();
 
 
-            return View(deliveries);
+            return View(inventory);
         }
 
 
         // =====================================================
-        // POST: SupplyDeliveries/Create
+        // POST: Inventory/Create
         // =====================================================
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            SupplyDelivery supplyDelivery)
+            Inventory inventory)
         {
             // Supplier and Ingredient are navigation properties.
             // They are not submitted by the HTML form.
@@ -79,23 +79,25 @@ namespace Online_Restaurant.Controllers
                     .ToListAsync();
 
 
-                // Reload existing deliveries
+                // Reload existing inventory records
 
-                var deliveries = await _context.SupplyDeliveries
-                    .Include(d => d.Supplier)
-                    .Include(d => d.Ingredient)
+                var inventories = await _context.Inventories
+                    .Include(i => i.Supplier)
+                    .Include(i => i.Ingredient)
                     .ToListAsync();
 
 
-                return View("Index", deliveries);
+                return View("Index", inventories);
             }
 
 
-            // Check that the selected Supplier exists
+            // =================================================
+            // Check Supplier
+            // =================================================
 
             var supplier = await _context.Suppliers
                 .FirstOrDefaultAsync(s =>
-                    s.SupplierId == supplyDelivery.SupplierId);
+                    s.SupplierId == inventory.SupplierId);
 
 
             if (supplier == null)
@@ -104,11 +106,13 @@ namespace Online_Restaurant.Controllers
             }
 
 
-            // Check that the selected Ingredient exists
+            // =================================================
+            // Check Ingredient
+            // =================================================
 
             var ingredient = await _context.Ingredients
                 .FirstOrDefaultAsync(i =>
-                    i.IngredientId == supplyDelivery.IngredientId);
+                    i.IngredientId == inventory.IngredientId);
 
 
             if (ingredient == null)
@@ -135,16 +139,14 @@ namespace Online_Restaurant.Controllers
                         await _context.Database
                             .BeginTransactionAsync();
 
-
                     try
                     {
-                        // Add the new supply delivery
+                        // Add the new inventory record
 
-                        _context.SupplyDeliveries
-                            .Add(supplyDelivery);
+                        _context.Inventories.Add(inventory);
 
 
-                        // Save the new delivery
+                        // Save changes
 
                         await _context.SaveChangesAsync();
 
@@ -169,7 +171,7 @@ namespace Online_Restaurant.Controllers
             catch
             {
                 return Content(
-                    "Error happened! Supply order could not be completed."
+                    "Error happened! Inventory record could not be created."
                 );
             }
         }

@@ -56,6 +56,38 @@ namespace Online_Restaurant.Migrations
                     b.ToTable("Ingredients");
                 });
 
+            modelBuilder.Entity("Online_Restaurant.Models.Inventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("Inventories");
+                });
+
             modelBuilder.Entity("Online_Restaurant.Models.Menu_Ingredient", b =>
                 {
                     b.Property<int>("MenuIngredientId")
@@ -261,38 +293,6 @@ namespace Online_Restaurant.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("Online_Restaurant.Models.SupplyDelivery", b =>
-                {
-                    b.Property<int>("DeliveryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryId"));
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("QuantityDelivered")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DeliveryId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("SupplyDeliveries");
-                });
-
             modelBuilder.Entity("Online_Restaurant.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -328,6 +328,25 @@ namespace Online_Restaurant.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Online_Restaurant.Models.Inventory", b =>
+                {
+                    b.HasOne("Online_Restaurant.Models.Ingredient", "Ingredient")
+                        .WithMany("Inventories")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Online_Restaurant.Models.Supplier", "Supplier")
+                        .WithMany("SupplyDeliveries")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Menu_Ingredient", b =>
@@ -406,25 +425,6 @@ namespace Online_Restaurant.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Online_Restaurant.Models.SupplyDelivery", b =>
-                {
-                    b.HasOne("Online_Restaurant.Models.Ingredient", "Ingredient")
-                        .WithMany("SupplyDeliveries")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Online_Restaurant.Models.Supplier", "Supplier")
-                        .WithMany("SupplyDeliveries")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Supplier");
-                });
-
             modelBuilder.Entity("Online_Restaurant.Models.Category", b =>
                 {
                     b.Navigation("MenuItems");
@@ -432,9 +432,9 @@ namespace Online_Restaurant.Migrations
 
             modelBuilder.Entity("Online_Restaurant.Models.Ingredient", b =>
                 {
-                    b.Navigation("Menu_Ingredients");
+                    b.Navigation("Inventories");
 
-                    b.Navigation("SupplyDeliveries");
+                    b.Navigation("Menu_Ingredients");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Menu_Item", b =>

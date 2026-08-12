@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Online_Restaurant.Models.SupplyDelivery>
+﻿@model IEnumerable<Online_Restaurant.Models.Inventory>
 
 @{
-    ViewData["Title"] = "Supply Deliveries";
+    ViewData["Title"] = "Inventory";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
 
@@ -12,24 +12,24 @@
     <div class="mb-4">
 
         <h2 class="fw-bold">
-            Supply Deliveries
+            Inventory
         </h2>
 
         <p class="text-muted mb-0">
-            Manage supply orders sent to suppliers
+            Manage ingredient supplies and inventory records
         </p>
 
     </div>
 
 
-    <!-- ================= DELIVERY HISTORY ================= -->
+    <!-- ================= INVENTORY HISTORY ================= -->
 
     <div class="card shadow-sm mb-4">
 
         <div class="card-header bg-white">
 
             <h5 class="mb-0">
-                Delivery History
+                Inventory History
             </h5>
 
         </div>
@@ -46,7 +46,7 @@
                         <tr>
 
                             <th>
-                                Delivery ID
+                                ID
                             </th>
 
                             <th>
@@ -65,6 +65,10 @@
                                 Date
                             </th>
 
+                            <th>
+                                Cost
+                            </th>
+
                         </tr>
 
                     </thead>
@@ -74,42 +78,49 @@
 
                         @if (Model != null && Model.Any())
                         {
-                            foreach (var delivery in Model)
+                            foreach (var inventory in Model)
                             {
                                 <tr>
 
-                                    <!-- DELIVERY ID -->
+                                    <!-- ID -->
 
                                     <td>
-                                        @delivery.DeliveryId
+                                        @inventory.Id
                                     </td>
 
 
                                     <!-- SUPPLIER -->
 
                                     <td>
-                                        @delivery.Supplier.CompanyName
+                                        @(inventory.Supplier?.CompanyName ?? "Unknown")
                                     </td>
 
 
                                     <!-- INGREDIENT -->
 
                                     <td>
-                                        @delivery.Ingredient.IngredientName
+                                        @(inventory.Ingredient?.IngredientName ?? "Unknown")
                                     </td>
 
 
                                     <!-- QUANTITY -->
 
                                     <td>
-                                        @delivery.QuantityDelivered
+                                        @inventory.Quantity
                                     </td>
 
 
                                     <!-- DATE -->
 
                                     <td>
-                                        @delivery.DeliveryDate.ToString("dd/MM/yyyy")
+                                        @inventory.DeliveryDate.ToString("dd/MM/yyyy")
+                                    </td>
+
+
+                                    <!-- COST -->
+
+                                    <td>
+                                        @inventory.Cost
                                     </td>
 
                                 </tr>
@@ -119,10 +130,10 @@
                         {
                             <tr>
 
-                                <td colspan="5"
+                                <td colspan="6"
                                     class="text-center text-muted py-4">
 
-                                    No supply deliveries found.
+                                    No inventory records found.
 
                                 </td>
 
@@ -140,14 +151,14 @@
     </div>
 
 
-    <!-- ================= CREATE SUPPLY ORDER ================= -->
+    <!-- ================= CREATE INVENTORY RECORD ================= -->
 
     <div class="card shadow-sm">
 
         <div class="card-header bg-primary text-white">
 
             <h5 class="mb-0">
-                Create Supply Order
+                Add Inventory Supply
             </h5>
 
         </div>
@@ -155,7 +166,7 @@
 
         <div class="card-body">
 
-            <form asp-controller="SupplyDeliveries"
+            <form asp-controller="Inventory"
                   asp-action="Create"
                   method="post">
 
@@ -230,20 +241,20 @@
                 </div>
 
 
-                <!-- ================= AMOUNT ================= -->
+                <!-- ================= QUANTITY ================= -->
 
                 <div class="mb-3">
 
                     <label class="form-label">
-                        Amount
+                        Quantity
                     </label>
 
                     <input type="number"
-                           name="QuantityDelivered"
+                           name="Quantity"
                            class="form-control"
                            min="0.01"
                            step="0.01"
-                           placeholder="Enter amount"
+                           placeholder="Enter quantity"
                            required />
 
                 </div>
@@ -254,7 +265,7 @@
                 <div class="mb-3">
 
                     <label class="form-label">
-                        Date
+                        Delivery Date
                     </label>
 
                     <input type="date"
@@ -266,12 +277,31 @@
                 </div>
 
 
-                <!-- ================= PLACE ORDER ================= -->
+                <!-- ================= COST ================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Cost
+                    </label>
+
+                    <input type="number"
+                           name="Cost"
+                           class="form-control"
+                           min="0"
+                           step="0.01"
+                           placeholder="Enter cost"
+                           required />
+
+                </div>
+
+
+                <!-- ================= ADD ================= -->
 
                 <button type="submit"
                         class="btn btn-primary">
 
-                    Place Supply Order
+                    Add Inventory
 
                 </button>
 
