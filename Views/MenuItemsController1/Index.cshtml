@@ -5,16 +5,23 @@
     bool isAdmin = ViewBag.IsAdmin ?? false;
 
     // Set dynamic layout based on user role
-    Layout = isAdmin ? "~/Views/Shared/DashboardLayout.cshtml" : "~/Views/Shared/themedlayout.cshtml";
+    Layout = isAdmin
+        ? "~/Views/Shared/DashboardLayout.cshtml"
+        : "~/Views/Shared/themedlayout.cshtml";
 }
 
 <div class="container my-5">
+
     <!-- Display alert messages from TempData if available -->
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             @TempData["SuccessMessage"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
         </div>
     }
 
@@ -24,45 +31,64 @@
     </div>
 
     <!-- Sticky Navigation Bar for Category Filters -->
-    <div class="sticky-top bg-white py-3 mb-4 border-bottom shadow-sm" style="z-index: 1020;">
+    <div class=" bg-white py-3 mb-4 border-bottom shadow-sm"
+         style="z-index: 1020;">
+
         <div class="d-flex justify-content-center flex-wrap gap-2">
+
             @foreach (var category in Model)
             {
-                <a href="#cat-@category.CategoryId" class="btn btn-outline-dark rounded-pill px-4 fw-semibold">
+                <a href="#cat-@category.CategoryId"
+                   class="btn btn-outline-dark rounded-pill px-4 fw-semibold">
+
                     @category.CategoryName
+
                 </a>
             }
+
         </div>
     </div>
 
     <!-- Vertical Category Sections -->
     @foreach (var category in Model)
     {
-        <section id="cat-@category.CategoryId" class="menu-section mb-5 pt-3">
+        <section id="cat-@category.CategoryId"
+                 class="menu-section mb-5 pt-3">
+
             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
-                <h3 class="text-primary fw-bold mb-0">@category.CategoryName</h3>
+
+                <h3 class="text-primary fw-bold mb-0">
+                    @category.CategoryName
+                </h3>
 
                 @if (isAdmin)
                 {
                     <!-- Admin Add Meal Button (+) -->
+
                     <a asp-controller="MenuItemsController1"
                        asp-action="Create"
                        asp-route-categoryId="@category.CategoryId"
                        class="btn btn-success btn-sm rounded-circle d-flex align-items-center justify-content-center"
                        style="width: 35px; height: 35px;"
                        title="Add New Meal">
-                        <i class="bi bi-plus-lg fs-5">+</i>
+
+                        <i class="bi bi-plus-lg"></i>
+
                     </a>
                 }
+
             </div>
 
             <!-- List of Menu Items under current Category -->
-            <div class="d-flex flex-wrap gap-3">
-                @if (category.MenuItems != null && category.MenuItems.Any())
-                {
+            @if (category.MenuItems != null && category.MenuItems.Any())
+            {
+                <div class="d-flex flex-wrap gap-3">
+
                     @foreach (var item in category.MenuItems)
                     {
-                        <div class="btn-group shadow-sm flex-fill" role="group">
+                        <div class="menu-item-card btn-group shadow-sm flex-fill"
+                             role="group">
+
                             <!-- Meal Details Button -->
                             @if (isAdmin)
                             {
@@ -70,49 +96,160 @@
                                    asp-action="Ingredients"
                                    asp-route-id="@item.MenuItemId"
                                    class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
-                                    <span>@item.Name</span>
-                                    <span class="badge bg-primary rounded-pill ms-3">$@item.Price</span>
+
+                                    <span>
+                                        @item.Name
+                                    </span>
+
+                                    <span class="badge bg-primary rounded-pill ms-3">
+                                        $@item.Price
+                                    </span>
+
                                 </a>
                             }
                             else
                             {
-                                <button type="button" class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
-                                    <span>@item.Name</span>
-                                    <span class="badge bg-primary rounded-pill ms-3">$@item.Price</span>
+                                <div class="btn btn-outline-secondary btn-lg py-3 px-4 text-start d-flex justify-content-between align-items-center w-100">
+
+                                    <span>
+                                        @item.Name
+                                    </span>
+
+                                    <span class="badge bg-primary rounded-pill ms-3">
+                                        $@item.Price
+                                    </span>
+
+                                </div>
+
+                                <!-- Add Item To Cart Button -->
+
+                                <button type="button"
+                                        class="btn btn-primary add-to-cart d-flex align-items-center justify-content-center"
+                                        data-id="@item.MenuItemId"
+                                        data-name="@item.Name"
+                                        data-price="@item.Price"
+                                        title="Add to cart">
+
+                                    <i class="bi bi-plus-lg"></i>
+
                                 </button>
                             }
 
+                            <!-- Admin Buttons -->
                             @if (isAdmin)
                             {
                                 <a asp-controller="MenuItemsController1"
                                    asp-action="Edit"
                                    asp-route-id="@item.MenuItemId"
                                    class="btn btn-warning d-flex align-items-center justify-content-center px-3">
+
                                     Edit
+
                                 </a>
 
-                                <!-- Delete Form Button (m-0 p-0 removes extra spacing breaking btn-group) -->
+                                <!-- Delete Form Button -->
+
                                 <form asp-controller="MenuItemsController1"
                                       asp-action="Delete"
                                       asp-route-id="@item.MenuItemId"
                                       method="post"
                                       class="d-flex m-0 p-0"
                                       onsubmit="return confirm('Are you sure you want to delete this item?');">
+
                                     @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-danger d-flex align-items-center justify-content-center px-3 rounded-0 rounded-end border-0">
+
+                                    <button type="submit"
+                                            class="btn btn-danger d-flex align-items-center justify-content-center px-3 rounded-0 rounded-end border-0">
+
                                         Delete
+
                                     </button>
+
                                 </form>
                             }
+
                         </div>
                     }
-                }
-                else
-                {
-                    <!-- Empty Category Fallback Message -->
-                    <p class="text-muted italic ms-2">No items available in this category yet.</p>
-                }
-            </div>
+
+                </div>
+            }
+            else
+            {
+                <!-- Empty Category Fallback Message -->
+
+                <p class="text-muted fst-italic ms-2">
+                    No items available in this category yet.
+                </p>
+            }
+
         </section>
     }
+
 </div>
+<script>
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+    function updateCartCount() {
+
+        let totalItems = 0;
+
+        cart.forEach(item => {
+            totalItems += item.quantity;
+        });
+
+        const cartCount = document.getElementById("cart-count");
+
+        if (cartCount) {
+            cartCount.textContent = totalItems;
+        }
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        updateCartCount();
+
+        const addButtons = document.querySelectorAll(".add-to-cart");
+
+
+        addButtons.forEach(button => {
+
+            button.addEventListener("click", function () {
+
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+
+
+                const existingItem = cart.find(item => item.id === id);
+
+
+                if (existingItem) {
+
+                    existingItem.quantity++;
+
+                } else {
+
+                    cart.push({
+                        id: id,
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+
+                }
+
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+
+                updateCartCount();
+
+            });
+
+        });
+
+    });
+
+</script>

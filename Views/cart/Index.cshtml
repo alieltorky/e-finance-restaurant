@@ -1,0 +1,176 @@
+﻿@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "~/Views/Shared/themedlayout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Shopping Cart</h1>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Menu Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+        </table>
+
+        <!-- Checkout Summary -->
+        <div class="d-flex justify-content-end mt-4">
+            <div class="card shadow-sm" style="width: 320px;">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Checkout</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="fw-semibold">Total:</span>
+                        <span class="fw-bold text-primary">
+                            $<span id="cart-total">0.00</span>
+                        </span>
+                    </div>
+                    <button type="button" id="checkout-btn" class="btn btn-primary w-100">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const cartItems = document.getElementById("cart-items");
+
+    function updateCartCount() {
+        let totalItems = 0;
+
+        cart.forEach(item => {
+            totalItems += item.quantity;
+        });
+
+        const cartCount = document.getElementById("cart-count");
+
+        if (cartCount) {
+            cartCount.textContent = totalItems;
+        }
+    }
+
+    function displayCart() {
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                        Your cart is empty.
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("cart-total").textContent = "0.00";
+            updateCartCount();
+            return;
+        }
+
+        let cartTotal = 0;
+
+        cart.forEach(item => {
+            const total = item.price * item.quantity;
+            cartTotal += total;
+
+            cartItems.innerHTML += `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm"
+                                onclick="decreaseQuantity('${item.id}')">
+                            <i class="bi bi-dash"></i>
+                        </button>
+
+                        <span class="mx-3">${item.quantity}</span>
+
+                        <button type="button"
+                                class="btn btn-outline-primary btn-sm"
+                                onclick="increaseQuantity('${item.id}')">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </td>
+                    <td>$${total.toFixed(2)}</td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-danger btn-sm"
+                                onclick="removeItem('${item.id}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("cart-total").textContent = cartTotal.toFixed(2);
+        updateCartCount();
+    }
+
+    function increaseQuantity(id) {
+        const item = cart.find(item => item.id === id);
+
+        if (!item) {
+            return;
+        }
+
+        item.quantity++;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    function decreaseQuantity(id) {
+        const item = cart.find(item => item.id === id);
+
+        if (!item) {
+            return;
+        }
+
+        item.quantity--;
+
+        if (item.quantity <= 0) {
+            cart = cart.filter(item => item.id !== id);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    function removeItem(id) {
+        cart = cart.filter(item => item.id !== id);
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        localStorage.setItem("checkoutCart", JSON.stringify(cart));
+
+        window.location.href = "/Checkout/Index";
+    }
+
+    displayCart();
+
+    document.getElementById("checkout-btn").addEventListener("click", checkout);
+</script>
