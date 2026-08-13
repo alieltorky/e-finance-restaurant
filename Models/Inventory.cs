@@ -10,6 +10,7 @@ namespace Online_Restaurant.Models
         public int SupplierId { get; set; }
 
         public int IngredientId { get; set; }
+        public int OrderId { get; set; }
 
         public DateTime DeliveryDate { get; set; }
 
@@ -20,5 +21,6 @@ namespace Online_Restaurant.Models
         public Supplier Supplier { get; set; } = null!;
 
         public Ingredient Ingredient { get; set; } = null!;
+        public Orders Order { get; set; } = null!;
     }
 }

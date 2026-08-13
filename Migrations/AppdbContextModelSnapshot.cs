@@ -17,7 +17,7 @@ namespace Online_Restaurant.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.10")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -73,6 +73,9 @@ namespace Online_Restaurant.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
@@ -82,6 +85,8 @@ namespace Online_Restaurant.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SupplierId");
 
@@ -338,6 +343,12 @@ namespace Online_Restaurant.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Online_Restaurant.Models.Orders", "Order")
+                        .WithMany("Inventories")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Online_Restaurant.Models.Supplier", "Supplier")
                         .WithMany("SupplyDeliveries")
                         .HasForeignKey("SupplierId")
@@ -345,6 +356,8 @@ namespace Online_Restaurant.Migrations
                         .IsRequired();
 
                     b.Navigation("Ingredient");
+
+                    b.Navigation("Order");
 
                     b.Navigation("Supplier");
                 });
@@ -451,6 +464,8 @@ namespace Online_Restaurant.Migrations
 
             modelBuilder.Entity("Online_Restaurant.Models.Orders", b =>
                 {
+                    b.Navigation("Inventories");
+
                     b.Navigation("OrderDetails");
                 });
 

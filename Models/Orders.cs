@@ -17,6 +17,7 @@ namespace Online_Restaurant.Models
         public string Address {  get; set; }
         public User User { get; set; } = null!;
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
         public PaymentMethod PaymentMethod { get; set; } = null!;
         public OrderStatus OrderStatus { get; set; } = null!;
     }
