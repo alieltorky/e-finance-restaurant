@@ -104,10 +104,7 @@ namespace Online_Restaurant.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Menu_ItemMenuItemId")
+                    b.Property<int>("Menu_ItemId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -117,7 +114,7 @@ namespace Online_Restaurant.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.HasIndex("Menu_ItemMenuItemId");
+                    b.HasIndex("Menu_ItemId");
 
                     b.ToTable("MenuIngredients");
                 });
@@ -162,16 +159,10 @@ namespace Online_Restaurant.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetailId"));
 
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Menu_ItemMenuItemId")
+                    b.Property<int>("Menu_ItemId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrdersOrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -182,9 +173,9 @@ namespace Online_Restaurant.Migrations
 
                     b.HasKey("DetailId");
 
-                    b.HasIndex("Menu_ItemMenuItemId");
+                    b.HasIndex("Menu_ItemId");
 
-                    b.HasIndex("OrdersOrderId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -372,7 +363,7 @@ namespace Online_Restaurant.Migrations
 
                     b.HasOne("Online_Restaurant.Models.Menu_Item", "Menu_Item")
                         .WithMany("Menu_Ingredients")
-                        .HasForeignKey("Menu_ItemMenuItemId")
+                        .HasForeignKey("Menu_ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -396,19 +387,19 @@ namespace Online_Restaurant.Migrations
                 {
                     b.HasOne("Online_Restaurant.Models.Menu_Item", "Menu_Item")
                         .WithMany("OrderDetail")
-                        .HasForeignKey("Menu_ItemMenuItemId")
+                        .HasForeignKey("Menu_ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Online_Restaurant.Models.Orders", "Orders")
+                    b.HasOne("Online_Restaurant.Models.Orders", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrdersOrderId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Menu_Item");
 
-                    b.Navigation("Orders");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Orders", b =>

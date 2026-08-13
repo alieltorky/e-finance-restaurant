@@ -1,0 +1,13 @@
+﻿namespace Online_Restaurant.Models.DTOs
+{
+    public class CheckoutRequest
+    {
+        public List<CartItemRequest> Items { get; set; } = new();
+    }
+
+    public class CartItemRequest
+    {
+        public int MenuItemId { get; set; }
+        public int Quantity { get; set; }
+    }
+}

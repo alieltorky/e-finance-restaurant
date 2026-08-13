@@ -7,7 +7,7 @@ namespace Online_Restaurant.Models
     {
         [Key]
         public int MenuIngredientId { get; set; }
-        public int MenuItemId { get; set; }
+        public int Menu_ItemId { get; set; }
         public int IngredientId { get; set; }
         public decimal Quantity { get; set; }
 

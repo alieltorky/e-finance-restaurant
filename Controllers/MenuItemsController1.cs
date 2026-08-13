@@ -193,7 +193,7 @@ public class MenuItemsController1 : Controller
     public async Task<IActionResult> GetMenuIngredients(int menuItemId)
     {
         var ingredients = await _context.MenuIngredients
-            .Where(mi => mi.MenuItemId == menuItemId)
+            .Where(mi => mi.Menu_ItemId == menuItemId)
             .Include(mi => mi.Ingredient)
             .Select(mi => new
             {
@@ -220,7 +220,7 @@ public class MenuItemsController1 : Controller
         }
 
         bool alreadyLinked = await _context.MenuIngredients
-            .AnyAsync(mi => mi.MenuItemId == menuItemId && mi.IngredientId == ingredientId);
+            .AnyAsync(mi => mi.Menu_ItemId == menuItemId && mi.IngredientId == ingredientId);
 
         if (alreadyLinked)
         {
@@ -229,7 +229,7 @@ public class MenuItemsController1 : Controller
 
         var menuIngredient = new Menu_Ingredient
         {
-            MenuItemId = menuItemId,
+            Menu_ItemId = menuItemId,
             Menu_Item = menuItemEntity,
             IngredientId = ingredientId,
             Quantity = quantity

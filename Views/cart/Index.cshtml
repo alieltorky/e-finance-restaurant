@@ -41,7 +41,6 @@
         </div>
     </div>
 </div>
-
 <script>
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -158,19 +157,55 @@
 
         displayCart();
     }
-
-    function checkout() {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-            return;
-        }
-
-        localStorage.setItem("checkoutCart", JSON.stringify(cart));
-
-        window.location.href = "/Checkout/Index";
-    }
-
+   
     displayCart();
+    document.getElementById("checkout-btn").addEventListener("click", function() {
 
-    document.getElementById("checkout-btn").addEventListener("click", checkout);
+        console.log("Checkout button clicked!");
+
+        console.log("Cart data from LocalStorage:", cart);
+
+        const request = {
+            items: cart.map(item => ({
+                menuItemId: parseInt(item.id),
+                quantity: item.quantity
+            }))
+        };
+
+        console.log("Data being sent to C#:", request);
+
+        fetch("/Checkout/PlaceOrder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+        })
+            .then(async response => {
+
+                const text = await response.text();
+
+                console.log("HTTP Status:", response.status);
+                console.log("Server response:", text);
+
+                if (!response.ok) {
+                    throw new Error(text);
+                }
+
+                return JSON.parse(text);
+            })
+            .then(data => {
+
+                console.log("Response from C#:", data);
+
+            })
+            .catch(error => {
+
+                console.error("Checkout error:", error);
+
+            });
+
+    });
+
+    
 </script>

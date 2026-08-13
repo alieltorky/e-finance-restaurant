@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Models;
-namespace Online_Restaurant.Data
 
+namespace Online_Restaurant.Data
 {
     public class AppdbContext : DbContext
     {
-        public AppdbContext(DbContextOptions<AppdbContext> options) : base(options)
+        public AppdbContext(DbContextOptions<AppdbContext> options)
+            : base(options)
         {
         }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Menu_Item> MenuItems { get; set; }
@@ -20,5 +22,7 @@ namespace Online_Restaurant.Data
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+
+       
     }
 }
