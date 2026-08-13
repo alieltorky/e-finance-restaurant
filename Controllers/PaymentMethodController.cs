@@ -29,7 +29,16 @@ public class PaymentMethodController : Controller
 
         return View(paymentMethods);
     }
+    //return the payment methods to the JS pop up in user checkout
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var paymentMethods = await _context.PaymentMethods
+            .Select(p => new { p.PaymentMethodId, p.MethodName })
+            .ToListAsync();
 
+        return Json(paymentMethods);
+    }
     // POST: Create Payment Method
     [HttpPost]
     [ValidateAntiForgeryToken]

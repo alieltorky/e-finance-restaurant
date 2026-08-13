@@ -65,12 +65,12 @@
 
         if (cart.length === 0) {
             cartItems.innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center py-4 text-muted">
-                        Your cart is empty.
-                    </td>
-                </tr>
-            `;
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            Your cart is empty.
+                        </td>
+                    </tr>
+                `;
 
             document.getElementById("cart-total").textContent = "0.00";
             updateCartCount();
@@ -84,34 +84,34 @@
             cartTotal += total;
 
             cartItems.innerHTML += `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>$${item.price.toFixed(2)}</td>
-                    <td>
-                        <button type="button"
-                                class="btn btn-outline-secondary btn-sm"
-                                onclick="decreaseQuantity('${item.id}')">
-                            <i class="bi bi-dash"></i>
-                        </button>
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-outline-secondary btn-sm"
+                                    onclick="decreaseQuantity('${item.id}')">
+                                <i class="bi bi-dash"></i>
+                            </button>
 
-                        <span class="mx-3">${item.quantity}</span>
+                            <span class="mx-3">${item.quantity}</span>
 
-                        <button type="button"
-                                class="btn btn-outline-primary btn-sm"
-                                onclick="increaseQuantity('${item.id}')">
-                            <i class="bi bi-plus"></i>
-                        </button>
-                    </td>
-                    <td>$${total.toFixed(2)}</td>
-                    <td>
-                        <button type="button"
-                                class="btn btn-danger btn-sm"
-                                onclick="removeItem('${item.id}')">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-sm"
+                                    onclick="increaseQuantity('${item.id}')">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </td>
+                        <td>$${total.toFixed(2)}</td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="removeItem('${item.id}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
         });
 
         document.getElementById("cart-total").textContent = cartTotal.toFixed(2);
@@ -157,29 +157,88 @@
 
         displayCart();
     }
-   
-    displayCart();
-    document.getElementById("checkout-btn").addEventListener("click", function() {
+
+    //payment methode 
+    async function showPaymentMethodModal() {
+
+        const paymentMethodsResponse = await fetch("/PaymentMethod/GetAll");
+        const paymentMethods = await paymentMethodsResponse.json();
+
+        const paymentMethodOptionsHtml = paymentMethods.map((method, index) => `
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="paymentMethodOption"
+                           id="payment-method-${method.paymentMethodId}"
+                           value="${method.paymentMethodId}"
+                           ${index === 0 ? "checked" : ""}>
+                    <label class="form-check-label" for="payment-method-${method.paymentMethodId}">
+                        ${method.methodName}
+                    </label>
+                </div>
+            `).join("");
+
+        const paymentModalHtml = `
+                <div class="modal fade" id="paymentMethodModal" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Select payment method</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                        ${paymentMethodOptionsHtml}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirm-payment-method-btn">Confirm & Place Order</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            `;
+
+        document.body.insertAdjacentHTML("beforeend", paymentModalHtml);
+
+        const paymentModalElement = document.getElementById("paymentMethodModal");
+        const paymentModal = new bootstrap.Modal(paymentModalElement);
+        paymentModal.show();
+
+        document.getElementById("confirm-payment-method-btn").addEventListener("click", function() {
+            const checkedPaymentMethodInput = document.querySelector('input[name="paymentMethodOption"]:checked');
+            const selectedPaymentMethodId = parseInt(checkedPaymentMethodInput.value);
+
+            paymentModal.hide();
+            placeOrder(selectedPaymentMethodId);
+        });
+
+         // no duplicate 
+        paymentModalElement.addEventListener("hidden.bs.modal", function() {
+            paymentModalElement.remove();
+        });
+    }
+
+    // Sends the cart + chosen payment method to the server to save the order
+    function placeOrder(selectedPaymentMethodId) {
 
         console.log("Checkout button clicked!");
 
         console.log("Cart data from LocalStorage:", cart);
 
-        const request = {
+        const checkoutRequest = {
             items: cart.map(item => ({
                 menuItemId: parseInt(item.id),
                 quantity: item.quantity
-            }))
+            })),
+            paymentMethodId: selectedPaymentMethodId
         };
 
-        console.log("Data being sent to C#:", request);
+        console.log("Data being sent to C#:", checkoutRequest);
 
         fetch("/Checkout/PlaceOrder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(request)
+            body: JSON.stringify(checkoutRequest)
         })
             .then(async response => {
 
@@ -204,7 +263,19 @@
                 console.error("Checkout error:", error);
 
             });
+    }
 
+    displayCart();
+    document.getElementById("checkout-btn").addEventListener("click", async function() {
+        //user must login first after click checkout button
+        const authResponse = await fetch("/Account/IsAuthenticated");
+        const authData = await authResponse.json();
+        if (!authData.isAuthenticated) {
+            const returnUrl = encodeURIComponent(window.location.pathname);
+            window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
+            return;
+        }
+        showPaymentMethodModal();
     });
 
     

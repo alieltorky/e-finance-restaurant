@@ -3,6 +3,7 @@
     public class CheckoutRequest
     {
         public List<CartItemRequest> Items { get; set; } = new();
+        public int PaymentMethodId { get; set; }
     }
 
     public class CartItemRequest

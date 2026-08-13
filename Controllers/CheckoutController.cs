@@ -3,9 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 using Online_Restaurant.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Online_Restaurant.Controllers
 {
+    [Authorize]
     public class CheckoutController : Controller
     {
         private readonly AppdbContext _context;
@@ -25,7 +28,12 @@ namespace Online_Restaurant.Controllers
                 return BadRequest(new { success = false, message = "Cart is empty." });
             }
 
-            int userId = 3; // constant user id for now
+            //int userId = 3; // constant user id for now
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized(new { success = false, message = "You must be logged in to check out." });
+            }
 
             // Check user
             var user = await _context.Users.FindAsync(userId);
@@ -34,6 +42,14 @@ namespace Online_Restaurant.Controllers
                 return BadRequest(new { success = false, message = "User does not exist." });
             }
 
+            //check payment method
+            var paymentMethod = await _context.PaymentMethods
+                   .FirstOrDefaultAsync(p => p.PaymentMethodId == request.PaymentMethodId);
+
+            if (paymentMethod == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid payment method." });
+            }
             // Get the menu items from database
             var menuItemIds = request.Items
                 .Select(x => x.MenuItemId)
@@ -88,7 +104,7 @@ namespace Online_Restaurant.Controllers
                         Date = DateTime.Now,
                         Price = orderTotal,
                         OrderStatusId = 4, // 4 = Preparing constant untill changed
-                        PaymentMethodId = 2, // payment contstant untill changed
+                        PaymentMethodId = request.PaymentMethodId,
                         MobileNumber = user.PhoneNumber,
                         Address = user.Address
                     };

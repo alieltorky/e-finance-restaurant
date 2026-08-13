@@ -19,17 +19,29 @@ namespace Online_Restaurant.Controllers
             _context = context;
         }
 
+        // GET: Account/IsAuthenticated
+        // Lightweight check used by JS (e.g. Cart page) before checkout
+        [HttpGet]
+        public IActionResult IsAuthenticated()
+        {
+            return Json(new
+            {
+                isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated
+            });
+        }
+
         // GET: Account/Register
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(string? returnUrl = null)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         // POST: Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User user, string confirmPassword)
+        public async Task<IActionResult> Register(User user, string confirmPassword, string? returnUrl = null)
         {
             // Role is assigned by the server below, not submitted by the form
             ModelState.Remove("Role");
@@ -47,6 +59,7 @@ namespace Online_Restaurant.Controllers
 
             if (!ModelState.IsValid)
             {
+                ViewBag.ReturnUrl = returnUrl;
                 return View(user);
             }
 
@@ -61,26 +74,28 @@ namespace Online_Restaurant.Controllers
 
             await SignInUser(user);
 
-            return RedirectToAction("Index", "MenuItemsController1");
+            return RedirectToLocal(returnUrl);
         }
 
         // GET: Account/Login
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         // POST: Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(string email, string password, string? returnUrl = null)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
             {
                 ModelState.AddModelError("", "Invalid email or password.");
+                ViewBag.ReturnUrl = returnUrl;
                 return View();
             }
 
@@ -89,12 +104,13 @@ namespace Online_Restaurant.Controllers
             if (result == PasswordVerificationResult.Failed)
             {
                 ModelState.AddModelError("", "Invalid email or password.");
+                ViewBag.ReturnUrl = returnUrl;
                 return View();
             }
 
             await SignInUser(user);
 
-            return RedirectToAction("Index", "MenuItemsController1");
+            return RedirectToLocal(returnUrl);
         }
 
         // POST: Account/Logout
@@ -120,6 +136,18 @@ namespace Online_Restaurant.Controllers
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+
+        // Only redirect within this site — blocks an attacker from
+        // injecting an external URL via ?returnUrl=
+        private IActionResult RedirectToLocal(string? returnUrl)
+        {
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "MenuItemsController1");
         }
     }
 }
