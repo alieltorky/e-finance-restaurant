@@ -64,22 +64,37 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <!--cart icon --> 
-     <a asp-controller="Cart"
-        asp-action="Index"
-        class="cart-link position-relative">
+            <!--cart icon -->
+            <a asp-controller="Cart"
+               asp-action="Index"
+               class="cart-link position-relative">
 
-        <i class="bi bi-cart3"></i>
+                <i class="bi bi-cart3"></i>
 
-        <span id="cart-count"
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            0
-        </span>
+                <span id="cart-count"
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                </span>
 
-    </a>
+            </a>
 
-    </div>
-  </header>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <span class="ms-3 me-2">Hi, @User.Identity.Name</span>
+
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-sm btn-outline-primary ms-3 me-2">Login</a>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-sm btn-primary">Register</a>
+            }
+
+        </div>
+    </header>
     <main>
         @RenderBody()
     </main>

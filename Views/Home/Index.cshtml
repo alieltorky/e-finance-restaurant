@@ -9,5 +9,16 @@
 <div class="text-center my-5 py-5">
     <h1 class="display-4 fw-bold">Welcome to Our Restaurant</h1>
     <p class="lead">Discover our amazing dishes and order online.</p>
-    <a asp-controller="MenuItemsController1" asp-action="Index" class="btn btn-primary btn-lg mt-3">View Menu</a>
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="MenuItemsController1" asp-action="Index" class="btn btn-primary btn-lg mt-3">View Menu</a>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg">Login</a>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg">Register</a>
+        </div>
+    }
 </div>
