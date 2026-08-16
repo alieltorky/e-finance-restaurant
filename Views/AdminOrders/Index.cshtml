@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Online_Restaurant.Models.Orders>
+@using Online_Restaurant.Models
+
+@{
+    ViewData["Title"] = "All Orders";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+    var allStatuses = ViewBag.AllStatuses as List<OrderStatus>;
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">All Orders</h2>
+            <p class="text-muted mb-0">Update an order's status directly from this page</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Orders</h5>
+        </div>
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Payment Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model)
+                            {
+                                <tr>
+                                    <td>#@order.OrderId</td>
+                                    <td>@order.User?.UserName</td>
+                                    <td>@order.Date.ToString("dd MMM yyyy, HH:mm")</td>
+                                    <td>$@order.Price.ToString("0.00")</td>
+                                    <td>@order.PaymentMethod?.MethodName</td>
+                                    <td>
+                                        <form asp-controller="AdminOrders" asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="orderId" value="@order.OrderId" />
+
+                                            <select name="orderStatusId" class="form-select form-select-sm" style="width: auto;">
+                                                @if (allStatuses != null)
+                                                {
+                                                    @foreach (var status in allStatuses)
+                                                    {
+                                                        if (status.OrderStatusId == order.OrderStatusId)
+                                                        {
+                                                            <option value="@status.OrderStatusId" selected>@status.StatusName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@status.OrderStatusId">@status.StatusName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+
+                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h5 class="text-muted">No orders found</h5>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

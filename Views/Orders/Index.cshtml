@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Online_Restaurant.Models.Orders>
+
+@{
+    ViewData["Title"] = "My Orders";
+    Layout = "~/Views/Shared/ThemedLayout.cshtml";
+}
+
+<div class="container my-5">
+
+    <h2 class="mb-4">My Orders</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>#@order.OrderId</td>
+                            <td>@order.Date.ToString("dd MMM yyyy, HH:mm")</td>
+                            <td>$@order.Price.ToString("0.00")</td>
+                            <td>@order.PaymentMethod?.MethodName</td>
+                            <td>
+                                <span class="badge bg-info text-dark">@order.OrderStatus?.StatusName</span>
+                            </td>
+                            <td>
+                                <a asp-controller="Orders" asp-action="Details" asp-route-id="@order.OrderId" class="btn btn-sm btn-outline-primary">
+                                    View Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <p class="text-muted mb-3">You haven't placed any orders yet.</p>
+            <a asp-controller="MenuItemsController1" asp-action="Index" class="btn btn-primary">Browse the Menu</a>
+        </div>
+    }
+
+</div>
