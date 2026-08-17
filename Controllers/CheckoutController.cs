@@ -378,7 +378,7 @@ using System.Security.Claims;
 
 namespace Online_Restaurant.Controllers
 {
-    [Authorize]
+    
     public class CheckoutController : Controller
     {
         private readonly AppdbContext _context;

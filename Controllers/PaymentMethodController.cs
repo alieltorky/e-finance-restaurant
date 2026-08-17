@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 
-[Authorize(Roles = "Admin")]
+
 public class PaymentMethodController : Controller
 {
     private readonly AppdbContext _context;
@@ -44,6 +44,9 @@ public class PaymentMethodController : Controller
     // POST: Create Payment Method
     [HttpPost]
     [ValidateAntiForgeryToken]
+
+
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(PaymentMethod paymentMethod)
     {
         if (!ModelState.IsValid)
@@ -66,6 +69,7 @@ public class PaymentMethodController : Controller
     // POST: Edit Payment Method
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(PaymentMethod paymentMethod)
     {
         if (!ModelState.IsValid)
@@ -92,6 +96,7 @@ public class PaymentMethodController : Controller
     // POST: Delete Payment Method
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         var paymentMethod = await _context.PaymentMethods.FindAsync(id);
