@@ -8,10 +8,13 @@ using System.Security.Claims;
 
 namespace Online_Restaurant.Controllers
 {
+    //user must be authorized before checking out 
     [Authorize]
     public class CheckoutController : Controller
     {
+        //to access data 
         private readonly AppdbContext _context;
+        //constant value for supplier in inventory
         private const int InternalUseSupplierId = 4;
 
         public CheckoutController(AppdbContext context)
@@ -19,6 +22,7 @@ namespace Online_Restaurant.Controllers
             _context = context;
         }
 
+        //Post to place orrder
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] CheckoutRequest request)
         {
@@ -30,6 +34,7 @@ namespace Online_Restaurant.Controllers
 
             //int userId = 3; // constant user id for now
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //convert id ino integer
             if (!int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new { success = false, message = "You must be logged in to check out." });
@@ -44,22 +49,20 @@ namespace Online_Restaurant.Controllers
 
             //check payment method
             var paymentMethod = await _context.PaymentMethods
-                   .FirstOrDefaultAsync(p => p.PaymentMethodId == request.PaymentMethodId);
-
+                        .FirstOrDefaultAsync(p => p.PaymentMethodId == request.PaymentMethodId);
             if (paymentMethod == null)
             {
                 return BadRequest(new { success = false, message = "Invalid payment method." });
             }
-            // Get the menu items from database
+            // Get the menu items from user
             var menuItemIds = request.Items
                 .Select(x => x.MenuItemId)
                 .Distinct()
                 .ToList();
-
+            // Get the menu items from database
             var menuItems = await _context.MenuItems
                 .Where(x => menuItemIds.Contains(x.MenuItemId))
                 .ToListAsync();
-
             // Check that all menu items exist
             if (menuItems.Count != menuItemIds.Count)
             {
@@ -112,7 +115,7 @@ namespace Online_Restaurant.Controllers
                     _context.Orders.Add(order);
                     await _context.SaveChangesAsync(); // Generates order.OrderId
 
-                    // 8. Create OrderDetails
+                    // Create OrderDetails
                     foreach (var item in request.Items)
                     {
                         var menuItem = menuItems.First(x => x.MenuItemId == item.MenuItemId);
@@ -130,7 +133,7 @@ namespace Online_Restaurant.Controllers
 
                     await _context.SaveChangesAsync();
 
-                    // 9.negative Inventory rows
+                    //negative Inventory rows
                     foreach (var item in request.Items)
                     {
                         var neededIngredients = menuIngredients
@@ -157,7 +160,7 @@ namespace Online_Restaurant.Controllers
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    // 10. Return result
+                    //Return result
                     return Json(new
                     {
                         success = true,
