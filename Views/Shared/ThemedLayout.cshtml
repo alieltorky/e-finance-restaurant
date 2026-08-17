@@ -80,7 +80,9 @@
 
             @if (User.Identity != null && User.Identity.IsAuthenticated)
             {
-                <span class="ms-3 me-2">Hi, @User.Identity.Name</span>
+                <a asp-controller="Orders" asp-action="Index" class="btn btn-sm btn-outline-secondary ms-3 me-2">My Orders</a>
+
+                <span class="me-2">Hi, @User.Identity.Name</span>
 
                 <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                     @Html.AntiForgeryToken()
