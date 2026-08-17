@@ -181,42 +181,31 @@
 
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
+    <!-- Keep the navbar cart badge in sync with whichever user is logged in -->
     <script>
-            (async function() {
-                try {
-                    const authResponse = await fetch("/Account/IsAuthenticated");
-                    const authData = await authResponse.json(); // must include userId
+        (async function () {
+            let cartKey = "cart_guest";
 
-                    const cartOwner = localStorage.getItem("cartOwner");
+            try {
+                const authResponse = await fetch("/Account/IsAuthenticated");
+                const authData = await authResponse.json();
+                cartKey = authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
+            } catch (err) {
+                console.error("Cart badge sync failed:", err);
+            }
 
-                    if (authData.isAuthenticated) {
-                        if (cartOwner !== authData.userId) {
-                            // Different user than whoever's cart is currently stored — reset
-                            localStorage.removeItem("cart");
-                            localStorage.setItem("cartOwner", authData.userId);
-                        }
-                    } else {
-                        // Logged out — clear the cart and the owner marker
-                        localStorage.removeItem("cart");
-                        localStorage.removeItem("cartOwner");
-                    }
-                } catch (err) {
-                    console.error("Cart sync failed:", err);
-                }
+            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            let totalItems = 0;
 
-                // Update the badge with whatever the cart now actually contains
-                const cart = JSON.parse(localStorage.getItem("cart")) || [];
-                let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
 
-                cart.forEach(item => {
-                    totalItems += item.quantity;
-                });
-
-                const cartCount = document.getElementById("cart-count");
-                if (cartCount) {
-                    cartCount.textContent = totalItems;
-                }
-            })();
+            const cartCount = document.getElementById("cart-count");
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+        })();
     </script>
 </body>
 </html>
