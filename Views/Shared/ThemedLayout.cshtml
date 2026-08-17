@@ -160,13 +160,16 @@
         </div>
 
     </footer>
-    <!-- Temporary Admin Dashboard Link -->
-    <div class="text-center mt-3 pb-3">
-        <a asp-controller="Dashboard" asp-action="Index" class="text-muted small text-decoration-none">
-            <i class="bi bi-gear-fill"></i> [ Temporary Admin Dashboard ]
-        </a>
-    </div>
-    <!-- Vendor JS Files -->
+        @if (User.IsInRole("Admin"))
+        {
+            <!-- Temporary Admin Dashboard Link -->
+            <div class="text-center mt-3 pb-3">
+                <a asp-controller="Dashboard" asp-action="Index" class="text-muted small text-decoration-none">
+                    <i class="bi bi-gear-fill"></i> [ Temporary Admin Dashboard ]
+                </a>
+            </div>                
+        }
+        <!-- Vendor JS Files -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
     <script src="~/assets/vendor/aos/aos.js"></script>

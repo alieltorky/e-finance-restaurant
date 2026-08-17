@@ -12,6 +12,7 @@ namespace Online_Restaurant.Models
         public decimal Price { get; set; }
         public bool Available { get; set; }
         public int CategoryId { get; set; }
+        public string? ImagePath { get; set; }
 
         public ICollection<OrderDetail> OrderDetail { get; set; } = new List<OrderDetail>();
         public ICollection<Menu_Ingredient> Menu_Ingredients { get; set; } = new List<Menu_Ingredient>();

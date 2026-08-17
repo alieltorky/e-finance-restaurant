@@ -11,12 +11,20 @@ namespace Online_Restaurant.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AppdbContext _context;
-        private readonly PasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
+        //private readonly AppdbContext _context;
+        //private readonly PasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
+       private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(AppdbContext context)
+            
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                SignInManager<ApplicationUser> signInManager,
+                                RoleManager<IdentityRole> roleManager)
         {
-            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         // GET: Account/IsAuthenticated
@@ -41,40 +49,50 @@ namespace Online_Restaurant.Controllers
         // POST: Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User user, string confirmPassword, string? returnUrl = null)
+        public async Task<IActionResult> Register(string userName, string email, string password, string confirmPassword, string? address, string? returnUrl = null)
         {
             // Role is assigned by the server below, not submitted by the form
             ModelState.Remove("Role");
 
-            if (user.Password != confirmPassword)
+            if (password != confirmPassword)
             {
                 ModelState.AddModelError("", "Passwords do not match.");
-            }
-
-            bool emailTaken = await _context.Users.AnyAsync(u => u.Email == user.Email);
-            if (emailTaken)
-            {
-                ModelState.AddModelError("", "An account with this email already exists.");
             }
 
             if (!ModelState.IsValid)
             {
                 ViewBag.ReturnUrl = returnUrl;
-                return View(user);
+                return View();
             }
+            var user = new ApplicationUser
+            {
+                UserName = userName,
+                Email = email,
+                Address = address
+            };
+            // Creates user, hashes password automatically, and checks uniqueness/rules
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                if (!await _roleManager.RoleExistsAsync("Customer"))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Customer"));
+                }
+                // Assign default role to self-registered accounts
+                await _userManager.AddToRoleAsync(user, "Customer");
 
-            // Default role for self-registered accounts
-            user.Role = "Customer";
+                await _signInManager.SignInAsync(user, isPersistent: false);
 
-            // Hash the password before storing it
-            user.Password = _passwordHasher.HashPassword(user, user.Password);
+                return RedirectToLocal(returnUrl);
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
 
-            await SignInUser(user);
-
-            return RedirectToLocal(returnUrl);
         }
 
         // GET: Account/Login
@@ -88,29 +106,31 @@ namespace Online_Restaurant.Controllers
         // POST: Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password, string? returnUrl = null)
+        public async Task<IActionResult> Login(string email, string password, bool rememberMe, string? returnUrl = null)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
+            if(!ModelState.IsValid)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
+            // Find user by Email first
+            var user = await _userManager.FindByEmailAsync(email) ?? await _userManager.FindByNameAsync(email);
             if (user == null)
             {
                 ModelState.AddModelError("", "Invalid email or password.");
                 ViewBag.ReturnUrl = returnUrl;
                 return View();
             }
+            // Verify password and sign in (lockoutOnFailure: false for now)
+            var result = await _signInManager.PasswordSignInAsync(user.UserName!, password, rememberMe, lockoutOnFailure: false);
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
-
-            if (result == PasswordVerificationResult.Failed)
+            if(result.Succeeded)
             {
-                ModelState.AddModelError("", "Invalid email or password.");
-                ViewBag.ReturnUrl = returnUrl;
-                return View();
+                return RedirectToLocal(returnUrl);
             }
-
-            await SignInUser(user);
-
-            return RedirectToLocal(returnUrl);
+            ModelState.AddModelError("", "Invalid email or password.");
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
         }
 
         // POST: Account/Logout
@@ -118,26 +138,16 @@ namespace Online_Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-        private async Task SignInUser(User user)
+        // GET: Account/AccessDenied
+        [HttpGet]
+        public IActionResult AccessDenied()
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName ?? user.Email),
-                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
-                new Claim(ClaimTypes.Role, user.Role ?? "Customer")
-            };
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            return View();
         }
-
+        
         // Only redirect within this site — blocks an attacker from
         // injecting an external URL via ?returnUrl=
         private IActionResult RedirectToLocal(string? returnUrl)

@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container text-center py-5" style="margin-top: 100px;">
+    <div class="alert alert-danger shadow p-5 rounded-4 d-inline-block">
+        <h1 class="display-4 text-danger"><i class="bi bi-shield-x"></i> 403 Access Denied</h1>
+        <p class="lead mt-3">You do not have permission to access this page.</p>
+        <hr />
+        <a asp-controller="MenuItemsController1" asp-action="Index" class="btn btn-primary mt-2">
+            Back to Home / Menu
+        </a>
+    </div>
+</div>

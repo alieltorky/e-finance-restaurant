@@ -1,10 +1,13 @@
-﻿namespace Online_Restaurant.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+namespace Online_Restaurant.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 
+
+[Authorize(Roles = "Admin")]
 public class CategoriesController : Controller
 {
     private readonly AppdbContext _context;
