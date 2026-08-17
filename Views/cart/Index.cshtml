@@ -158,7 +158,7 @@
         displayCart();
     }
 
-    //payment methode 
+    //payment methode
     async function showPaymentMethodModal() {
 
         const paymentMethodsResponse = await fetch("/PaymentMethod/GetAll");
@@ -210,7 +210,7 @@
             placeOrder(selectedPaymentMethodId);
         });
 
-         // no duplicate 
+        // no duplicate
         paymentModalElement.addEventListener("hidden.bs.modal", function() {
             paymentModalElement.remove();
         });
@@ -256,16 +256,45 @@
             .then(data => {
 
                 console.log("Response from C#:", data);
+                cart = [];
+                localStorage.removeItem("cart");
+                displayCart();
+                alert(`Order placed successfully! Order #${data.orderId}`);
 
             })
             .catch(error => {
 
                 console.error("Checkout error:", error);
-
+                alert("Something went wrong placing your order. Please try again.");
             });
     }
 
-    displayCart();
+    // Keeps the cart tied to whichever user is currently logged in.
+    // Clears it out if the logged-in user has changed since the cart was last saved.
+    async function syncCartWithCurrentUser() {
+        const authResponse = await fetch("/Account/IsAuthenticated");
+        const authData = await authResponse.json(); // must include userId (see AccountController)
+
+        const cartOwner = localStorage.getItem("cartOwner");
+
+        if (authData.isAuthenticated && cartOwner !== authData.userId) {
+            // Different user (or first time) — reset the cart
+            cart = [];
+            localStorage.removeItem("cart");
+            localStorage.setItem("cartOwner", authData.userId);
+        } else if (!authData.isAuthenticated) {
+            localStorage.removeItem("cartOwner");
+        }
+    }
+
+    // Runs on page load: sync first, then re-read cart in case it was just cleared, then render
+    async function init() {
+        await syncCartWithCurrentUser();
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+        displayCart();
+    }
+    init();
+
     document.getElementById("checkout-btn").addEventListener("click", async function() {
         //user must login first after click checkout button
         const authResponse = await fetch("/Account/IsAuthenticated");

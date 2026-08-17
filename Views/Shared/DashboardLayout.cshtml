@@ -116,6 +116,11 @@
         background-color: #212529;
     }
 
+    .back-to-site {
+        border-bottom: 1px solid #343a40;
+        padding-bottom: 15px !important;
+        margin-bottom: 10px;
+    }
 </style>
 
 
@@ -131,6 +136,13 @@
 
 
         <div class="sidebar-menu">
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="d-flex align-items-center back-to-site">
+
+                <i class="bi bi-arrow-left-circle me-2"></i> Back to Site
+
+            </a>
 
             <!-- ================= DASHBOARD ================= -->
 
