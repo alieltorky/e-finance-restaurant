@@ -20,8 +20,8 @@ namespace Online_Restaurant.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdClaim, out int userId))
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized();
             }
@@ -40,8 +40,8 @@ namespace Online_Restaurant.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdClaim, out int userId))
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized();
             }
@@ -51,7 +51,6 @@ namespace Online_Restaurant.Controllers
                 .Include(o => o.PaymentMethod)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(od => od.Menu_Item)
-                // Only ever match an order that belongs to the logged-in user
                 .FirstOrDefaultAsync(o => o.OrderId == id && o.UserId == userId);
 
             if (order == null)

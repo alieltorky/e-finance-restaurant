@@ -1,4 +1,5 @@
-﻿namespace Online_Restaurant.Models.DTOs
+﻿//DTOs : that define the data transfered form local storage into controller
+namespace Online_Restaurant.Models.DTOs
 {
     public class CheckoutRequest
     {

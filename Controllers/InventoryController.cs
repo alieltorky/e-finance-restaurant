@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 
 namespace Online_Restaurant.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class InventoryController : Controller
     {
         private readonly AppdbContext _context;

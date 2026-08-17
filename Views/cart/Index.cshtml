@@ -222,7 +222,7 @@
         console.log("Checkout button clicked!");
 
         console.log("Cart data from LocalStorage:", cart);
-
+        //just sent id and quantity and the server will automatically read it from the database
         const checkoutRequest = {
             items: cart.map(item => ({
                 menuItemId: parseInt(item.id),
