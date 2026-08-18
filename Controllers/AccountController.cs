@@ -32,10 +32,11 @@ namespace Online_Restaurant.Controllers
         [HttpGet]
         public IActionResult IsAuthenticated()
         {
-            return Json(new
-            {
-                isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated
-            });
+            var userId = User.Identity.IsAuthenticated
+                ? User.FindFirstValue(ClaimTypes.NameIdentifier)
+                : null;
+
+            return Json(new { isAuthenticated = User.Identity.IsAuthenticated, userId });
         }
 
         // GET: Account/Register

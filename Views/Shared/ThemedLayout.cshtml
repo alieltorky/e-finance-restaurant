@@ -181,6 +181,31 @@
 
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
+    <!-- Keep the navbar cart badge in sync with whichever user is logged in -->
+    <script>
+        (async function () {
+            let cartKey = "cart_guest";
 
+            try {
+                const authResponse = await fetch("/Account/IsAuthenticated");
+                const authData = await authResponse.json();
+                cartKey = authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
+            } catch (err) {
+                console.error("Cart badge sync failed:", err);
+            }
+
+            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            let totalItems = 0;
+
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+
+            const cartCount = document.getElementById("cart-count");
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+        })();
+    </script>
 </body>
 </html>

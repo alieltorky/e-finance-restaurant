@@ -188,8 +188,8 @@
 </div>
 <script>
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+    let CART_KEY = "cart_guest";
+    let cart = [];
 
     function updateCartCount() {
 
@@ -206,25 +206,36 @@
         }
     }
 
+    async function determineCartKey() {
+        try {
+            const authResponse = await fetch("/Account/IsAuthenticated");
+            const authData = await authResponse.json(); // must include userId
 
-    document.addEventListener("DOMContentLoaded", function () {
+            return authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
+        } catch (err) {
+            console.error("Could not determine cart owner, defaulting to guest cart:", err);
+            return "cart_guest";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", async function() {
+
+        CART_KEY = await determineCartKey();
+        cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
 
         updateCartCount();
 
         const addButtons = document.querySelectorAll(".add-to-cart");
 
-
         addButtons.forEach(button => {
 
-            button.addEventListener("click", function () {
+            button.addEventListener("click", function() {
 
                 const id = this.dataset.id;
                 const name = this.dataset.name;
                 const price = parseFloat(this.dataset.price);
 
-
                 const existingItem = cart.find(item => item.id === id);
-
 
                 if (existingItem) {
 
@@ -241,8 +252,7 @@
 
                 }
 
-
-                localStorage.setItem("cart", JSON.stringify(cart));
+                localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
                 updateCartCount();
 

@@ -42,9 +42,18 @@
     </div>
 </div>
 <script>
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let CART_KEY = "cart_guest"; // placeholder until we know who's logged in
+    let cart = [];
 
     const cartItems = document.getElementById("cart-items");
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    }
+
+    function saveCart() {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
 
     function updateCartCount() {
         let totalItems = 0;
@@ -127,8 +136,7 @@
 
         item.quantity++;
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-
+        saveCart();
         displayCart();
     }
 
@@ -145,20 +153,18 @@
             cart = cart.filter(item => item.id !== id);
         }
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-
+        saveCart();
         displayCart();
     }
 
     function removeItem(id) {
         cart = cart.filter(item => item.id !== id);
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-
+        saveCart();
         displayCart();
     }
 
-    //payment methode 
+    //payment methode
     async function showPaymentMethodModal() {
 
         const paymentMethodsResponse = await fetch("/PaymentMethod/GetAll");
@@ -210,7 +216,7 @@
             placeOrder(selectedPaymentMethodId);
         });
 
-         // no duplicate 
+        // no duplicate
         paymentModalElement.addEventListener("hidden.bs.modal", function() {
             paymentModalElement.remove();
         });
@@ -220,9 +226,8 @@
     function placeOrder(selectedPaymentMethodId) {
 
         console.log("Checkout button clicked!");
-
         console.log("Cart data from LocalStorage:", cart);
-        //just sent id and quantity and the server will automatically read it from the database
+
         const checkoutRequest = {
             items: cart.map(item => ({
                 menuItemId: parseInt(item.id),
@@ -257,15 +262,40 @@
 
                 console.log("Response from C#:", data);
 
+                // Only checkout empties the cart now
+                cart = [];
+                saveCart();
+                displayCart();
+
+                alert(`Order placed successfully! Order #${data.orderId}`);
             })
             .catch(error => {
 
                 console.error("Checkout error:", error);
-
+                alert("Something went wrong placing your order. Please try again.");
             });
     }
 
-    displayCart();
+    // Figures out whose cart to load: a logged-in user's, or the guest cart
+    async function determineCartKey() {
+        try {
+            const authResponse = await fetch("/Account/IsAuthenticated");
+            const authData = await authResponse.json(); // must include userId
+
+            return authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
+        } catch (err) {
+            console.error("Could not determine cart owner, defaulting to guest cart:", err);
+            return "cart_guest";
+        }
+    }
+
+    async function init() {
+        CART_KEY = await determineCartKey();
+        cart = getCart();
+        displayCart();
+    }
+    init();
+
     document.getElementById("checkout-btn").addEventListener("click", async function() {
         //user must login first after click checkout button
         const authResponse = await fetch("/Account/IsAuthenticated");
@@ -277,6 +307,5 @@
         }
         showPaymentMethodModal();
     });
-
     
 </script>
