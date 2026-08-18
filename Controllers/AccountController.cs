@@ -47,9 +47,9 @@ namespace Online_Restaurant.Controllers
         }
 
         // POST: Account/Register
-        [HttpPost]
+        [HttpPost]      
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(string userName, string email, string password, string confirmPassword, string? address, string? returnUrl = null)
+        public async Task<IActionResult> Register(string userName, string email, string password, string confirmPassword, string? address, string phonenumber, string? returnUrl = null)
         {
             // Role is assigned by the server below, not submitted by the form
             ModelState.Remove("Role");
@@ -68,7 +68,9 @@ namespace Online_Restaurant.Controllers
             {
                 UserName = userName,
                 Email = email,
-                Address = address
+                Address = address,
+                PhoneNumber = phonenumber
+
             };
             // Creates user, hashes password automatically, and checks uniqueness/rules
             var result = await _userManager.CreateAsync(user, password);
