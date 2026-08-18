@@ -5,14 +5,18 @@
     ViewData["Title"] = "All Orders";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
     var allStatuses = ViewBag.AllStatuses as List<OrderStatus>;
+    var acceptStatus = allStatuses?.FirstOrDefault(s => s.StatusName == "Preparing");
+    var rejectStatus = allStatuses?.FirstOrDefault(s => s.StatusName == "Rejected");
 }
 
 <div class="container-fluid">
 
+    @Html.AntiForgeryToken()
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="mb-1">All Orders</h2>
-            <p class="text-muted mb-0">Update an order's status directly from this page</p>
+            <p class="text-muted mb-0">Accept or reject an order directly from this page</p>
         </div>
     </div>
 
@@ -20,6 +24,8 @@
     {
         <div class="alert alert-success">@TempData["SuccessMessage"]</div>
     }
+
+    <div id="statusErrorAlert" class="alert alert-danger" style="display:none;"></div>
 
     <div class="card shadow-sm">
         <div class="card-header bg-white">
@@ -38,12 +44,19 @@
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Payment Method</th>
+                                <th>Action</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var order in Model)
                             {
+                                string statusName = order.OrderStatus?.StatusName;
+                                bool isPending = statusName == "Pending";
+                                bool isRejected = statusName == "Rejected";
+                                // Anything already decided that isn't "Rejected" is treated as the accepted path
+                                bool isAcceptedPath = !isPending && !isRejected;
+
                                 <tr>
                                     <td>#@order.OrderId</td>
                                     <td>@order.User?.UserName</td>
@@ -51,29 +64,39 @@
                                     <td>$@order.Price.ToString("0.00")</td>
                                     <td>@order.PaymentMethod?.MethodName</td>
                                     <td>
-                                        <form asp-controller="AdminOrders" asp-action="UpdateStatus" method="post" class="d-flex gap-2">
-                                            @Html.AntiForgeryToken()
-                                            <input type="hidden" name="orderId" value="@order.OrderId" />
+                                        <div class="status-cell"
+                                             data-order-id="@order.OrderId"
+                                             data-accept-status-id="@acceptStatus?.OrderStatusId"
+                                             data-reject-status-id="@rejectStatus?.OrderStatusId">
 
-                                            <select name="orderStatusId" class="form-select form-select-sm" style="width: auto;">
-                                                @if (allStatuses != null)
-                                                {
-                                                    @foreach (var status in allStatuses)
-                                                    {
-                                                        if (status.OrderStatusId == order.OrderStatusId)
-                                                        {
-                                                            <option value="@status.OrderStatusId" selected>@status.StatusName</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@status.OrderStatusId">@status.StatusName</option>
-                                                        }
-                                                    }
-                                                }
-                                            </select>
-
-                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                                        </form>
+                                            <div class="d-flex gap-3 align-items-center status-radio-group">
+                                                <div class="form-check form-check-inline m-0">
+                                                    <input class="form-check-input status-radio"
+                                                           type="radio"
+                                                           name="statusChoice-@order.OrderId"
+                                                           id="accept-@order.OrderId"
+                                                           value="accept"
+                                                           checked="@(isAcceptedPath ? "checked" : null)"
+                                                           disabled="@(!isPending ? "disabled" : null)">
+                                                    <label class="form-check-label text-success fw-semibold" for="accept-@order.OrderId">Accept</label>
+                                                </div>
+                                                <div class="form-check form-check-inline m-0">
+                                                    <input class="form-check-input status-radio"
+                                                           type="radio"
+                                                           name="statusChoice-@order.OrderId"
+                                                           id="reject-@order.OrderId"
+                                                           value="reject"
+                                                           checked="@(isRejected ? "checked" : null)"
+                                                           disabled="@(!isPending ? "disabled" : null)">
+                                                    <label class="form-check-label text-danger fw-semibold" for="reject-@order.OrderId">Reject</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="status-label fw-bold" data-order-id-status="@order.OrderId">
+                                            @statusName
+                                        </span>
                                     </td>
                                 </tr>
                             }
@@ -91,3 +114,74 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            const errorAlert = document.getElementById("statusErrorAlert");
+
+            document.addEventListener("change", async function (e) {
+                if (!e.target.classList.contains("status-radio")) return;
+
+                const radio = e.target;
+                const cell = radio.closest(".status-cell");
+                const allRadios = cell.querySelectorAll(".status-radio");
+                const orderId = cell.dataset.orderId;
+                const statusLabel = document.querySelector(`.status-label[data-order-id-status="${orderId}"]`);
+
+                const choice = radio.value; // "accept" or "reject"
+                const orderStatusId = choice === "accept"
+                    ? cell.dataset.acceptStatusId
+                    : cell.dataset.rejectStatusId;
+
+                const confirmed = confirm(
+                    `Are you sure you want to ${choice.toUpperCase()} order #${orderId}?`
+                );
+
+                if (!confirmed) {
+                    radio.checked = false;
+                    return;
+                }
+
+                allRadios.forEach(r => r.disabled = true);
+                if (errorAlert) errorAlert.style.display = "none";
+
+                try {
+                    const response = await fetch('@Url.Action("UpdateStatus", "AdminOrders")', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "RequestVerificationToken": token
+                        },
+                        body: JSON.stringify({
+                            orderId: Number(orderId),
+                            orderStatusId: Number(orderStatusId)
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        // Radios stay visible, both remain disabled, chosen one stays checked
+                        statusLabel.textContent = data.statusName;
+                    } else {
+                        showError(data.message || "Failed to update status.");
+                        radio.checked = false;
+                        allRadios.forEach(r => r.disabled = false);
+                    }
+                } catch (err) {
+                    showError("Something went wrong updating the status.");
+                    radio.checked = false;
+                    allRadios.forEach(r => r.disabled = false);
+                }
+            });
+
+            function showError(message) {
+                if (!errorAlert) return;
+                errorAlert.textContent = message;
+                errorAlert.style.display = "block";
+            }
+        });
+    </script>
+}

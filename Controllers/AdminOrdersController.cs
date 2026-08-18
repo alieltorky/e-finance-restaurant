@@ -9,7 +9,7 @@ namespace Online_Restaurant.Controllers
     {
         private readonly AppdbContext _context;
         private const int PreparingStatusId = 4; // "accepted" trigger for inventory deduction
-        private const int InternalUseSupplierId = 4;
+        private const int InternalUseSupplierId = 5;
 
         public AdminOrdersController(AppdbContext context)
         {
@@ -33,10 +33,20 @@ namespace Online_Restaurant.Controllers
         }
 
         // POST: AdminOrders/UpdateStatus
+        // Accepts a JSON body: { orderId, orderStatusId }
+        // Always responds with JSON: { success: bool, statusName?: string, message?: string }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateStatus(int orderId, int orderStatusId)
+        public async Task<IActionResult> UpdateStatus([FromBody] UpdateStatusRequest request)
         {
+            if (request == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int orderId = request.OrderId;
+            int orderStatusId = request.OrderStatusId;
+
             var order = await _context.Orders
                 .Include(o => o.OrderDetails)
                 .Include(o => o.Inventories)
@@ -44,7 +54,15 @@ namespace Online_Restaurant.Controllers
 
             if (order == null)
             {
-                return NotFound();
+                return NotFound(new { success = false, message = "Order not found." });
+            }
+
+            var newStatus = await _context.OrderStatuses
+                .FirstOrDefaultAsync(s => s.OrderStatusId == orderStatusId);
+
+            if (newStatus == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid status." });
             }
 
             bool movingToPreparing = orderStatusId == PreparingStatusId
@@ -88,8 +106,18 @@ namespace Online_Restaurant.Controllers
 
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = $"Order #{orderId} status updated.";
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                success = true,
+                statusName = newStatus.StatusName
+            });
         }
+    }
+
+    // Request model for the AJAX status update
+    public class UpdateStatusRequest
+    {
+        public int OrderId { get; set; }
+        public int OrderStatusId { get; set; }
     }
 }
