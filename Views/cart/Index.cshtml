@@ -27,6 +27,16 @@
             <div class="card shadow-sm" style="width: 320px;">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Checkout</h5>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Address:</span>
+                        <span id="customer-address" class="text-end">-</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="fw-semibold">Phone:</span>
+                        <span id="customer-phone">-</span>
+                    </div>
+
                     <div class="d-flex justify-content-between mb-3">
                         <span class="fw-semibold">Total:</span>
                         <span class="fw-bold text-primary">
@@ -289,10 +299,23 @@
         }
     }
 
+    async function loadCustomerInfo() {
+        try {
+            const response = await fetch("/Checkout/GetCustomerInfo");
+            const data = await response.json();
+
+            document.getElementById("customer-address").textContent = data.address || "No address on file";
+            document.getElementById("customer-phone").textContent = data.mobileNumber || "No phone on file";
+        } catch (err) {
+            console.error("Could not load customer info:", err);
+        }
+    }
+
     async function init() {
         CART_KEY = await determineCartKey();
         cart = getCart();
         displayCart();
+        loadCustomerInfo();
     }
     init();
 

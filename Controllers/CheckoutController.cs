@@ -21,7 +21,27 @@ namespace Online_Restaurant.Controllers
             _context = context;
             _userManager = userManager;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerInfo()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Json(new { address = "", mobileNumber = "" });
+            }
+
+            var latestOrder = await _context.Orders
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.Date)
+                .FirstOrDefaultAsync();
+
+            return Json(new
+            {
+                address = latestOrder?.Address ?? "",
+                mobileNumber = latestOrder?.MobileNumber ?? ""
+            });
+        }
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] CheckoutRequest request)
         {
