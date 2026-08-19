@@ -8,257 +8,685 @@
 }
 
 <div class="container-fluid">
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="mb-1">Edit Menu Item</h2>
-            <p class="text-muted mb-0">Modify item details for: <strong>@ViewBag.CategoryName</strong></p>
+            <p class="text-muted mb-0">
+                Modify item details for:
+                <strong>@ViewBag.CategoryName</strong>
+            </p>
         </div>
     </div>
 
     <div class="card shadow-sm mb-4" id="menuItemForm">
+
         <div class="card-header bg-white">
             <h5 class="mb-0">Edit @Model.Name</h5>
         </div>
 
         <div class="card-body">
-            <form asp-controller="MenuItemsController1" asp-action="Edit" method="post">
+
+            <form asp-controller="MenuItemsController1"
+                  asp-action="Edit"
+                  method="post"
+                  enctype="multipart/form-data">
+
                 @Html.AntiForgeryToken()
 
-                <!-- Hidden Primary Key and CategoryId -->
                 <input type="hidden" asp-for="MenuItemId" />
                 <input type="hidden" asp-for="CategoryId" />
 
                 <div class="row">
+
                     <!-- Item Name -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Item Name</label>
-                        <input asp-for="Name" class="form-control" placeholder="Enter item name" required />
+
+                        <input asp-for="Name"
+                               class="form-control"
+                               placeholder="Enter item name"
+                               required />
+
+                        <span asp-validation-for="Name"
+                              class="text-danger"></span>
                     </div>
+
 
                     <!-- Price -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Price</label>
-                        <input asp-for="Price" type="number" step="0.01" min="0" class="form-control" placeholder="Enter price" required />
+
+                        <input asp-for="Price"
+                               type="number"
+                               step="0.01"
+                               min="0"
+                               class="form-control"
+                               placeholder="Enter price"
+                               required />
+
+                        <span asp-validation-for="Price"
+                              class="text-danger"></span>
                     </div>
 
-                    <!-- Availability Switch -->
+
+                    <!-- Availability -->
                     <div class="col-md-6 mb-3 d-flex align-items-center mt-3">
+
                         <div class="form-check form-switch fs-5">
-                            <input class="form-check-input" type="checkbox" asp-for="Available" id="availableCheck" />
-                            <label class="form-check-label fs-6" for="availableCheck">Available for Order</label>
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   asp-for="Available"
+                                   id="availableCheck" />
+
+                            <label class="form-check-label fs-6"
+                                   for="availableCheck">
+                                Available for Order
+                            </label>
+
                         </div>
+
                     </div>
+
 
                     <!-- Description -->
                     <div class="col-12 mb-3">
-                        <label class="form-label">Description (Optional)</label>
-                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter item description..."></textarea>
+
+                        <label class="form-label">
+                            Description (Optional)
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Enter item description..."></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger"></span>
+
                     </div>
+
+
+                    <!-- Image -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Menu Item Image
+                        </label>
+
+                        <input type="file"
+                               name="imageFile"
+                               id="imageFile"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png" />
+
+                        <small class="text-muted">
+                            JPG, JPEG or PNG. Maximum size: 2 MB.
+                        </small>
+
+                        <span id="imageError"
+                              class="text-danger d-block"></span>
+
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <div class="mt-3">
+
+                                <p class="mb-2">
+                                    Current Image:
+                                </p>
+
+                                <img src="@Model.ImagePath"
+                                     id="currentImage"
+                                     alt="@Model.Name"
+                                     style="width: 180px;
+                                height: 180px;
+                                object-fit: cover;
+                                border-radius: 8px;" />
+
+                            </div>
+                        }
+
+                    </div>
+
+
+                    <!-- New Image Preview -->
+                    <div class="col-md-6 mb-3">
+
+                        <div id="previewContainer"
+                             style="display:none;">
+
+                            <p class="mb-2">
+                                New Image Preview:
+                            </p>
+
+                            <img id="imagePreview"
+                                 alt="Image Preview"
+                                 style="width: 180px;
+                            height: 180px;
+                            object-fit: cover;
+                            border-radius: 8px;" />
+
+                        </div>
+
+                    </div>
+
                 </div>
 
+
                 <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-warning">Save Changes</button>
-                    <a asp-controller="MenuItemsController1" asp-action="AdminMenu" class="btn btn-secondary">Cancel</a>
+
+                    <button type="submit"
+                            class="btn btn-warning"
+                            id="saveButton">
+                        Save Changes
+                    </button>
+
+                    <a asp-controller="MenuItemsController1"
+                       asp-action="AdminMenu"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
                 </div>
+
             </form>
+
         </div>
     </div>
 
-    <!-- ================= INGREDIENTS (AJAX / jQuery) ================= -->
+
+    <!-- INGREDIENTS -->
 
     <form id="antiForgeryForm">
         @Html.AntiForgeryToken()
     </form>
 
-    <div id="alertBox" class="alert alert-danger d-none" role="alert"></div>
+    <div id="alertBox"
+         class="alert alert-danger d-none"
+         role="alert">
+    </div>
+
 
     <div class="card shadow-sm mb-4">
+
         <div class="card-header bg-white">
             <h5 class="mb-0">Ingredients</h5>
         </div>
 
         <div class="card-body">
+
             <div class="table-responsive">
-                <table class="table table-hover align-middle" id="ingredientsTable">
+
+                <table class="table table-hover align-middle"
+                       id="ingredientsTable">
+
                     <thead class="table-dark">
+
                         <tr>
                             <th>Ingredient</th>
                             <th>Quantity</th>
                             <th>Actions</th>
                         </tr>
+
                     </thead>
+
                     <tbody id="ingredientsBody">
-                        <!-- populated by AJAX -->
                     </tbody>
+
                 </table>
+
             </div>
 
-            <div id="emptyMessage" class="text-center text-muted py-3 d-none">
+            <div id="emptyMessage"
+                 class="text-center text-muted py-3 d-none">
+
                 No ingredients added to this menu item yet.
+
             </div>
+
         </div>
+
     </div>
 
+
+    <!-- ADD INGREDIENT -->
+
     <div class="card shadow-sm">
+
         <div class="card-header bg-white">
             <h5 class="mb-0">Add Ingredient</h5>
         </div>
 
         <div class="card-body">
+
             <div class="row g-2 align-items-end">
+
                 <div class="col-md-5">
-                    <label class="form-label">Ingredient</label>
-                    <select id="ingredientSelect" class="form-select">
+
+                    <label class="form-label">
+                        Ingredient
+                    </label>
+
+                    <select id="ingredientSelect"
+                            class="form-select">
+
                         @if (allIngredients != null)
                         {
                             @foreach (var ing in allIngredients)
                             {
-                                <option value="@ing.IngredientId">@ing.IngredientName</option>
+                                <option value="@ing.IngredientId">
+                                    @ing.IngredientName
+                                </option>
                             }
                         }
+
                     </select>
+
                 </div>
+
 
                 <div class="col-md-3">
-                    <label class="form-label">Quantity</label>
-                    <input type="number" step="0.01" min="0" id="quantityInput" class="form-control" placeholder="e.g. 50" />
+
+                    <label class="form-label">
+                        Quantity
+                    </label>
+
+                    <input type="number"
+                           step="0.01"
+                           min="0"
+                           id="quantityInput"
+                           class="form-control"
+                           placeholder="e.g. 50" />
+
                 </div>
 
+
                 <div class="col-md-2">
-                    <button type="button" id="addIngredientBtn" class="btn btn-primary w-100">
+
+                    <button type="button"
+                            id="addIngredientBtn"
+                            class="btn btn-primary w-100">
                         Add
                     </button>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
 </div>
 
+
 @section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
+
         $(function() {
+
+            // Image validation
+            $('#imageFile').on('change', function() {
+
+                const file = this.files[0];
+
+                $('#imageError').text('');
+
+                if (!file) {
+                    $('#previewContainer').hide();
+                    return;
+                }
+
+                const allowedTypes = [
+                    'image/jpeg',
+                    'image/png'
+                ];
+
+                const maxSize = 2 * 1024 * 1024;
+
+                // Check file type
+                if (!allowedTypes.includes(file.type)) {
+
+                    $('#imageError').text(
+                        'Only JPG, JPEG and PNG images are allowed.'
+                    );
+
+                    this.value = '';
+                    $('#previewContainer').hide();
+
+                    return;
+                }
+
+                // Check file size
+                if (file.size > maxSize) {
+
+                    $('#imageError').text(
+                        'Image size cannot exceed 2 MB.'
+                    );
+
+                    this.value = '';
+                    $('#previewContainer').hide();
+
+                    return;
+                }
+
+                // Show preview
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    $('#imagePreview')
+                        .attr('src', e.target.result);
+
+                    $('#previewContainer').show();
+                };
+
+                reader.readAsDataURL(file);
+
+            });
+
+
+            // Ingredients
+
             const menuItemId = @Model.MenuItemId;
-            const token = $('#antiForgeryForm input[name="__RequestVerificationToken"]').val();
+
+            const token =
+                $('#antiForgeryForm input[name="__RequestVerificationToken"]').val();
+
 
             function showError(message) {
-                $('#alertBox').text(message).removeClass('d-none');
-                setTimeout(() => $('#alertBox').addClass('d-none'), 4000);
+
+                $('#alertBox')
+                    .text(message)
+                    .removeClass('d-none');
+
+                setTimeout(function() {
+
+                    $('#alertBox').addClass('d-none');
+
+                }, 4000);
             }
 
+
             function buildRow(item) {
-                const $tr = $('<tr>').attr('data-id', item.menuIngredientId);
+
+                const $tr = $('<tr>')
+                    .attr('data-id', item.menuIngredientId);
 
                 $tr.html(`
-                            <td>${item.ingredientName}</td>
+
                             <td>
-                                <input type="number" step="0.01" min="0" class="form-control form-control-sm qty-input" style="width:100px" value="${item.quantity}" />
+                                ${item.ingredientName}
                             </td>
+
                             <td>
+
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       class="form-control form-control-sm qty-input"
+                                       style="width:100px"
+                                       value="${item.quantity}" />
+
+                            </td>
+
+                            <td>
+
                                 <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-sm btn-success save-btn">Save</button>
-                                    <button type="button" class="btn btn-sm btn-danger delete-btn">Delete</button>
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-success save-btn">
+                                        Save
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-danger delete-btn">
+                                        Delete
+                                    </button>
+
                                 </div>
+
                             </td>
+
                         `);
 
+
                 $tr.find('.save-btn').on('click', function() {
-                    saveIngredient(item.menuIngredientId, $tr);
+
+                    saveIngredient(
+                        item.menuIngredientId,
+                        $tr
+                    );
+
                 });
 
+
                 $tr.find('.delete-btn').on('click', function() {
-                    deleteIngredient(item.menuIngredientId, $tr);
+
+                    deleteIngredient(
+                        item.menuIngredientId,
+                        $tr
+                    );
+
                 });
+
 
                 return $tr;
             }
 
+
             function toggleEmptyMessage() {
-                $('#emptyMessage').toggleClass('d-none', $('#ingredientsBody tr').length > 0);
+
+                $('#emptyMessage')
+                    .toggleClass(
+                        'd-none',
+                        $('#ingredientsBody tr').length > 0
+                    );
             }
+
 
             function loadIngredients() {
+
                 $.ajax({
+
                     url: '/MenuItemsController1/GetMenuIngredients',
+
                     type: 'GET',
-                    data: { menuItemId: menuItemId },
+
+                    data: {
+                        menuItemId: menuItemId
+                    },
+
                     success: function(data) {
+
                         $('#ingredientsBody').empty();
-                        data.forEach(item => $('#ingredientsBody').append(buildRow(item)));
+
+                        data.forEach(function(item) {
+
+                            $('#ingredientsBody')
+                                .append(buildRow(item));
+
+                        });
+
                         toggleEmptyMessage();
                     },
+
                     error: function() {
-                        showError('Could not load ingredients.');
+
+                        showError(
+                            'Could not load ingredients.'
+                        );
+
                     }
+
                 });
             }
+
 
             function saveIngredient(id, $row) {
-                const quantity = $row.find('.qty-input').val();
+
+                const quantity =
+                    $row.find('.qty-input').val();
 
                 $.ajax({
+
                     url: '/MenuItemsController1/EditMenuIngredient',
+
                     type: 'POST',
-                    data: { menuIngredientId: id, quantity: quantity, __RequestVerificationToken: token },
-                    success: function(data) {
-                        if (!data.success) showError(data.message || 'Could not update ingredient.');
+
+                    data: {
+                        menuIngredientId: id,
+                        quantity: quantity,
+                        __RequestVerificationToken: token
                     },
+
+                    success: function(data) {
+
+                        if (!data.success) {
+
+                            showError(
+                                data.message ||
+                                'Could not update ingredient.'
+                            );
+
+                        }
+
+                    },
+
                     error: function() {
-                        showError('Could not update ingredient.');
+
+                        showError(
+                            'Could not update ingredient.'
+                        );
+
                     }
+
                 });
             }
+
 
             function deleteIngredient(id, $row) {
-                if (!confirm('Remove this ingredient from the menu item?')) return;
 
-                $.ajax({
-                    url: '/MenuItemsController1/DeleteMenuIngredient',
-                    type: 'POST',
-                    data: { menuIngredientId: id, __RequestVerificationToken: token },
-                    success: function(data) {
-                        if (data.success) {
-                            $row.remove();
-                            toggleEmptyMessage();
-                        } else {
-                            showError(data.message || 'Could not delete ingredient.');
-                        }
-                    },
-                    error: function() {
-                        showError('Could not delete ingredient.');
-                    }
-                });
-            }
-
-            $('#addIngredientBtn').on('click', function() {
-                const ingredientId = $('#ingredientSelect').val();
-                const quantity = $('#quantityInput').val();
-
-                if (!ingredientId || !quantity) {
-                    showError('Please choose an ingredient and enter a quantity.');
+                if (!confirm(
+                    'Remove this ingredient from the menu item?'
+                )) {
                     return;
                 }
 
                 $.ajax({
-                    url: '/MenuItemsController1/AddMenuIngredient',
+
+                    url: '/MenuItemsController1/DeleteMenuIngredient',
+
                     type: 'POST',
-                    data: { menuItemId: menuItemId, ingredientId: ingredientId, quantity: quantity, __RequestVerificationToken: token },
-                    success: function(data) {
-                        if (data.success) {
-                            $('#ingredientsBody').append(buildRow(data));
-                            $('#quantityInput').val('');
-                            toggleEmptyMessage();
-                        } else {
-                            showError(data.message || 'Could not add ingredient.');
-                        }
+
+                    data: {
+                        menuIngredientId: id,
+                        __RequestVerificationToken: token
                     },
+
+                    success: function(data) {
+
+                        if (data.success) {
+
+                            $row.remove();
+
+                            toggleEmptyMessage();
+
+                        } else {
+
+                            showError(
+                                data.message ||
+                                'Could not delete ingredient.'
+                            );
+
+                        }
+
+                    },
+
                     error: function() {
-                        showError('Could not add ingredient.');
+
+                        showError(
+                            'Could not delete ingredient.'
+                        );
+
                     }
+
                 });
+            }
+
+
+            $('#addIngredientBtn').on('click', function() {
+
+                const ingredientId =
+                    $('#ingredientSelect').val();
+
+                const quantity =
+                    $('#quantityInput').val();
+
+                if (!ingredientId || !quantity) {
+
+                    showError(
+                        'Please choose an ingredient and enter a quantity.'
+                    );
+
+                    return;
+                }
+
+                $.ajax({
+
+                    url: '/MenuItemsController1/AddMenuIngredient',
+
+                    type: 'POST',
+
+                    data: {
+                        menuItemId: menuItemId,
+                        ingredientId: ingredientId,
+                        quantity: quantity,
+                        __RequestVerificationToken: token
+                    },
+
+                    success: function(data) {
+
+                        if (data.success) {
+
+                            $('#ingredientsBody')
+                                .append(buildRow(data));
+
+                            $('#quantityInput').val('');
+
+                            toggleEmptyMessage();
+
+                        } else {
+
+                            showError(
+                                data.message ||
+                                'Could not add ingredient.'
+                            );
+
+                        }
+
+                    },
+
+                    error: function() {
+
+                        showError(
+                            'Could not add ingredient.'
+                        );
+
+                    }
+
+                });
+
             });
 
+
             loadIngredients();
+
         });
+
     </script>
 }

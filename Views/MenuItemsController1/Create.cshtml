@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create Menu Item";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
+
 <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
 <div class="container-fluid">
@@ -20,7 +21,8 @@
         </div>
 
         <div class="card-body">
-            <form asp-controller="MenuItemsController1" asp-action="Create" method="post">
+            <!-- Added enctype="multipart/form-data" -->
+            <form asp-controller="MenuItemsController1" asp-action="Create" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
                 <!-- Hidden CategoryId passed from (+) button -->
@@ -29,14 +31,26 @@
                 <div class="row">
                     <!-- Item Name -->
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Item Name</label>
+                        <label class="form-label fw-semibold">Item Name</label>
                         <input name="Name" class="form-control" placeholder="Enter item name" required />
                     </div>
 
                     <!-- Price -->
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Price</label>
+                        <label class="form-label fw-semibold">Price</label>
                         <input type="number" step="0.01" min="0" name="Price" class="form-control" placeholder="Enter price" required />
+                    </div>
+
+                    <!-- Dish Image Upload -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Item Image</label>
+                        <input type="file"
+                               name="imageFile"
+                               id="imageFileInput"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png" />
+                        <div class="form-text">Allowed formats: JPG, PNG. Max size: 2 MB.</div>
+                        <div id="imageError" class="text-danger small mt-1" style="display: none;"></div>
                     </div>
 
                     <!-- Availability Switch -->
@@ -48,18 +62,76 @@
                         </div>
                     </div>
 
-                    <!-- Description (Optional -> Null if left empty) -->
+                    <!-- Image Preview -->
+                    <div class="col-12 mb-3" id="previewContainer" style="display: none;">
+                        <label class="form-label fw-semibold">Image Preview</label>
+                        <div>
+                            <img id="imagePreview"
+                                 src="#"
+                                 alt="Image Preview"
+                                 class="rounded border bg-light p-2"
+                                 style="max-height: 140px; object-fit: contain;" />
+                        </div>
+                    </div>
+
+                    <!-- Description -->
                     <div class="col-12 mb-3">
-                        <label class="form-label">Description (Optional)</label>
+                        <label class="form-label fw-semibold">Description (Optional)</label>
                         <textarea name="Description" class="form-control" rows="3" placeholder="Enter item description..."></textarea>
                     </div>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">Add Menu Item</button>
-                    <a asp-controller="MenuItemsController1" asp-action="Create" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Add Menu Item</button>
+                    <a asp-controller="MenuItemsController1" asp-action="AdminMenu" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("imageFileInput").addEventListener("change", function() {
+        const file = this.files[0];
+        const errorDiv = document.getElementById("imageError");
+        const previewContainer = document.getElementById("previewContainer");
+        const imagePreview = document.getElementById("imagePreview");
+        const submitBtn = document.getElementById("submitBtn");
+
+        errorDiv.style.display = "none";
+        errorDiv.textContent = "";
+        previewContainer.style.display = "none";
+        submitBtn.disabled = false;
+
+        if (file) {
+            const allowedExtensions = ["image/jpeg", "image/png", "image/jpg"];
+            const maxSizeBytes = 2 * 1024 * 1024; // 2 MB
+
+            // Validate File Type
+            if (!allowedExtensions.includes(file.type)) {
+                errorDiv.textContent = "Only JPG and PNG image files are allowed.";
+                errorDiv.style.display = "block";
+                this.value = "";
+                submitBtn.disabled = true;
+                return;
+            }
+
+            // Validate File Size
+            if (file.size > maxSizeBytes) {
+                errorDiv.textContent = "Image size cannot exceed 2 MB.";
+                errorDiv.style.display = "block";
+                this.value = "";
+                submitBtn.disabled = true;
+                return;
+            }
+
+            // Show Preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                previewContainer.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
