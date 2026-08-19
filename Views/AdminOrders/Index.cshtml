@@ -1,12 +1,11 @@
-﻿@model IEnumerable<Online_Restaurant.Models.Orders>
+﻿@model Online_Restaurant.ViewModels.AdminOrdersViewModel
 @using Online_Restaurant.Models
 
 @{
     ViewData["Title"] = "All Orders";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
-    var allStatuses = ViewBag.AllStatuses as List<OrderStatus>;
-    var acceptStatus = allStatuses?.FirstOrDefault(s => s.StatusName == "Preparing");
-    var rejectStatus = allStatuses?.FirstOrDefault(s => s.StatusName == "Rejected");
+    var acceptStatus = Model.AllStatuses.FirstOrDefault(s => s.StatusName == "Preparing");
+    var rejectStatus = Model.AllStatuses.FirstOrDefault(s => s.StatusName == "Rejected");
 }
 
 <div class="container-fluid">
@@ -27,12 +26,44 @@
 
     <div id="statusErrorAlert" class="alert alert-danger" style="display:none;"></div>
 
-    <div class="mb-3">
-        <input type="text"
-               id="orderSearchInput"
-               class="form-control"
-               placeholder="Search by order #, phone number, or username..." />
-    </div>
+    <!-- ================= SEARCH FILTERS ================= -->
+
+    <form asp-controller="AdminOrders" asp-action="Index" method="get" class="row g-2 mb-3 align-items-end">
+
+        <div class="col-md-3">
+            <label class="form-label">Order #</label>
+            <input type="number" name="orderId" value="@Model.OrderId" class="form-control" placeholder="e.g. 42" />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" name="phoneNumber" value="@Model.PhoneNumber" class="form-control" placeholder="e.g. 0101234..." />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Delivery Guy</label>
+            <select name="deliveryManId" class="form-select">
+                <option value="">All</option>
+                @foreach (var staff in Model.DeliveryStaff)
+                {
+                    if (staff.Id == Model.DeliveryManId)
+                    {
+                        <option value="@staff.Id" selected>@staff.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@staff.Id">@staff.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-fill">Search</button>
+            <a asp-controller="AdminOrders" asp-action="Index" class="btn btn-outline-secondary flex-fill">Clear</a>
+        </div>
+
+    </form>
 
     <div class="card shadow-sm">
         <div class="card-header bg-white">
@@ -40,7 +71,7 @@
         </div>
 
         <div class="card-body">
-            @if (Model != null && Model.Any())
+            @if (Model.Orders != null && Model.Orders.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
@@ -52,12 +83,13 @@
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Payment Method</th>
+                                <th>Delivery Guy</th>
                                 <th>Action</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var order in Model)
+                            @foreach (var order in Model.Orders)
                             {
                                 string statusName = order.OrderStatus?.StatusName;
                                 bool isPending = statusName == "Pending";
@@ -65,7 +97,7 @@
                                 // Anything already decided that isn't "Rejected" is treated as the accepted path
                                 bool isAcceptedPath = !isPending && !isRejected;
 
-                                <tr data-search="@order.OrderId @order.User?.UserName @order.MobileNumber">
+                                <tr>
                                     <td>#@order.OrderId</td>
                                     <td>@order.User?.UserName</td>
                                     <td>
@@ -81,6 +113,7 @@
                                     <td>@order.Date.ToString("dd MMM yyyy, HH:mm")</td>
                                     <td>$@order.Price.ToString("0.00")</td>
                                     <td>@order.PaymentMethod?.MethodName</td>
+                                    <td>@(order.DeliveryMan?.UserName ?? "-")</td>
                                     <td>
                                         <div class="status-cell"
                                              data-order-id="@order.OrderId"
@@ -120,16 +153,70 @@
                             }
                         </tbody>
                     </table>
-
-                    <div id="noSearchResults" class="text-center text-muted py-4" style="display:none;">
-                        No orders match your search.
-                    </div>
                 </div>
+
+                <!-- ================= PAGINATION ================= -->
+                @if (Model.TotalPages > 1)
+                {
+                    <nav>
+                        <ul class="pagination justify-content-center mt-3">
+
+                            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-orderId="@Model.OrderId"
+                                   asp-route-phoneNumber="@Model.PhoneNumber"
+                                   asp-route-deliveryManId="@Model.DeliveryManId"
+                                   asp-route-pageNumber="1">First</a>
+                            </li>
+
+                            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-orderId="@Model.OrderId"
+                                   asp-route-phoneNumber="@Model.PhoneNumber"
+                                   asp-route-deliveryManId="@Model.DeliveryManId"
+                                   asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+                            </li>
+
+                            @for (int p = 1; p <= Model.TotalPages; p++)
+                            {
+                                <li class="page-item @(p == Model.PageNumber ? "active" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-orderId="@Model.OrderId"
+                                       asp-route-phoneNumber="@Model.PhoneNumber"
+                                       asp-route-deliveryManId="@Model.DeliveryManId"
+                                       asp-route-pageNumber="@p">@p</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-orderId="@Model.OrderId"
+                                   asp-route-phoneNumber="@Model.PhoneNumber"
+                                   asp-route-deliveryManId="@Model.DeliveryManId"
+                                   asp-route-pageNumber="@(Model.PageNumber + 1)">Next</a>
+                            </li>
+
+                            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-orderId="@Model.OrderId"
+                                   asp-route-phoneNumber="@Model.PhoneNumber"
+                                   asp-route-deliveryManId="@Model.DeliveryManId"
+                                   asp-route-pageNumber="@Model.TotalPages">Last</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                }
             }
             else
             {
                 <div class="text-center py-5">
-                    <h5 class="text-muted">No orders found</h5>
+                    <h5 class="text-muted">No orders match your search</h5>
                 </div>
             }
         </div>
@@ -139,11 +226,11 @@
 
 @section Scripts {
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
             const errorAlert = document.getElementById("statusErrorAlert");
 
-            document.addEventListener("change", async function (e) {
+            document.addEventListener("change", async function(e) {
                 if (!e.target.classList.contains("status-radio")) return;
 
                 const radio = e.target;
@@ -203,29 +290,6 @@
                 if (!errorAlert) return;
                 errorAlert.textContent = message;
                 errorAlert.style.display = "block";
-            }
-
-            const searchInput = document.getElementById("orderSearchInput");
-            const noResults = document.getElementById("noSearchResults");
-
-            if (searchInput) {
-                searchInput.addEventListener("input", function() {
-                    const term = searchInput.value.trim().toLowerCase();
-                    const rows = document.querySelectorAll("tbody tr[data-search]");
-                    let visibleCount = 0;
-
-                    rows.forEach(function(row) {
-                        const haystack = row.dataset.search.toLowerCase();
-                        const matches = haystack.includes(term);
-
-                        row.style.display = matches ? "" : "none";
-                        if (matches) visibleCount++;
-                    });
-
-                    if (noResults) {
-                        noResults.style.display = visibleCount === 0 ? "block" : "none";
-                    }
-                });
             }
         });
     </script>
