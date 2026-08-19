@@ -22,6 +22,7 @@ namespace Online_Restaurant.Controllers
             _userManager = userManager;
         }
         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetCustomerInfo()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -31,15 +32,12 @@ namespace Online_Restaurant.Controllers
                 return Json(new { address = "", mobileNumber = "" });
             }
 
-            var latestOrder = await _context.Orders
-                .Where(o => o.UserId == userId)
-                .OrderByDescending(o => o.Date)
-                .FirstOrDefaultAsync();
+            var user = await _userManager.FindByIdAsync(userId);
 
             return Json(new
             {
-                address = latestOrder?.Address ?? "",
-                mobileNumber = latestOrder?.MobileNumber ?? ""
+                address = user?.Address ?? "",
+                mobileNumber = user?.PhoneNumber ?? ""
             });
         }
         [HttpPost]

@@ -27,6 +27,13 @@
 
     <div id="statusErrorAlert" class="alert alert-danger" style="display:none;"></div>
 
+    <div class="mb-3">
+        <input type="text"
+               id="orderSearchInput"
+               class="form-control"
+               placeholder="Search by order #, phone number, or username..." />
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-header bg-white">
             <h5 class="mb-0">Orders</h5>
@@ -57,7 +64,7 @@
                                 // Anything already decided that isn't "Rejected" is treated as the accepted path
                                 bool isAcceptedPath = !isPending && !isRejected;
 
-                                <tr>
+                                <tr data-search="@order.OrderId @order.User?.UserName @order.MobileNumber">
                                     <td>#@order.OrderId</td>
                                     <td>@order.User?.UserName</td>
                                     <td>@order.Date.ToString("dd MMM yyyy, HH:mm")</td>
@@ -102,6 +109,10 @@
                             }
                         </tbody>
                     </table>
+
+                    <div id="noSearchResults" class="text-center text-muted py-4" style="display:none;">
+                        No orders match your search.
+                    </div>
                 </div>
             }
             else
@@ -181,6 +192,29 @@
                 if (!errorAlert) return;
                 errorAlert.textContent = message;
                 errorAlert.style.display = "block";
+            }
+
+            const searchInput = document.getElementById("orderSearchInput");
+            const noResults = document.getElementById("noSearchResults");
+
+            if (searchInput) {
+                searchInput.addEventListener("input", function() {
+                    const term = searchInput.value.trim().toLowerCase();
+                    const rows = document.querySelectorAll("tbody tr[data-search]");
+                    let visibleCount = 0;
+
+                    rows.forEach(function(row) {
+                        const haystack = row.dataset.search.toLowerCase();
+                        const matches = haystack.includes(term);
+
+                        row.style.display = matches ? "" : "none";
+                        if (matches) visibleCount++;
+                    });
+
+                    if (noResults) {
+                        noResults.style.display = visibleCount === 0 ? "block" : "none";
+                    }
+                });
             }
         });
     </script>
