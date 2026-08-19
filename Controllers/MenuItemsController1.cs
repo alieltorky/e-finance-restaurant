@@ -1,5 +1,4 @@
 ﻿namespace Online_Restaurant.Controllers;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 [Authorize(Roles = "Admin")]
 public class MenuItemsController1 : Controller
 {
     private readonly AppdbContext _context;
+
+    //where the application is running on the computer or server
     private readonly IWebHostEnvironment _environment;
 
     public MenuItemsController1(
@@ -275,6 +277,7 @@ public class MenuItemsController1 : Controller
     // Save the image in wwwroot/images
     private async Task<string> SaveImage(IFormFile imageFile)
     {
+        //Find the images folder
         string imagesFolder = Path.Combine(
             _environment.WebRootPath,
             "images"
@@ -285,20 +288,23 @@ public class MenuItemsController1 : Controller
             Directory.CreateDirectory(imagesFolder);
         }
 
+        //get the extension 
         string extension =
             Path.GetExtension(imageFile.FileName)
                 .ToLowerInvariant();
 
+        //generates a unique ID 
         string fileName = $"{Guid.NewGuid()}{extension}";
-
+        //complete physical path
         string filePath =
             Path.Combine(imagesFolder, fileName);
-
+        //creating a connection to a file so that we can write data into it
         using var stream =
             new FileStream(filePath, FileMode.Create);
-
+        //Take everything inside imageFile and write it into stream
         await imageFile.CopyToAsync(stream);
 
+        //return web path
         return $"/images/{fileName}";
     }
 
