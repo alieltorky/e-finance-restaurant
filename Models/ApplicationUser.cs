@@ -8,6 +8,10 @@ namespace Online_Restaurant.Models
     {
         public String? Address { get; set; }
 
-        public ICollection<Orders> Orders { get; set; } = new List<Orders>();
+        // Soft delete flag
+        public bool IsActive { get; set; } = true;
+
+        public ICollection<Orders> CustomerOrders { get; set; } = new List<Orders>();
+        public ICollection<Orders> DeliveryOrders { get; set; } = new List<Orders>();
      }
 }

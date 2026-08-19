@@ -1,0 +1,161 @@
+﻿@model Online_Restaurant.ViewModels.DeliveryDashboardViewModel
+
+@{
+    ViewData["Title"] = "Delivery Dashboard";
+}
+
+<div class="container-fluid py-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Left Table: Available Orders -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Available Orders</h5>
+                    <span class="badge bg-primary">@Model.AvailableOrders.Count Ready</span>
+                </div>
+                <div class="card-body p-0 table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order #</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Items</th>
+                                <th>Payment</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.AvailableOrders.Any())
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">No orders waiting for delivery.</td>
+                                </tr>
+                            }
+                            @foreach (var order in Model.AvailableOrders)
+                            {
+                                <tr>
+                                    <td><strong>#@order.OrderId</strong></td>
+                                    <td>@order.Address</td>
+                                    <td>@order.MobileNumber</td>
+                                    <td>
+                                        <small>
+                                            @foreach (var item in order.Items)
+                                            {
+                                                <div>@item</div>
+                                            }
+                                        </small>
+                                    </td>
+                                    <td>
+                                        @if (order.IsCashOnDelivery)
+                                        {
+                                            <span class="badge bg-warning text-dark">Collect @order.Price EGP</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">Paid</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <form asp-action="AcceptOrder" method="post">
+                                            <input type="hidden" name="orderId" value="@order.OrderId" />
+                                            <button type="submit" class="btn btn-sm btn-primary">Accept</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Table: My Orders -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">My Orders</h5>
+                    <span class="badge bg-secondary">@Model.MyOrders.Count Total</span>
+                </div>
+                <div class="card-body p-0 table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order #</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.MyOrders.Any())
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">You have not accepted any orders yet.</td>
+                                </tr>
+                            }
+                            @foreach (var order in Model.MyOrders)
+                            {
+                                <tr>
+                                    <td><strong>#@order.OrderId</strong></td>
+                                    <td>@order.Address</td>
+                                    <td>@order.MobileNumber</td>
+                                    <td>
+                                        @if (order.IsCashOnDelivery)
+                                        {
+                                            <span class="badge bg-warning text-dark">Collect @order.Price EGP</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">Paid</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (order.OrderStatusId == 2)
+                                        {
+                                            <span class="badge bg-success">Delivered</span>
+                                        }
+                                        else if (order.OrderStatusId == 6)
+                                        {
+                                            <span class="badge bg-info text-dark">On Delivery</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (order.OrderStatusId == 6)
+                                        {
+                                            <form asp-action="MarkAsDelivered" method="post">
+                                                <input type="hidden" name="orderId" value="@order.OrderId" />
+                                                <button type="submit" class="btn btn-sm btn-success">Mark Delivered</button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted"><i class="bi bi-check2-circle"></i> Done</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

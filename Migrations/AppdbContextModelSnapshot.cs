@@ -177,6 +177,9 @@ namespace Online_Restaurant.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -416,6 +419,9 @@ namespace Online_Restaurant.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DeliveryManId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("MobileNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -434,6 +440,8 @@ namespace Online_Restaurant.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("DeliveryManId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -623,6 +631,11 @@ namespace Online_Restaurant.Migrations
 
             modelBuilder.Entity("Online_Restaurant.Models.Orders", b =>
                 {
+                    b.HasOne("Online_Restaurant.Models.ApplicationUser", "DeliveryMan")
+                        .WithMany("DeliveryOrders")
+                        .HasForeignKey("DeliveryManId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Online_Restaurant.Models.OrderStatus", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
@@ -636,10 +649,12 @@ namespace Online_Restaurant.Migrations
                         .IsRequired();
 
                     b.HasOne("Online_Restaurant.Models.ApplicationUser", "User")
-                        .WithMany("Orders")
+                        .WithMany("CustomerOrders")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("DeliveryMan");
 
                     b.Navigation("OrderStatus");
 
@@ -650,7 +665,9 @@ namespace Online_Restaurant.Migrations
 
             modelBuilder.Entity("Online_Restaurant.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("CustomerOrders");
+
+                    b.Navigation("DeliveryOrders");
                 });
 
             modelBuilder.Entity("Online_Restaurant.Models.Category", b =>

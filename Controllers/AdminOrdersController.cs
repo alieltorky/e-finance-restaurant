@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 
 namespace Online_Restaurant.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class AdminOrdersController : Controller
     {
         private readonly AppdbContext _context;
@@ -22,6 +24,7 @@ namespace Online_Restaurant.Controllers
         {
             var orders = await _context.Orders
                 .Include(o => o.User)
+                .Include(o => o.DeliveryMan)
                 .Include(o => o.OrderStatus)
                 .Include(o => o.PaymentMethod)
                 .OrderByDescending(o => o.Date)

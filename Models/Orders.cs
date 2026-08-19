@@ -20,5 +20,7 @@ namespace Online_Restaurant.Models
         public ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
         public PaymentMethod PaymentMethod { get; set; } = null!;
         public OrderStatus OrderStatus { get; set; } = null!;
+        public string? DeliveryManId { get; set; }
+        public virtual ApplicationUser? DeliveryMan { get; set; }
     }
 }

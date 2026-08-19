@@ -116,6 +116,56 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+// Seed Delivery Roles and Users
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // 1. Ensure "Delivery" role exists
+    if (!await roleManager.RoleExistsAsync("Delivery"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Delivery"));
+    }
+
+    // 2. Create Delivery Man 1
+    var delivery1 = await userManager.FindByNameAsync("delivery1@restaurant.com");
+    if (delivery1 == null)
+    {
+        var user1 = new ApplicationUser
+        {
+            UserName = "DeliveryMan1",
+            Email = "delivery1@restaurant.com",
+            EmailConfirmed = true,
+            PhoneNumber = "01011111111",
+            Address = "Giza, Egypt"
+        };
+        var result = await userManager.CreateAsync(user1, "Delivery@123");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user1, "Delivery");
+        }
+    }
+
+    // 3. Create Delivery Man 2
+    var delivery2 = await userManager.FindByNameAsync("delivery2@restaurant.com");
+    if (delivery2 == null)
+    {
+        var user2 = new ApplicationUser
+        {
+            UserName = "DeliveryMan2",
+            Email = "delivery2@restaurant.com",
+            EmailConfirmed = true,
+            PhoneNumber = "01022222222",
+            Address = "Cairo, Egypt"
+        };
+        var result = await userManager.CreateAsync(user2, "Delivery@123");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user2, "Delivery");
+        }
+    }
+}
 
 
 app.Run();
