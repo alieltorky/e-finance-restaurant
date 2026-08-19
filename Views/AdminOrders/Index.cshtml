@@ -48,6 +48,7 @@
                             <tr>
                                 <th>Order #</th>
                                 <th>Customer</th>
+                                <th>Phone Number</th>
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Payment Method</th>
@@ -67,6 +68,16 @@
                                 <tr data-search="@order.OrderId @order.User?.UserName @order.MobileNumber">
                                     <td>#@order.OrderId</td>
                                     <td>@order.User?.UserName</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(order.MobileNumber))
+                                        {
+                                            <span><i class="bi bi-telephone me-1 text-secondary"></i>@order.MobileNumber</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted"><em>N/A</em></span>
+                                        }
+                                    </td>
                                     <td>@order.Date.ToString("dd MMM yyyy, HH:mm")</td>
                                     <td>$@order.Price.ToString("0.00")</td>
                                     <td>@order.PaymentMethod?.MethodName</td>
