@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
 using System.Collections;
-
 namespace Online_Restaurant.Models
 {
     public class ApplicationUser : IdentityUser
