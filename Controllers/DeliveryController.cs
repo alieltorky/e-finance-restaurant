@@ -41,7 +41,7 @@ public class DeliveryController : Controller
                 Address = o.Address,
                 MobileNumber = o.MobileNumber,
                 Price = o.Price,
-                IsCashOnDelivery = o.PaymentMethodId == 1, // Change 1 if Cash has a different ID
+                IsCashOnDelivery = o.PaymentMethodId == 4, 
                 OrderStatusId = o.OrderStatusId,
                 Items = o.OrderDetails.Select(d => $"{d.Menu_Item.Name} ({d.Quantity})").ToList()
             })
@@ -57,7 +57,7 @@ public class DeliveryController : Controller
                 Address = o.Address,
                 MobileNumber = o.MobileNumber,
                 Price = o.Price,
-                IsCashOnDelivery = o.PaymentMethodId == 1,
+                IsCashOnDelivery = o.PaymentMethodId == 4,
                 OrderStatusId = o.OrderStatusId,
                 Items = o.OrderDetails.Select(d => $"{d.Menu_Item.Name} ({d.Quantity})").ToList()
             })

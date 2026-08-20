@@ -1652,5 +1652,26 @@ section,
 # Starter Section Section
 --------------------------------------------------------------*/
 .starter-section {
-  /* Add your styles here */
+    /* Add your styles here */
+    /* 1. جعل الـ Navbar الرئيسي في أعلى طبقة دائماً */
+    #header, .header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1050 !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    /* 2. إجبار شريط الـ Categories/Filter أن يقف أسفل الـ Header مباشرة */
+    .menu .nav-tabs,
+    .category-filter,
+    .nav-pills,
+    div:has(> .nav-pills),
+    div:has(> a[href*="#cat-"]) {
+        position: sticky !important;
+        top: 85px !important; /* دي بتخليه ينزل تحت الـ Header وميطلعش فوقه أبداً */
+        z-index: 1020 !important; /* طبقة أقل من الـ Header */
+        background-color: #ffffff !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 }
