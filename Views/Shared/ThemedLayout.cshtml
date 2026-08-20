@@ -76,7 +76,17 @@
                             </a>
                         </li>
                     }
-          <li><a href="#contact">Contact</a></li>
+
+                    <!-- Chef Dashboard Link  -->
+                    @if (User.IsInRole("Chef"))
+                    {
+                        <li>
+                            <a asp-controller="Chef" asp-action="Index" class="text-success fw-bold">
+                                <i class="bi bi-egg-fried me-1"></i> Chef Dashboard
+                            </a>
+                        </li>
+                    }
+                    <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

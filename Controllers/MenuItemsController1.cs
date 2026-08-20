@@ -90,12 +90,15 @@ public class MenuItemsController1 : Controller
             var category = await _context.Categories
                 .FindAsync(menuItem.CategoryId);
 
-            ViewBag.CategoryId = menuItem.CategoryId;
             ViewBag.CategoryName =
                 category?.CategoryName ?? "Category";
 
+            // Ingredients are shown read-only here; only the Chef role
+            // can add/edit/remove them (see ChefController).
             return View(menuItem);
         }
+
+        // Update menu item
 
         // Use the default image if no image was selected
         if (imageFile != null && imageFile.Length > 0)
@@ -178,9 +181,6 @@ public class MenuItemsController1 : Controller
 
             ViewBag.CategoryName =
                 category?.CategoryName ?? "Category";
-
-            ViewBag.AllIngredients =
-                await _context.Ingredients.ToListAsync();
 
             return View(menuItem);
         }
@@ -326,136 +326,6 @@ public class MenuItemsController1 : Controller
             System.IO.File.Delete(filePath);
         }
     }
-
-    // Get ingredients for a menu item
-    [HttpGet]
-    public async Task<IActionResult> GetMenuIngredients(
-        int menuItemId)
-    {
-        var ingredients = await _context.MenuIngredients
-            .Where(mi => mi.Menu_ItemId == menuItemId)
-            .Include(mi => mi.Ingredient)
-            .Select(mi => new
-            {
-                mi.MenuIngredientId,
-                mi.IngredientId,
-                IngredientName = mi.Ingredient.IngredientName,
-                mi.Quantity
-            })
-            .ToListAsync();
-
-        return Json(ingredients);
-    }
-
-    // Add ingredient to a menu item
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddMenuIngredient(
-        int menuItemId,
-        int ingredientId,
-        decimal quantity)
-    {
-        var menuItem = await _context.MenuItems
-            .FindAsync(menuItemId);
-
-        if (menuItem == null)
-        {
-            return Json(new
-            {
-                success = false,
-                message = "Menu item not found."
-            });
-        }
-
-        bool alreadyExists =
-            await _context.MenuIngredients
-                .AnyAsync(mi =>
-                    mi.Menu_ItemId == menuItemId &&
-                    mi.IngredientId == ingredientId);
-
-        if (alreadyExists)
-        {
-            return Json(new
-            {
-                success = false,
-                message = "This ingredient is already added."
-            });
-        }
-
-        var menuIngredient = new Menu_Ingredient
-        {
-            Menu_ItemId = menuItemId,
-            IngredientId = ingredientId,
-            Quantity = quantity
-        };
-
-        _context.MenuIngredients.Add(menuIngredient);
-
-        await _context.SaveChangesAsync();
-
-        var ingredient = await _context.Ingredients
-            .FindAsync(ingredientId);
-
-        return Json(new
-        {
-            success = true,
-            menuIngredient.MenuIngredientId,
-            menuIngredient.IngredientId,
-            IngredientName = ingredient?.IngredientName,
-            menuIngredient.Quantity
-        });
-    }
-
-    // Change ingredient quantity
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditMenuIngredient(
-        int menuIngredientId,
-        decimal quantity)
-    {
-        var menuIngredient =
-            await _context.MenuIngredients
-                .FindAsync(menuIngredientId);
-
-        if (menuIngredient == null)
-        {
-            return Json(new
-            {
-                success = false,
-                message = "Ingredient not found."
-            });
-        }
-
-        menuIngredient.Quantity = quantity;
-
-        await _context.SaveChangesAsync();
-
-        return Json(new
-        {
-            success = true
-        });
-    }
-
-    // Remove ingredient from menu item
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteMenuIngredient(
-        int menuIngredientId)
-    {
-        var menuIngredient =
-            await _context.MenuIngredients
-                .FindAsync(menuIngredientId);
-
-        if (menuIngredient != null)
-        {
-            _context.MenuIngredients.Remove(menuIngredient);
-
-            await _context.SaveChangesAsync();
-        }
-
-        return Json(new
-        {
-            success = true
-        });
-    }
+    // Ingredient management (add/edit/delete Menu_Ingredients) has moved
+    // to ChefController — only the Chef role may change an item's recipe.
 }

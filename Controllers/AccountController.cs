@@ -127,9 +127,9 @@ namespace Online_Restaurant.Controllers
             // Verify password and sign in (lockoutOnFailure: false for now)
             var result = await _signInManager.PasswordSignInAsync(user.UserName!, password, rememberMe, lockoutOnFailure: false);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
-                return RedirectToLocal(returnUrl);
+                return await RedirectAfterLogin(user, returnUrl);
             }
             ModelState.AddModelError("", "Invalid email or password.");
             ViewBag.ReturnUrl = returnUrl;
@@ -150,7 +150,9 @@ namespace Online_Restaurant.Controllers
         {
             return View();
         }
-        
+
+        // Only redirect within this site — blocks an attacker from
+        // injecting an external URL via ?returnUrl=
         // Only redirect within this site — blocks an attacker from
         // injecting an external URL via ?returnUrl=
         private IActionResult RedirectToLocal(string? returnUrl)
@@ -158,6 +160,33 @@ namespace Online_Restaurant.Controllers
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "MenuItemsController1");
+        }
+
+        // After login, send each role to its own dashboard.
+        // returnUrl (if present and local) still takes priority.
+        private async Task<IActionResult> RedirectAfterLogin(ApplicationUser user, string? returnUrl)
+        {
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            if (await _userManager.IsInRoleAsync(user, "Chef"))
+            {
+                return RedirectToAction("Index", "Chef");
+            }
+
+            if (await _userManager.IsInRoleAsync(user, "Delivery"))
+            {
+                return RedirectToAction("Index", "Delivery");
+            }
+
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard");
             }
 
             return RedirectToAction("Index", "MenuItemsController1");
