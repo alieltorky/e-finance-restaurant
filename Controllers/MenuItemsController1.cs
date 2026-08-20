@@ -1,4 +1,5 @@
 ﻿namespace Online_Restaurant.Controllers;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,14 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 [Authorize(Roles = "Admin")]
 public class MenuItemsController1 : Controller
 {
     private readonly AppdbContext _context;
-
-    //where the application is running on the computer or server
     private readonly IWebHostEnvironment _environment;
 
     public MenuItemsController1(
@@ -105,7 +103,7 @@ public class MenuItemsController1 : Controller
         // Use the default image if no image was selected
         if (imageFile != null && imageFile.Length > 0)
         {
-            menuItem.ImagePath = await SaveImage(imageFile);
+            menuItem.ImagePath = await SaveImage(imageFile,menuItem.MenuItemId);
         }
         else
         {
@@ -203,9 +201,13 @@ public class MenuItemsController1 : Controller
         // Only change the image if a new one was uploaded
         if (imageFile != null && imageFile.Length > 0)
         {
-            DeleteImage(existingItem.ImagePath);
+            string? oldImagePath = existingItem.ImagePath;
 
-            existingItem.ImagePath = await SaveImage(imageFile);
+            // 1. Save new image first so it detects the existing file 
+            existingItem.ImagePath = await SaveImage(imageFile, existingItem.MenuItemId);
+
+            // 2. Delete the old image afterwards
+            DeleteImage(oldImagePath);
         }
 
         await _context.SaveChangesAsync();
@@ -275,9 +277,8 @@ public class MenuItemsController1 : Controller
     }
 
     // Save the image in wwwroot/images
-    private async Task<string> SaveImage(IFormFile imageFile)
+    private async Task<string> SaveImage(IFormFile imageFile, int menuItemId)
     {
-        //Find the images folder
         string imagesFolder = Path.Combine(
             _environment.WebRootPath,
             "images"
@@ -288,23 +289,32 @@ public class MenuItemsController1 : Controller
             Directory.CreateDirectory(imagesFolder);
         }
 
-        //get the extension 
         string extension =
             Path.GetExtension(imageFile.FileName)
                 .ToLowerInvariant();
 
-        //generates a unique ID 
-        string fileName = $"{Guid.NewGuid()}{extension}";
-        //complete physical path
-        string filePath =
-            Path.Combine(imagesFolder, fileName);
-        //creating a connection to a file so that we can write data into it
+        string fileName = $"{menuItemId}{extension}";
+        string filePath = Path.Combine(imagesFolder, fileName);
+
+        if (System.IO.File.Exists(filePath))
+        {
+            int version = 1;
+            fileName = $"{menuItemId}.{version}{extension}";
+            filePath = Path.Combine(imagesFolder, fileName);
+
+            while (System.IO.File.Exists(filePath))
+            {
+                version++;
+                fileName = $"{menuItemId}.{version}{extension}";
+                filePath = Path.Combine(imagesFolder, fileName);
+            }
+        }
+
         using var stream =
             new FileStream(filePath, FileMode.Create);
-        //Take everything inside imageFile and write it into stream
+
         await imageFile.CopyToAsync(stream);
 
-        //return web path
         return $"/images/{fileName}";
     }
 
