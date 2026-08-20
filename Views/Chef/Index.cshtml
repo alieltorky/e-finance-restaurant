@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Online_Restaurant.Models.Category>
+
+@{
+    ViewData["Title"] = "Chef Dashboard";
+    Layout = "~/Views/Shared/ChefDashboardLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Menu Items</h2>
+        <p class="text-muted mb-0">Select a dish to view or update its ingredients.</p>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@foreach (var category in Model)
+{
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">@category.CategoryName</h5>
+        </div>
+
+        <div class="card-body">
+            @if (category.MenuItems != null && category.MenuItems.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Ingredients</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in category.MenuItems)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>$@item.Price</td>
+                                    <td>@(item.Menu_Ingredients?.Count ?? 0) ingredient(s)</td>
+                                    <td class="text-end">
+                                        <a asp-controller="Chef"
+                                           asp-action="Ingredients"
+                                           asp-route-id="@item.MenuItemId"
+                                           class="btn btn-sm btn-primary">
+                                            Manage Ingredients
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted fst-italic mb-0">No items in this category yet.</p>
+            }
+        </div>
+    </div>
+}

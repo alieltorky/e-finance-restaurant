@@ -1,0 +1,184 @@
+﻿<title>@ViewData["Title"] - Chef Dashboard</title>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+    }
+
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .dashboard-wrapper {
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 250px;
+        min-width: 250px;
+        height: 100vh;
+        background-color: #212529;
+        color: white;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+    }
+
+    .sidebar-header {
+        padding: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        border-bottom: 1px solid #343a40;
+    }
+
+    .sidebar-menu {
+        padding: 15px 0;
+    }
+
+        .sidebar-menu a {
+            color: #dee2e6;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+
+            .sidebar-menu a:hover {
+                background-color: #343a40;
+                color: white;
+            }
+
+    .menu-title {
+        padding: 10px 20px;
+        color: #adb5bd;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .main-content {
+        flex: 1;
+        min-width: 0;
+        min-height: 100vh;
+    }
+
+    .top-navbar {
+        background-color: white;
+        border-bottom: 1px solid #dee2e6;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .content-area {
+        padding: 25px;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+        background-color: #495057;
+        border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+        background-color: #212529;
+    }
+
+    .back-to-site {
+        border-bottom: 1px solid #343a40;
+        padding-bottom: 15px !important;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<div class="dashboard-wrapper">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            Kitchen
+        </div>
+
+        <div class="sidebar-menu">
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="d-flex align-items-center back-to-site">
+                <i class="bi bi-arrow-left-circle me-2"></i> Back to Site
+            </a>
+
+            <a asp-controller="Chef"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <div class="menu-title">
+                Recipes
+            </div>
+
+            <a asp-controller="Chef"
+               asp-action="Index">
+                Menu Items &amp; Ingredients
+            </a>
+
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <nav class="top-navbar">
+
+            <div>
+                <strong>@ViewData["Title"]</strong>
+            </div>
+
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown">
+                        Chef
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Account"
+                               asp-action="Logout">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+
+        <div class="content-area">
+            @RenderBody()
+        </div>
+
+    </main>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)

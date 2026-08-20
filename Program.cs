@@ -166,6 +166,37 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+// Seed Chef Role and a default Chef user
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // 1. Ensure "Chef" role exists
+    if (!await roleManager.RoleExistsAsync("Chef"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Chef"));
+    }
+
+    // 2. Create default Chef user
+    var chef1 = await userManager.FindByNameAsync("chef1@restaurant.com");
+    if (chef1 == null)
+    {
+        var chefUser = new ApplicationUser
+        {
+            UserName = "Chef1",
+            Email = "chef1@restaurant.com",
+            EmailConfirmed = true,
+            PhoneNumber = "01033333333",
+            Address = "Restaurant Kitchen"
+        };
+        var result = await userManager.CreateAsync(chefUser, "Chef@123456");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(chefUser, "Chef");
+        }
+    }
+}
 
 
 app.Run();
