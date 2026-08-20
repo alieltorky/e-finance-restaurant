@@ -57,8 +57,25 @@
             </a>
         </li>
           <li><a href="#events">Events</a></li>
-          <li><a href="#chefs">Chefs</a></li>
-          <li><a href="#gallery">Gallery</a></li>
+                    <!-- Admin Dashboard Link  -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a asp-controller="Dashboard" asp-action="Index" class="text-danger fw-bold">
+                                <i class="bi bi-gear-fill me-1"></i> Admin Dashboard
+                            </a>
+                        </li>
+                    }
+
+                    <!-- Delivery Dashboard Link  -->
+                    @if (User.IsInRole("Delivery"))
+                    {
+                        <li>
+                            <a asp-controller="Delivery" asp-action="Index" class="text-warning fw-bold">
+                                <i class="bi bi-bicycle me-1"></i> Delivery Dashboard
+                            </a>
+                        </li>
+                    }
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -162,24 +179,7 @@
         </div>
 
     </footer>
-        @if (User.IsInRole("Admin"))
-        {
-            <!--  Admin Dashboard Link -->
-            <div class="text-center mt-3 pb-3">
-                <a asp-controller="Dashboard" asp-action="Index" class="text-muted small text-decoration-none">
-                    <i class="bi bi-gear-fill"></i> [  Admin Dashboard ]
-                </a>
-            </div>                
-        }
-        @if (User.IsInRole("Delivery"))
-        {
-            <!-- Delivery Dashboard Link -->
-            <div class="text-center mt-3 pb-3">
-                <a asp-controller="Delivery" asp-action="Index" class="text-muted small text-decoration-none">
-                    <i class="bi bi-bicycle"></i> [ Delivery Dashboard ]
-                </a>
-            </div>
-        }   
+        
         <!-- Vendor JS Files -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
