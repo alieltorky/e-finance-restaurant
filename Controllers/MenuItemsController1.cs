@@ -100,7 +100,7 @@ public class MenuItemsController1 : Controller
         // Use the default image if no image was selected
         if (imageFile != null && imageFile.Length > 0)
         {
-            menuItem.ImagePath = await SaveImage(imageFile);
+            menuItem.ImagePath = await SaveImage(imageFile,menuItem.MenuItemId);
         }
         else
         {
@@ -201,9 +201,13 @@ public class MenuItemsController1 : Controller
         // Only change the image if a new one was uploaded
         if (imageFile != null && imageFile.Length > 0)
         {
-            DeleteImage(existingItem.ImagePath);
+            string? oldImagePath = existingItem.ImagePath;
 
-            existingItem.ImagePath = await SaveImage(imageFile);
+            // 1. Save new image first so it detects the existing file 
+            existingItem.ImagePath = await SaveImage(imageFile, existingItem.MenuItemId);
+
+            // 2. Delete the old image afterwards
+            DeleteImage(oldImagePath);
         }
 
         await _context.SaveChangesAsync();
@@ -273,7 +277,7 @@ public class MenuItemsController1 : Controller
     }
 
     // Save the image in wwwroot/images
-    private async Task<string> SaveImage(IFormFile imageFile)
+    private async Task<string> SaveImage(IFormFile imageFile, int menuItemId)
     {
         string imagesFolder = Path.Combine(
             _environment.WebRootPath,
@@ -289,10 +293,22 @@ public class MenuItemsController1 : Controller
             Path.GetExtension(imageFile.FileName)
                 .ToLowerInvariant();
 
-        string fileName = $"{Guid.NewGuid()}{extension}";
+        string fileName = $"{menuItemId}{extension}";
+        string filePath = Path.Combine(imagesFolder, fileName);
 
-        string filePath =
-            Path.Combine(imagesFolder, fileName);
+        if (System.IO.File.Exists(filePath))
+        {
+            int version = 1;
+            fileName = $"{menuItemId}.{version}{extension}";
+            filePath = Path.Combine(imagesFolder, fileName);
+
+            while (System.IO.File.Exists(filePath))
+            {
+                version++;
+                fileName = $"{menuItemId}.{version}{extension}";
+                filePath = Path.Combine(imagesFolder, fileName);
+            }
+        }
 
         using var stream =
             new FileStream(filePath, FileMode.Create);
