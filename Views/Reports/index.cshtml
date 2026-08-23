@@ -1,0 +1,107 @@
+﻿@model Online_Restaurant.ViewModels.SupplierReportViewModel
+
+@{
+    ViewData["Title"] = "Supplier Reports";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Supplier Reports</h2>
+            <p class="text-muted mb-0">Filter deliveries by supplier and export to Excel</p>
+        </div>
+    </div>
+
+    <!-- ================= FILTER ================= -->
+
+    <form asp-controller="Reports" asp-action="Index" method="get" class="row g-2 mb-3 align-items-end">
+
+        <div class="col-md-4">
+            <label class="form-label">Supplier</label>
+            <select name="supplierId" class="form-select">
+                <option value="">All Suppliers</option>
+                @foreach (var supplier in Model.Suppliers)
+                {
+                    if (supplier.SupplierId == Model.SelectedSupplierId)
+                    {
+                        <option value="@supplier.SupplierId" selected>@supplier.CompanyName</option>
+                    }
+                    else
+                    {
+                        <option value="@supplier.SupplierId">@supplier.CompanyName</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-fill">Filter</button>
+            <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-secondary flex-fill">Clear</a>
+        </div>
+
+        <div class="col-md-4 text-md-end">
+            <a asp-controller="Reports"
+               asp-action="ExportExcel"
+               asp-route-supplierId="@Model.SelectedSupplierId"
+               class="btn btn-success">
+                <i class="bi bi-file-earmark-excel"></i> Export to Excel
+            </a>
+        </div>
+
+    </form>
+
+    <!-- ================= RESULTS ================= -->
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Delivery Records</h5>
+        </div>
+
+        <div class="card-body">
+            @if (Model.Records != null && Model.Records.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Delivery Date</th>
+                                <th>Supplier</th>
+                                <th>Ingredient</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var record in Model.Records)
+                            {
+                                <tr>
+                                    <td>@record.DeliveryDate.ToString("dd MMM yyyy")</td>
+                                    <td>@record.Supplier?.CompanyName</td>
+                                    <td>@record.Ingredient?.IngredientName</td>
+                                    <td>@record.Quantity</td>
+                                    <td>$@record.Cost.ToString("0.00")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="fw-bold">
+                                <td colspan="3" class="text-end">Total:</td>
+                                <td>@Model.TotalQuantity</td>
+                                <td>$@Model.TotalCost.ToString("0.00")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h5 class="text-muted">No delivery records found</h5>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

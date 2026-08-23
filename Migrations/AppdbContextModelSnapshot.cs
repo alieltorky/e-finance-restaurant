@@ -277,7 +277,7 @@ namespace Online_Restaurant.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -563,9 +563,7 @@ namespace Online_Restaurant.Migrations
 
                     b.HasOne("Online_Restaurant.Models.Orders", "Order")
                         .WithMany("Inventories")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("Online_Restaurant.Models.Supplier", "Supplier")
                         .WithMany("SupplyDeliveries")
