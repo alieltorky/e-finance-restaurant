@@ -9,15 +9,24 @@ namespace Online_Restaurant.Controllers
     public class HomeController : Controller
     {
         private readonly AppdbContext _context;
-        private const int BestSellersCount = 10;
+        //private const int BestSellersCount = 10;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(AppdbContext context)
+        public HomeController(AppdbContext context,IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
         {
+            return View();
+        }
+        public async Task<IActionResult> GetBestSellers()
+        {
+            int bestSellersCount =
+                _configuration.GetValue<int>("BestSellersCount");
+
             var bestSellers = await _context.OrderDetails
                 .GroupBy(od => od.Menu_ItemId)
                 .Select(g => new
@@ -26,11 +35,13 @@ namespace Online_Restaurant.Controllers
                     UnitsSold = g.Sum(od => od.Quantity)
                 })
                 .OrderByDescending(g => g.UnitsSold)
-                .Take(BestSellersCount)
-                .Join(_context.MenuItems,   
-                    g => g.MenuItemId,   //g for the previous group by + select
-                    m => m.MenuItemId,  //m for the menuitems table
-                    (g, m) => m)
+                .Take(bestSellersCount)
+                .Join(
+                    _context.MenuItems,
+                    g => g.MenuItemId,
+                    m => m.MenuItemId,
+                    (g, m) => m
+                )
                 .Where(m => m.Available)
                 .ToListAsync();
 
@@ -38,13 +49,12 @@ namespace Online_Restaurant.Controllers
             {
                 bestSellers = await _context.MenuItems
                     .Where(m => m.Available)
-                    .Take(BestSellersCount)
+                    .Take(bestSellersCount)
                     .ToListAsync();
             }
 
-            return View(bestSellers);
+            return Json(bestSellers);
         }
-
         public IActionResult Privacy()
         {
             return View();
