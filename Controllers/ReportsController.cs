@@ -11,27 +11,42 @@ namespace Online_Restaurant.Controllers
     public class ReportsController : Controller
     {
         private readonly AppdbContext _context;
+        private const int PageSize = 10;
 
         public ReportsController(AppdbContext context)
         {
             _context = context;
         }
 
-        // GET: Reports?supplierId=3
+
         [HttpGet]
-        public async Task<IActionResult> Index(int? supplierId)
+        public async Task<IActionResult> Index(int? supplierId, int pageNumber = 1)
         {
-            var records = await GetFilteredRecords(supplierId);
+
+            var allRecords = await GetFilteredRecords(supplierId);
+
+            int totalCount = allRecords.Count;
+            int totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)PageSize));
+
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageNumber > totalPages) pageNumber = totalPages;
+
+            var pageRecords = allRecords
+                .Skip((pageNumber - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
 
             var viewModel = new SupplierReportViewModel
             {
-                Records = records,
+                Records = pageRecords,
                 Suppliers = await _context.Suppliers
                     .OrderBy(s => s.CompanyName)
                     .ToListAsync(),
                 SelectedSupplierId = supplierId,
-                TotalQuantity = records.Sum(r => r.Quantity),
-                TotalCost = records.Sum(r => r.Cost)
+                TotalQuantity = allRecords.Sum(r => r.Quantity),
+                TotalCost = allRecords.Sum(r => r.Cost),
+                PageNumber = pageNumber,
+                TotalPages = totalPages
             };
 
             return View(viewModel);
@@ -78,7 +93,7 @@ namespace Online_Restaurant.Controllers
                 worksheet.Cell(row, 1).Style.DateFormat.Format = "dd MMM yyyy";
                 worksheet.Cell(row, 2).Value = record.Supplier?.CompanyName ?? "-";
                 worksheet.Cell(row, 3).Value = record.Ingredient?.IngredientName ?? "-";
-                worksheet.Cell(row, 4).Value = - record.Quantity;
+                worksheet.Cell(row, 4).Value = record.Quantity;
                 worksheet.Cell(row, 5).Value = record.Cost;
                 worksheet.Cell(row, 5).Style.NumberFormat.Format = "$#,##0.00";
                 row++;
@@ -87,7 +102,7 @@ namespace Online_Restaurant.Controllers
             // Totals row
             worksheet.Cell(row, 3).Value = "Total:";
             worksheet.Cell(row, 3).Style.Font.Bold = true;
-            worksheet.Cell(row, 4).Value = records.Sum(r => - r.Quantity);
+            worksheet.Cell(row, 4).Value = records.Sum(r => r.Quantity);
             worksheet.Cell(row, 4).Style.Font.Bold = true;
             worksheet.Cell(row, 5).Value = records.Sum(r => r.Cost);
             worksheet.Cell(row, 5).Style.NumberFormat.Format = "$#,##0.00";
@@ -112,6 +127,7 @@ namespace Online_Restaurant.Controllers
             var query = _context.Inventories
                 .Include(i => i.Supplier)
                 .Include(i => i.Ingredient)
+                .Where(i => i.Quantity > 0)
                 .AsQueryable();
 
             if (supplierId.HasValue)

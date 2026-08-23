@@ -94,7 +94,55 @@
                         </tfoot>
                     </table>
                 </div>
+
+                @if (Model.TotalPages > 1)
+                {
+                    <nav>
+                        <ul class="pagination justify-content-center mt-3">
+
+                            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-supplierId="@Model.SelectedSupplierId"
+                                   asp-route-pageNumber="1">First</a>
+                            </li>
+
+                            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-supplierId="@Model.SelectedSupplierId"
+                                   asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+                            </li>
+
+                            @for (int p = 1; p <= Model.TotalPages; p++)
+                            {
+                                <li class="page-item @(p == Model.PageNumber ? "active" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-supplierId="@Model.SelectedSupplierId"
+                                       asp-route-pageNumber="@p">@p</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-supplierId="@Model.SelectedSupplierId"
+                                   asp-route-pageNumber="@(Model.PageNumber + 1)">Next</a>
+                            </li>
+
+                            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-supplierId="@Model.SelectedSupplierId"
+                                   asp-route-pageNumber="@Model.TotalPages">Last</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                }
             }
+            
             else
             {
                 <div class="text-center py-5">
