@@ -31,10 +31,10 @@
         animation-iteration-count: infinite;
     }
 
-    /* Pause on hover so people can actually look at / click an item
+    
     .marquee-wrapper:hover .marquee-track {
         animation-play-state: paused;
-    } */
+    }
 
     @@keyframes marquee-scroll {
         from {
@@ -47,6 +47,7 @@
     }
 
     .best-seller-card {
+        display: block;
         flex: 0 0 auto;
         width: 220px;
         margin: 0 10px;
@@ -55,7 +56,16 @@
         overflow: hidden;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         position: relative;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+        .best-seller-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            color: inherit;
+        }
 
     .best-seller-badge {
         position: absolute;
@@ -114,17 +124,19 @@
                 {
                     var imageSource = string.IsNullOrEmpty(item.ImagePath) ? "/images/1.png" : item.ImagePath;
 
-                    <div class="best-seller-card">
+                    <a asp-controller="MenuItemsController1"
+                       asp-action="Index"
+                       asp-fragment="cat-@item.CategoryId"
+                       class="best-seller-card">
                         <span class="badge bg-danger best-seller-badge">Best Seller</span>
                         <img src="@imageSource" alt="@item.Name" class="best-seller-img" loading="lazy">
                         <div class="best-seller-info text-center p-3">
                             <h5 class="mb-1">@item.Name</h5>
                             <p class="fw-bold text-primary mb-0">@item.Price.ToString("C")</p>
                         </div>
-                    </div>
+                    </a>
                 }
             </div>
         </div>
     </section>
 }
-
