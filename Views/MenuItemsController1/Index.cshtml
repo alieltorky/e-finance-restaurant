@@ -9,7 +9,12 @@
         ? "~/Views/Shared/DashboardLayout.cshtml"
         : "~/Views/Shared/themedlayout.cshtml";
 }
-
+<style>
+    .category-bar {
+        top: 80px;
+        z-index: 1020;
+    }
+</style>
 <div class="container my-5">
 
     <!-- Display alert messages from TempData if available -->
@@ -27,7 +32,7 @@
     </div>
 
     <!-- Sticky Navigation Bar for Category Filters -->
-    <div class="bg-white py-3 mb-4 border-bottom shadow-sm sticky-top" style="z-index: 1020; top: 0;">
+    <div class="category-bar bg-white py-3 mb-4 border-bottom shadow-sm sticky-top">
         <div class="d-flex justify-content-center flex-wrap gap-2">
             @foreach (var category in Model)
             {

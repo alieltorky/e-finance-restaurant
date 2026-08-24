@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
+using Online_Restaurant.Middleware;
 using Online_Restaurant.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddDbContext<AppdbContext>(options =>
     options.UseSqlServer(connectionString, sqlOptions =>
@@ -20,12 +23,10 @@ builder.Services.AddDbContext<AppdbContext>(options =>
         );
     }));
 
-
 //options in the signin
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
-    
 
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 6;
@@ -36,10 +37,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<AppdbContext>()
     .AddDefaultTokenProviders();
-
-
-
-
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -58,9 +55,13 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler(); // uses GlobalExceptionHandler
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -78,15 +79,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
-// add the admin email 
+// add the admin email
 // Seed Default Roles and Admin User
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    // 1. Ensure Roles Exist
     string[] roles = { "Admin", "Customer" };
     foreach (var role in roles)
     {
@@ -96,7 +95,6 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // 2. Ensure Admin User Exists
     var adminEmail = "admin@restaurant.com";
     var adminUserName = "Ahmed Khalifa";
 
@@ -118,19 +116,18 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+
 // Seed Delivery Roles and Users
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    // 1. Ensure "Delivery" role exists
     if (!await roleManager.RoleExistsAsync("Delivery"))
     {
         await roleManager.CreateAsync(new IdentityRole("Delivery"));
     }
 
-    // 2. Create Delivery Man 1
     var delivery1 = await userManager.FindByNameAsync("delivery1@restaurant.com");
     if (delivery1 == null)
     {
@@ -149,7 +146,6 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // 3. Create Delivery Man 2
     var delivery2 = await userManager.FindByNameAsync("delivery2@restaurant.com");
     if (delivery2 == null)
     {
@@ -168,19 +164,18 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+
 // Seed Chef Role and a default Chef user
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    // 1. Ensure "Chef" role exists
     if (!await roleManager.RoleExistsAsync("Chef"))
     {
         await roleManager.CreateAsync(new IdentityRole("Chef"));
     }
 
-    // 2. Create default Chef user
     var chef1 = await userManager.FindByNameAsync("chef1@restaurant.com");
     if (chef1 == null)
     {
@@ -199,6 +194,5 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-
 
 app.Run();
