@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Online_Restaurant.Models
 {
-    public class Supplier
+    public class Supplier : BaseEntity
     {
         [Key]
         public int SupplierId { get; set; }

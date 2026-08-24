@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Online_Restaurant.Models
 {
-    public class Orders
+    public class Orders : BaseEntity
     {
         [Key]
         public int OrderId { get; set; }

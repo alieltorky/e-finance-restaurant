@@ -2,15 +2,15 @@
 
 namespace Online_Restaurant.Models
 {
-    public class Inventory
+    public class Inventory : BaseEntity
     {
         [Key]
         public int Id { get; set; }
 
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
 
         public int IngredientId { get; set; }
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
 
         public DateTime DeliveryDate { get; set; }
 
@@ -18,9 +18,9 @@ namespace Online_Restaurant.Models
 
         public decimal Cost { get; set; }
 
-        public Supplier Supplier { get; set; } = null!;
+        public Supplier? Supplier { get; set; } = null!;
 
         public Ingredient Ingredient { get; set; } = null!;
-        public Orders Order { get; set; } = null!;
+        public Orders? Order { get; set; } = null!;
     }
 }

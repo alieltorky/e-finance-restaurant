@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Online_Restaurant.Models
 {
-    public class PaymentMethod
+    public class PaymentMethod : BaseEntity
     {
         [Key]
         public int PaymentMethodId { get; set; }

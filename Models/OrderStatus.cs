@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Online_Restaurant.Models
 {
-    public class OrderStatus
+    public class OrderStatus : BaseEntity
     {
         [Key]
         public int OrderStatusId { get; set; }

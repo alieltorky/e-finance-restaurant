@@ -2,7 +2,7 @@
 
 namespace Online_Restaurant.Models
 {
-    public class Ingredient
+    public class Ingredient :  BaseEntity
     {
         [Key]
         public int IngredientId { get; set; }

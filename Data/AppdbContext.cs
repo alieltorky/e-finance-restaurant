@@ -1,16 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Models;
+using System.Security.Claims;
 
 namespace Online_Restaurant.Data
 {
     public class AppdbContext : IdentityDbContext<ApplicationUser>
     {
-        public AppdbContext(DbContextOptions<AppdbContext> options)
+       private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public AppdbContext(IHttpContextAccessor httpContextAccessor, DbContextOptions<AppdbContext> options)
             : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -44,6 +47,48 @@ namespace Online_Restaurant.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // the delete if restricted for the sake of not loosing the data 
+        }
+        private void ApplyReportingInformation()
+        {
+            
+            var currentUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)
+                                ?? _httpContextAccessor.HttpContext?.User?.Identity?.Name
+                                ?? "System";
+
+            var currentTime = DateTime.Now;
+
+           
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = currentTime;
+                    entry.Entity.CreatedBy = currentUserId;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                     // 3lshan don't override Original Data 
+                     // Get entity using query then map entity to all functions but this is better because it is more genaric 
+                    entry.Property(e => e.CreatedAt).IsModified = false;
+                    entry.Property(e => e.CreatedBy).IsModified = false;
+
+                    entry.Entity.UpdatedAt = currentTime;
+                    entry.Entity.UpdatedBy = currentUserId;
+                }
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            ApplyReportingInformation();
+            return base.SaveChanges();
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ApplyReportingInformation();
+            return base.SaveChangesAsync(cancellationToken);
         }
 
 

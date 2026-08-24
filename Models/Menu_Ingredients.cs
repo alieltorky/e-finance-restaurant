@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Online_Restaurant.Models
 {
-    public class Menu_Ingredient
+    public class Menu_Ingredient : BaseEntity
     {
         [Key]
         public int MenuIngredientId { get; set; }
