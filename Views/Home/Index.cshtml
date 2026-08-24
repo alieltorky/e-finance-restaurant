@@ -1,19 +1,8 @@
-﻿@model IEnumerable<Online_Restaurant.Models.Menu_Item>
-@{
+﻿@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/ThemedLayout.cshtml";
-
-    // ViewData["Title"] = "Dashboard";
-    // Layout = "~/Views/Shared/DashboardLayout.cshtml";
-
-    // Duplicate the list so the CSS animation can loop seamlessly (scrolls through
-    // the first copy, then keeps going right into the identical second copy).
-    var bestSellerItems = Model?.ToList() ?? new List<Online_Restaurant.Models.Menu_Item>();
-    var loopedItems = bestSellerItems.Concat(bestSellerItems).ToList();
-
-    // Slower scroll for more items so the pace feels consistent either way.
-    var scrollSeconds = Math.Max(15, bestSellerItems.Count * 4);
 }
+
 <style>
     .marquee-wrapper {
         overflow: hidden;
@@ -31,10 +20,9 @@
         animation-iteration-count: infinite;
     }
 
-    /* Pause on hover so people can actually look at / click an item
     .marquee-wrapper:hover .marquee-track {
         animation-play-state: paused;
-    } */
+    }
 
     @@keyframes marquee-scroll {
         from {
@@ -47,6 +35,7 @@
     }
 
     .best-seller-card {
+        display: block;
         flex: 0 0 auto;
         width: 220px;
         margin: 0 10px;
@@ -55,7 +44,16 @@
         overflow: hidden;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         position: relative;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+        .best-seller-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            color: inherit;
+        }
 
     .best-seller-badge {
         position: absolute;
@@ -71,6 +69,10 @@
         display: block;
     }
 
+    .best-seller-info {
+        min-height: 80px;
+    }
+
     @@media (max-width: 576px) {
         .best-seller-card {
             width: 160px;
@@ -81,50 +83,105 @@
         }
     }
 </style>
+
 <div class="text-center my-5 py-3">
     <h1 class="display-4 fw-bold">Welcome to Our Restaurant</h1>
     <p class="lead">Discover our amazing dishes and order online.</p>
 
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
-        <a asp-controller="MenuItemsController1" asp-action="Index" class="btn btn-primary btn-lg mt-3">View Menu</a>
+        <a asp-controller="MenuItemsController1"
+           asp-action="Index"
+           class="btn btn-primary btn-lg mt-3">
+            View Menu
+        </a>
     }
     else
     {
         <div class="d-flex justify-content-center gap-3 mt-3">
-            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg">Login</a>
-            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg">Register</a>
+            <a asp-controller="Account"
+               asp-action="Login"
+               class="btn btn-primary btn-lg">
+                Login
+            </a>
+
+            <a asp-controller="Account"
+               asp-action="Register"
+               class="btn btn-outline-primary btn-lg">
+                Register
+            </a>
         </div>
     }
 </div>
 
-@if (bestSellerItems.Any())
-{
-    <section id="best-sellers" class="best-sellers section pt-2 pb-5">
-        <div class="container">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold">Best Sellers</h2>
-                <p class="text-muted">Our customers' favorite picks</p>
-            </div>
+<section id="best-sellers" class="best-sellers section pt-2 pb-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Best Sellers</h2>
+            <p class="text-muted">Our customers' favorite picks</p>
         </div>
+    </div>
 
-        <div class="marquee-wrapper">
-            <div class="marquee-track" style="animation-duration: @(scrollSeconds)s;">
-                @foreach (var item in loopedItems)
-                {
-                    var imageSource = string.IsNullOrEmpty(item.ImagePath) ? "/images/1.png" : item.ImagePath;
+    <div class="marquee-wrapper">
+        <div id="best-sellers-track" class="marquee-track"></div>
+    </div>
+</section>
 
-                    <div class="best-seller-card">
-                        <span class="badge bg-danger best-seller-badge">Best Seller</span>
-                        <img src="@imageSource" alt="@item.Name" class="best-seller-img" loading="lazy">
-                        <div class="best-seller-info text-center p-3">
-                            <h5 class="mb-1">@item.Name</h5>
-                            <p class="fw-bold text-primary mb-0">@item.Price.ToString("C")</p>
-                        </div>
-                    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/Home/GetBestSellers')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to load best sellers");
                 }
-            </div>
-        </div>
-    </section>
-}
 
+                return response.json();
+            })
+            .then(bestSellers => {
+                console.log("Best Sellers:", bestSellers);
+
+                const track = document.getElementById("best-sellers-track");
+
+                if (bestSellers.length === 0) {
+                    console.log("No best sellers found.");
+                    return;
+                }
+
+                const items = [...bestSellers, ...bestSellers];
+
+                items.forEach(item => {
+                    const imageSource = item.imagePath || "/images/1.png";
+                    const card = document.createElement("a");
+
+                    card.href = `/MenuItemsController1/Index#cat-${item.categoryId}`;
+                    card.className = "best-seller-card";
+
+                    card.innerHTML = `
+                            <span class="badge bg-danger best-seller-badge">
+                                Best Seller
+                            </span>
+
+                            <img src="${imageSource}"
+                                 alt="${item.name}"
+                                 class="best-seller-img"
+                                 loading="lazy">
+
+                            <div class="best-seller-info text-center p-3">
+                                <h5 class="mb-1">${item.name}</h5>
+                                <p class="fw-bold text-primary mb-0">
+                                    ${item.price}
+                                </p>
+                            </div>
+                        `;
+
+                    track.appendChild(card);
+                });
+
+                const scrollSeconds = Math.max(15, bestSellers.length * 4);
+                track.style.animationDuration = `${scrollSeconds}s`;
+            })
+            .catch(error => {
+                console.error("Error loading best sellers:", error);
+            });
+    });
+</script>
