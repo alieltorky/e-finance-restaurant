@@ -182,19 +182,19 @@ namespace Online_Restaurant.Controllers
                         total = orderTotal
                     });
                 }
-                catch (Exception ex)
+                catch
                 {
                     await transaction.RollbackAsync();
+                    throw;
 
-                    // Get detailed inner database exception
-                    var realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                    //var realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
 
-                    return StatusCode(500, new
-                    {
-                        success = false,
-                        message = "Order could not be completed. Please try again.",
-                        error = realError
-                    });
+                    //return StatusCode(500, new
+                    //{
+                    //    success = false,
+                    //    message = "Order could not be completed. Please try again.",
+                    //    error = realError
+                    //});
                 }
             });
         }
