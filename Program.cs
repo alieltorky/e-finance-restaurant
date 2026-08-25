@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
+using Online_Restaurant.Extensions;
 using Online_Restaurant.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddSerilogLogging();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -56,6 +59,8 @@ builder.Services.AddAntiforgery(options =>
 });
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
+
+app.UseCostumeSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
