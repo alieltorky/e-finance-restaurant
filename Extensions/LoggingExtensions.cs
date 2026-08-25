@@ -10,6 +10,7 @@ namespace Online_Restaurant.Extensions
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .WriteTo.Console()
                 .WriteTo.File(
                     path: "Logs/log-.txt",
                     rollingInterval: RollingInterval.Day,
@@ -38,10 +39,11 @@ namespace Online_Restaurant.Extensions
                     diagnosticContext.Set("User", httpContext.User.Identity?.Name ?? "Guest");
                 };
 
-                options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} | User: {User} | Status: {StatusCode} in {Elapsed:0.00} ms";
+                options.MessageTemplate = "{RequestMethod,-6} {StatusCode,-5} {RequestPath,-30} | {User}";
             });
 
             return app;
         }
     }
 }
+//verbose - debug - info - warning - error - fetal
