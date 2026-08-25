@@ -8,6 +8,15 @@ namespace Online_Restaurant.Controllers
 {
     public class HomeController : Controller
     {
+        //public IActionResult TestError()
+        //{
+        //    throw new Exception("This is a test exception");
+        //}
+        //[HttpGet]
+        //public IActionResult TestJsonError()
+        //{
+        //    throw new Exception("This is a test JSON exception");
+        //}
         private readonly AppdbContext _context;
         //private const int BestSellersCount = 10;
         private readonly IConfiguration _configuration;

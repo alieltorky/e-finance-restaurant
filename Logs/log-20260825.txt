@@ -95,3 +95,623 @@
 [INF] GET    200   /Delivery                      | DeliveryMan1
 [INF] POST   302   /Delivery/MarkAsDelivered      | DeliveryMan1
 [INF] GET    200   /Delivery                      | DeliveryMan1
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    200   /Account/Login                 | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] POST   302   /Account/Login                 | mariam alaa
+[INF] GET    200   /MenuItemsController1          | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Cart                          | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Checkout/GetCustomerInfo      | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /PaymentMethod/GetAll          | mariam alaa
+[WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+[WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+[INF] POST   200   /Checkout/PlaceOrder           | mariam alaa
+[INF] POST   302   /Account/Logout                | mariam alaa
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    200   /Account/Login                 | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] POST   302   /Account/Login                 | Ahmed Khalifa
+[INF] GET    200   /Dashboard                     | Ahmed Khalifa
+[WRN] Unable to configure Browser Link script injection on the response. 
+[WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+[INF] GET    200   /AdminOrders                   | Ahmed Khalifa
+[WRN] Unable to configure Browser Link script injection on the response. 
+[WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+[WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+[INF] POST   200   /AdminOrders/UpdateStatus      | Ahmed Khalifa
+[INF] GET    200   /                              | Ahmed Khalifa
+[INF] GET    200   /Account/IsAuthenticated       | Ahmed Khalifa
+[INF] GET    200   /Home/GetBestSellers           | Ahmed Khalifa
+[INF] POST   302   /Account/Logout                | Ahmed Khalifa
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    200   /Account/Login                 | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] POST   302   /Account/Login                 | DeliveryMan1
+[INF] GET    200   /Delivery                      | DeliveryMan1
+[INF] POST   302   /Delivery/AcceptOrder          | DeliveryMan1
+[INF] GET    200   /Delivery                      | DeliveryMan1
+[INF] POST   302   /Delivery/MarkAsDelivered      | DeliveryMan1
+[INF] GET    200   /Delivery                      | DeliveryMan1
+[INF] GET    200   /                              | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] GET    200   /Home/GetBestSellers           | DeliveryMan1
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] GET    200   /Home/GetBestSellers           | DeliveryMan1
+[INF] GET    200   /MenuItemsController1          | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] GET    200   /                              | DeliveryMan1
+[INF] GET    200   /MenuItemsController1          | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] GET    200   /Account/IsAuthenticated       | DeliveryMan1
+[INF] POST   302   /Account/Logout                | DeliveryMan1
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    200   /Account/Login                 | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] POST   302   /Account/Login                 | mariam alaa
+[INF] GET    200   /MenuItemsController1          | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /                              | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Home/GetBestSellers           | mariam alaa
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method696(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | mariam alaa
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method696(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | mariam alaa
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method696(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | mariam alaa
+[INF] GET    200   /                              | mariam alaa
+[INF] GET    200   /Account/IsAuthenticated       | mariam alaa
+[INF] GET    200   /Home/GetBestSellers           | mariam alaa
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method696(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | mariam alaa
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    404   /home/errorpage                | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] Unhandled exception on /Home/TestError
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[INF] GET    302   /Home/TestError                | Guest
+[INF] GET    200   /Home/Error                    | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Home/Error                    | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test exception
+   at Online_Restaurant.Controllers.HomeController.TestError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 13
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestError                | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] Unhandled exception on /Home/TestJsonError
+System.Exception: This is a test JSON exception
+   at Online_Restaurant.Controllers.HomeController.TestJsonError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 18
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[INF] GET    302   /Home/TestJsonError            | Guest
+[INF] GET    200   /Home/Error                    | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[ERR] Unhandled exception on /Home/TestJsonError
+System.Exception: This is a test JSON exception
+   at Online_Restaurant.Controllers.HomeController.TestJsonError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 18
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[INF] GET    500   /Home/TestJsonError            | Guest
+[INF] GET    200   /Home/Error                    | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /                              | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[ERR] Unhandled exception on /Home/TestJsonError
+System.Exception: This is a test JSON exception
+   at Online_Restaurant.Controllers.HomeController.TestJsonError()
+   at lambda_method461(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+[INF] GET    302   /Home/TestJsonError            | Guest
+[INF] GET    200   /Home/Error                    | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /                              | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[INF] GET    200   /MenuItemsController1          | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[WRN] The application is not running against the published output and Static Web Assets are not enabled. To configure static web assets in other environments, call 'StaticWebAssetsLoader.UseStaticWebAssets(IWebHostEnvironment, IConfiguration)' to enable them.
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test JSON exception
+   at Online_Restaurant.Controllers.HomeController.TestJsonError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 18
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestJsonError            | Guest
+[ERR] An unhandled exception has occurred while executing the request.
+System.Exception: This is a test JSON exception
+   at Online_Restaurant.Controllers.HomeController.TestJsonError() in C:\Users\user\source\repos\alieltorky\e-finance-restaurant\Controllers\HomeController.cs:line 18
+   at lambda_method412(Closure, Object, Object[])
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[INF] GET    500   /Home/TestJsonError            | Guest
+[WRN] No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[WRN] No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+[INF] GET    200   /                              | Guest
+[INF] GET    200   /Account/IsAuthenticated       | Guest
+[INF] GET    200   /Home/GetBestSellers           | Guest
