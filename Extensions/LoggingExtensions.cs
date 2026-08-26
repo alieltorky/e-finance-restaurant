@@ -24,71 +24,10 @@ namespace Online_Restaurant.Extensions
             return builder;
         }
 
-        public static WebApplication UseCostumeSerilogRequestLogging(this WebApplication app)
+        public static WebApplication UseCustomRequestLogging(this WebApplication app)
         {
-            // Logs the "Request" line the moment a request arrives - but only
-            // for routes worth seeing in the log
-            app.Use(async (context, next) =>
-            {
-                string path = context.Request.Path.Value ?? string.Empty;
-
-                if (!IsNoisyPath(path))
-                {
-                    string user = context.User.Identity?.Name ?? "Guest";
-                    Log.Information("{Method}-{User}-{Type}", context.Request.Method, user, "Request");
-                }
-
-                await next();
-            });
-
-            app.UseSerilogRequestLogging(options =>
-            {
-                // Skip static assets and other low-value noise
-                options.GetLevel = (httpContext, elapsed, ex) =>
-                    IsNoisyPath(httpContext.Request.Path.Value ?? string.Empty)
-                        ? LogEventLevel.Verbose
-                        : LogEventLevel.Information;
-
-                // Extract user identity
-                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
-                {
-                    diagnosticContext.Set("User", httpContext.User.Identity?.Name ?? "Guest");
-                };
-
-                // Logs the "Response" line once the request has finished
-                options.MessageTemplate = "{RequestMethod}-{User}-Response";
-            });
-
+            app.UseMiddleware<Online_Restaurant.Middleware.RequestLoggingMiddleware>();
             return app;
-        }
-
-        // Shared by both the Request and Response loggers, so "important" means
-        // the same thing on the way in as it does on the way out.
-        private static bool IsNoisyPath(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return false;
-            }
-
-            // Static assets: css, js, images, fonts, favicon, etc.
-            if (path.Contains('.'))
-            {
-                return true;
-            }
-
-            // Frequently-polled, low-value application endpoints
-            if (path.Equals("/Account/IsAuthenticated", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            if (path.Equals("/Home/GetBestSellers", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

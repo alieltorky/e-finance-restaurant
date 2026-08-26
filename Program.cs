@@ -57,7 +57,7 @@ builder.Services.AddAntiforgery(options =>
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
-app.UseCostumeSerilogRequestLogging();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -76,6 +76,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCustomRequestLogging();
 
 app.MapStaticAssets();
 
