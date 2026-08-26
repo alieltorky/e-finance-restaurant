@@ -64,6 +64,7 @@ if (app.Environment.IsDevelopment())
 {
     Console.WriteLine("DEVELOPMENT");
     app.UseDeveloperExceptionPage();
+    //app.UseExceptionHandler();
 }
 else
 {
