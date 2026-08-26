@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\Theme\" />
   </ItemGroup>

@@ -1,0 +1,53 @@
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-26 12:11:47
+GET-Guest-Request-2026-08-26 12:11:53
+GET-Ahmed Khalifa-Response-2026-08-26 12:11:54
+POST-Guest-Request-2026-08-26 12:12:01
+POST-Ahmed Khalifa-Response-2026-08-26 12:12:01
+GET-Guest-Request-2026-08-26 12:12:01
+GET-Guest-Response-2026-08-26 12:12:01
+GET-Guest-Request-2026-08-26 12:12:02
+GET-Guest-Response-2026-08-26 12:12:02
+POST-Guest-Request-2026-08-26 12:12:14
+POST-Guest-Request-2026-08-26 12:12:16
+POST-Ali el Torky-Response-2026-08-26 12:12:17
+POST-Guest-Request-2026-08-26 12:12:18
+POST-Ali el Torky-Response-2026-08-26 12:12:19
+POST-Ali el Torky-Response-2026-08-26 12:12:20
+GET-Guest-Request-2026-08-26 12:12:20
+GET-Ali el Torky-Response-2026-08-26 12:12:20
+GET-Guest-Request-2026-08-26 12:12:28
+GET-Ali el Torky-Response-2026-08-26 12:12:28
+GET-Guest-Request-2026-08-26 12:12:28
+GET-Ali el Torky-Response-2026-08-26 12:12:28
+GET-Guest-Request-2026-08-26 12:12:29
+GET-Ali el Torky-Response-2026-08-26 12:12:29
+POST-Guest-Request-2026-08-26 12:12:32
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-26 12:12:33
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-26 12:12:33
+POST-Ali el Torky-Response-2026-08-26 12:12:33
+GET-Guest-Request-2026-08-26 12:12:38
+GET-Ali el Torky-Response-2026-08-26 12:12:38
+POST-Guest-Request-2026-08-26 12:12:39
+POST-Ali el Torky-Response-2026-08-26 12:12:39
+GET-Guest-Request-2026-08-26 12:12:39
+GET-Guest-Response-2026-08-26 12:12:39
+GET-Guest-Request-2026-08-26 12:12:42
+GET-Guest-Response-2026-08-26 12:12:42
+POST-Guest-Request-2026-08-26 12:12:51
+POST-Ahmed Khalifa-Response-2026-08-26 12:12:53
+GET-Guest-Request-2026-08-26 12:12:53
+GET-Ahmed Khalifa-Response-2026-08-26 12:12:53
+Unable to configure Browser Link script injection on the response. -2026-08-26 12:12:53
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-26 12:12:53
+GET-Guest-Request-2026-08-26 12:12:56
+GET-Ahmed Khalifa-Response-2026-08-26 12:12:57
+Unable to configure Browser Link script injection on the response. -2026-08-26 12:12:57
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-26 12:12:57
+POST-Guest-Request-2026-08-26 12:13:01
+Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.-2026-08-26 12:13:01
+POST-Ahmed Khalifa-Response-2026-08-26 12:13:02
