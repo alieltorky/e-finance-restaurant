@@ -21,23 +21,16 @@ public class SmtpEmailService : IEmailService
     {
         using var message = new MailMessage();
 
-        message.From = new MailAddress(
-            _settings.SenderEmail,
-            _settings.SenderName);
-
+        message.From = new MailAddress(_settings.SenderEmail,_settings.SenderName);
         message.To.Add(to);
         message.Subject = subject;
         message.Body = body;
         message.IsBodyHtml = true;
 
-        using var smtpClient = new SmtpClient(
-            _settings.SmtpServer,
-            _settings.Port);
+        using var smtpClient = new SmtpClient(_settings.SmtpServer,_settings.Port);
 
-        smtpClient.Credentials = new NetworkCredential(
-            _settings.Username,
-            _settings.Password);
-
+        smtpClient.Credentials = new NetworkCredential(_settings.Username,_settings.Password);
+        //for encryption
         smtpClient.EnableSsl = true;
 
         await smtpClient.SendMailAsync(message);

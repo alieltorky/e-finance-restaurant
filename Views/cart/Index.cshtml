@@ -19,6 +19,7 @@
                     <th style="width: 80px;">Action</th>
                 </tr>
             </thead>
+
             <tbody id="cart-items"></tbody>
         </table>
 
@@ -26,28 +27,45 @@
         <div class="d-flex justify-content-end mt-4">
             <div class="card shadow-sm" style="width: 320px;">
                 <div class="card-body">
-                    <h5 class="card-title mb-3 fw-bold">Checkout</h5>
+
+                    <h5 class="card-title mb-3 fw-bold">
+                        Checkout
+                    </h5>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="fw-semibold">Address:</span>
-                        <span id="customer-address" class="text-end text-muted">-</span>
+                        <span id="customer-address"
+                              class="text-end text-muted">
+                            -
+                        </span>
                     </div>
+
                     <div class="d-flex justify-content-between mb-3">
                         <span class="fw-semibold">Phone:</span>
-                        <span id="customer-phone" class="text-muted">-</span>
+                        <span id="customer-phone"
+                              class="text-muted">
+                            -
+                        </span>
                     </div>
 
                     <hr />
 
                     <div class="d-flex justify-content-between mb-3">
-                        <span class="fw-semibold fs-5">Total:</span>
+                        <span class="fw-semibold fs-5">
+                            Total:
+                        </span>
+
                         <span class="fw-bold text-primary fs-5">
                             $<span id="cart-total">0.00</span>
                         </span>
                     </div>
-                    <button type="button" id="checkout-btn" class="btn btn-primary w-100 py-2 fw-semibold">
+
+                    <button type="button"
+                            id="checkout-btn"
+                            class="btn btn-primary w-100 py-2 fw-semibold">
                         Checkout
                     </button>
+
                 </div>
             </div>
         </div>
@@ -59,252 +77,678 @@
     let cart = [];
 
     const cartItems = document.getElementById("cart-items");
-
     function getCart() {
-        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    }
 
+        return JSON.parse(
+            localStorage.getItem(CART_KEY)
+        ) || [];
+
+    }
     function saveCart() {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    }
 
+        localStorage.setItem(
+            CART_KEY,
+            JSON.stringify(cart)
+        );
+
+    }
     function updateCartCount() {
+
         let totalItems = 0;
+
         cart.forEach(item => {
+
             totalItems += item.quantity;
+
         });
 
-        const cartCount = document.getElementById("cart-count");
+        const cartCount =
+            document.getElementById("cart-count");
+
         if (cartCount) {
+
             cartCount.textContent = totalItems;
+
         }
+
     }
 
     function displayCart() {
+
         cartItems.innerHTML = "";
-
         if (cart.length === 0) {
-            cartItems.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">
-                            Your cart is empty.
-                        </td>
-                    </tr>
-                `;
 
-            document.getElementById("cart-total").textContent = "0.00";
+            cartItems.innerHTML = `
+                <tr>
+                    <td colspan="5"
+                        class="text-center py-4 text-muted">
+
+                        Your cart is empty.
+
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("cart-total")
+                .textContent = "0.00";
+
             updateCartCount();
+
             return;
         }
 
         let cartTotal = 0;
-
         cart.forEach(item => {
-            const total = item.price * item.quantity;
+
+            const total =
+                item.price * item.quantity;
+
             cartTotal += total;
-            const itemImage = item.image || "/images/1.png";
+
+            const itemImage =
+                item.image || "/images/1.png";
+
 
             cartItems.innerHTML += `
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="${itemImage}"
-                                     alt="${item.name}"
-                                     class="rounded bg-light border p-1"
-                                     style="width: 55px; height: 55px; object-fit: contain;" />
-                                <span class="fw-semibold text-dark">${item.name}</span>
-                            </div>
-                        </td>
-                        <td>$${item.price.toFixed(2)}</td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <button type="button"
-                                        class="btn btn-outline-secondary btn-sm"
-                                        onclick="decreaseQuantity('${item.id}')">
-                                    <i class="bi bi-dash"></i>
-                                </button>
+                <tr>
 
-                                <span class="mx-3 fw-bold">${item.quantity}</span>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
 
-                                <button type="button"
-                                        class="btn btn-outline-primary btn-sm"
-                                        onclick="increaseQuantity('${item.id}')">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="fw-semibold text-primary">$${total.toFixed(2)}</td>
-                        <td>
+                            <img src="${itemImage}"
+                                 alt="${item.name}"
+                                 class="rounded bg-light border p-1"
+                                 style="
+                                    width: 55px;
+                                    height: 55px;
+                                    object-fit: contain;
+                                 " />
+
+                            <span class="fw-semibold text-dark">
+                                ${item.name}
+                            </span>
+
+                        </div>
+                    </td>
+
+
+                    <td>
+                        $${item.price.toFixed(2)}
+                    </td>
+
+
+                    <td>
+
+                        <div class="d-flex align-items-center">
+
                             <button type="button"
-                                    class="btn btn-outline-danger btn-sm"
-                                    onclick="removeItem('${item.id}')"
-                                    title="Remove item">
-                                <i class="bi bi-trash"></i>
+                                    class="btn btn-outline-secondary btn-sm"
+                                    onclick="decreaseQuantity('${item.id}')">
+
+                                <i class="bi bi-dash"></i>
+
                             </button>
-                        </td>
-                    </tr>
-                `;
+
+
+                            <span class="mx-3 fw-bold">
+                                ${item.quantity}
+                            </span>
+
+
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-sm"
+                                    onclick="increaseQuantity('${item.id}')">
+
+                                <i class="bi bi-plus"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+
+                    <td class="fw-semibold text-primary">
+
+                        $${total.toFixed(2)}
+
+                    </td>
+
+
+                    <td>
+
+                        <button type="button"
+                                class="btn btn-outline-danger btn-sm"
+                                onclick="removeItem('${item.id}')"
+                                title="Remove item">
+
+                            <i class="bi bi-trash"></i>
+
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
         });
-
-        document.getElementById("cart-total").textContent = cartTotal.toFixed(2);
+        document.getElementById("cart-total")
+            .textContent = cartTotal.toFixed(2);
         updateCartCount();
-    }
 
+    }
     function increaseQuantity(id) {
-        const item = cart.find(item => item.id === id);
+
+        const item = cart.find(
+            item => item.id === id
+        );
+
         if (!item) return;
+
 
         item.quantity++;
-        saveCart();
-        displayCart();
-    }
 
+
+        saveCart();
+
+        displayCart();
+
+    }
     function decreaseQuantity(id) {
-        const item = cart.find(item => item.id === id);
+
+        const item = cart.find(
+            item => item.id === id
+        );
+
         if (!item) return;
 
+
         item.quantity--;
+
+
         if (item.quantity <= 0) {
-            cart = cart.filter(item => item.id !== id);
+
+            cart = cart.filter(
+                item => item.id !== id
+            );
+
         }
 
-        saveCart();
-        displayCart();
-    }
 
+        saveCart();
+
+        displayCart();
+
+    }
     function removeItem(id) {
-        cart = cart.filter(item => item.id !== id);
+
+        cart = cart.filter(
+            item => item.id !== id
+        );
+
+
         saveCart();
+
         displayCart();
+
     }
-
     async function showPaymentMethodModal() {
-        const paymentMethodsResponse = await fetch("/PaymentMethod/GetAll");
-        const paymentMethods = await paymentMethodsResponse.json();
 
-        const paymentMethodOptionsHtml = paymentMethods.map((method, index) => `
+        const paymentMethodsResponse =
+            await fetch("/PaymentMethod/GetAll");
+
+
+        const paymentMethods =
+            await paymentMethodsResponse.json();
+
+
+        const paymentMethodOptionsHtml =
+            paymentMethods.map((method, index) => `
+
                 <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="paymentMethodOption"
+
+                    <input class="form-check-input"
+                           type="radio"
+                           name="paymentMethodOption"
                            id="payment-method-${method.paymentMethodId}"
                            value="${method.paymentMethodId}"
                            ${index === 0 ? "checked" : ""}>
-                    <label class="form-check-label" for="payment-method-${method.paymentMethodId}">
+
+                    <label class="form-check-label"
+                           for="payment-method-${method.paymentMethodId}">
+
                         ${method.methodName}
+
                     </label>
+
                 </div>
+
             `).join("");
 
+
         const paymentModalHtml = `
-                <div class="modal fade" id="paymentMethodModal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title fw-bold">Select Payment Method</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                ${paymentMethodOptionsHtml}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" id="confirm-payment-method-btn">Confirm & Place Order</button>
-                            </div>
+
+            <div class="modal fade"
+                 id="paymentMethodModal"
+                 tabindex="-1">
+
+                <div class="modal-dialog modal-dialog-centered">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h5 class="modal-title fw-bold">
+                                Select Payment Method
+                            </h5>
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal">
+                            </button>
+
                         </div>
+
+
+                        <div class="modal-body">
+
+                            ${paymentMethodOptionsHtml}
+
+                        </div>
+
+
+                        <div class="modal-footer">
+
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+
+                                Cancel
+
+                            </button>
+
+
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    id="confirm-payment-method-btn">
+
+                                Confirm & Place Order
+
+                            </button>
+
+                        </div>
+
                     </div>
+
                 </div>
-            `;
 
-        document.body.insertAdjacentHTML("beforeend", paymentModalHtml);
+            </div>
 
-        const paymentModalElement = document.getElementById("paymentMethodModal");
-        const paymentModal = new bootstrap.Modal(paymentModalElement);
+        `;
+
+
+        document.body.insertAdjacentHTML(
+            "beforeend",
+            paymentModalHtml
+        );
+
+
+        const paymentModalElement =
+            document.getElementById(
+                "paymentMethodModal"
+            );
+
+
+        const paymentModal =
+            new bootstrap.Modal(
+                paymentModalElement
+            );
+
+
         paymentModal.show();
 
-        document.getElementById("confirm-payment-method-btn").addEventListener("click", function() {
-            const checkedPaymentMethodInput = document.querySelector('input[name="paymentMethodOption"]:checked');
-            const selectedPaymentMethodId = parseInt(checkedPaymentMethodInput.value);
 
-            paymentModal.hide();
-            placeOrder(selectedPaymentMethodId);
-        });
+        document
+            .getElementById(
+                "confirm-payment-method-btn"
+            )
+            .addEventListener("click", function () {
 
-        paymentModalElement.addEventListener("hidden.bs.modal", function() {
-            paymentModalElement.remove();
-        });
+
+                const checkedPaymentMethodInput =
+                    document.querySelector(
+                        'input[name="paymentMethodOption"]:checked'
+                    );
+
+
+                const selectedPaymentMethodId =
+                    parseInt(
+                        checkedPaymentMethodInput.value
+                    );
+
+
+                paymentModal.hide();
+
+
+                placeOrder(
+                    selectedPaymentMethodId
+                );
+
+            });
+
+
+        paymentModalElement.addEventListener(
+            "hidden.bs.modal",
+            function () {
+
+                paymentModalElement.remove();
+
+            }
+        );
+
     }
+    function placeOrder(
+        selectedPaymentMethodId
+    ) {
 
-    function placeOrder(selectedPaymentMethodId) {
         const checkoutRequest = {
+
             items: cart.map(item => ({
-                menuItemId: parseInt(item.id),
-                quantity: item.quantity
+
+                menuItemId:
+                    parseInt(item.id),
+
+                quantity:
+                    item.quantity
+
             })),
-            paymentMethodId: selectedPaymentMethodId
+
+            paymentMethodId:
+                selectedPaymentMethodId
+
         };
 
+
         fetch("/Checkout/PlaceOrder", {
+
             method: "POST",
+
             headers: {
-                "Content-Type": "application/json"
+
+                "Content-Type":
+                    "application/json"
+
             },
-            body: JSON.stringify(checkoutRequest)
+
+            body:
+                JSON.stringify(
+                    checkoutRequest
+                )
+
         })
-            .then(async response => {
-                const text = await response.text();
-                if (!response.ok) throw new Error(text);
-                return JSON.parse(text);
-            })
-            .then(data => {
-                cart = [];
-                saveCart();
-                displayCart();
-                alert(`Order placed successfully! Order #${data.orderId}`);
-            })
-            .catch(error => {
-                console.error("Checkout error:", error);
-                alert("Something went wrong placing your order. Please try again.");
-            });
-    }
 
+        .then(async response => {
+
+            const text =
+                await response.text();
+
+
+            if (!response.ok) {
+
+                throw new Error(text);
+
+            }
+
+
+            return JSON.parse(text);
+
+        })
+
+        .then(data => {
+            cart = [];
+
+            saveCart();
+
+            displayCart();
+
+
+            alert(
+                `Order placed successfully! Order #${data.orderId}`
+            );
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Checkout error:",
+                error
+            );
+
+
+            alert(
+                "Something went wrong placing your order. Please try again."
+            );
+
+        });
+
+    }
     async function determineCartKey() {
+
         try {
-            const authResponse = await fetch("/Account/IsAuthenticated");
-            const authData = await authResponse.json();
-            return authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
-        } catch (err) {
-            console.error("Could not determine cart owner, defaulting to guest cart:", err);
+
+            const authResponse =
+                await fetch(
+                    "/Account/IsAuthenticated"
+                );
+
+
+            const authData =
+                await authResponse.json();
+
+
+            if (authData.isAuthenticated) {
+
+                return `cart_${authData.userId}`;
+
+            }
+
+
             return "cart_guest";
-        }
-    }
 
+        }
+        catch (err) {
+
+            console.error(
+                "Could not determine cart owner, defaulting to guest cart:",
+                err
+            );
+
+
+            return "cart_guest";
+
+        }
+
+    }
+    function mergeGuestCartIntoUserCart(
+        userCartKey
+    ) {
+        const guestCart =
+            JSON.parse(
+                localStorage.getItem("cart_guest")
+            ) || [];
+        const userCart =
+            JSON.parse(
+                localStorage.getItem(userCartKey)
+            ) || [];
+        if (guestCart.length === 0) {
+
+            return userCart;
+
+        }
+        guestCart.forEach(guestItem => {
+
+
+            const existingItem =
+                userCart.find(
+                    userItem =>
+                        userItem.id === guestItem.id
+                );
+
+
+            if (existingItem) {
+                existingItem.quantity +=
+                    guestItem.quantity;
+
+            }
+            else {
+                userCart.push(
+                    guestItem
+                );
+
+            }
+
+        });
+        localStorage.setItem(
+            userCartKey,
+            JSON.stringify(userCart)
+        );
+        localStorage.removeItem(
+            "cart_guest"
+        );
+
+
+        return userCart;
+
+    }
     async function loadCustomerInfo() {
+
         try {
-            const response = await fetch("/Checkout/GetCustomerInfo");
-            const data = await response.json();
 
-            document.getElementById("customer-address").textContent = data.address || "No address on file";
-            document.getElementById("customer-phone").textContent = data.mobileNumber || "No phone on file";
-        } catch (err) {
-            console.error("Could not load customer info:", err);
+            const response =
+                await fetch(
+                    "/Checkout/GetCustomerInfo"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            document.getElementById(
+                "customer-address"
+            ).textContent =
+                data.address ||
+                "No address on file";
+
+
+            document.getElementById(
+                "customer-phone"
+            ).textContent =
+                data.mobileNumber ||
+                "No phone on file";
+
         }
-    }
+        catch (err) {
 
+            console.error(
+                "Could not load customer info:",
+                err
+            );
+
+        }
+
+    }
     async function init() {
-        CART_KEY = await determineCartKey();
-        cart = getCart();
-        displayCart();
-        loadCustomerInfo();
+
+        try {
+
+            const authResponse =
+                await fetch(
+                    "/Account/IsAuthenticated"
+                );
+
+
+            const authData =
+                await authResponse.json();
+            if (authData.isAuthenticated) {
+
+                CART_KEY =
+                    `cart_${authData.userId}`;
+                cart =
+                    mergeGuestCartIntoUserCart(
+                        CART_KEY
+                    );
+
+            }
+            else {
+
+                CART_KEY =
+                    "cart_guest";
+
+
+                cart =
+                    getCart();
+
+            }
+            displayCart();
+            loadCustomerInfo();
+
+        }
+        catch (err) {
+
+            console.error(
+                "Could not initialize cart:",
+                err
+            );
+            CART_KEY =
+                "cart_guest";
+
+
+            cart =
+                getCart();
+
+
+            displayCart();
+
+        }
+
     }
     init();
+    document
+        .getElementById("checkout-btn")
+        .addEventListener(
+            "click",
+            async function () {
 
-    document.getElementById("checkout-btn").addEventListener("click", async function() {
-        const authResponse = await fetch("/Account/IsAuthenticated");
-        const authData = await authResponse.json();
-        if (!authData.isAuthenticated) {
-            const returnUrl = encodeURIComponent(window.location.pathname);
-            window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
-            return;
-        }
-        showPaymentMethodModal();
-    });
+
+                const authResponse =
+                    await fetch(
+                        "/Account/IsAuthenticated"
+                    );
+
+
+                const authData =
+                    await authResponse.json();
+
+                if (!authData.isAuthenticated) {
+                    const returnUrl =
+                        encodeURIComponent(
+                            window.location.pathname
+                        );
+
+
+                    window.location.href =
+                        `/Account/Login?returnUrl=${returnUrl}`;
+
+
+                    return;
+
+                }
+                showPaymentMethodModal();
+
+            }
+        );
+
 </script>
+
