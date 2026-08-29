@@ -151,3 +151,45 @@ GET-Guest-Request-2026-08-29 13:38:55
 GET-Guest-Response-2026-08-29 13:38:55
 GET-Guest-Request-2026-08-29 13:38:56
 GET-Guest-Response-2026-08-29 13:38:56
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:46:37
+GET-Guest-Request-2026-08-29 13:46:41
+GET-Guest-Response-2026-08-29 13:46:41
+GET-Guest-Request-2026-08-29 13:47:09
+GET-Guest-Response-2026-08-29 13:47:09
+POST-Guest-Request-2026-08-29 13:47:47
+POST-Mohamed Ibrahim-Response-2026-08-29 13:47:48
+GET-Guest-Request-2026-08-29 13:47:48
+GET-Mohamed Ibrahim-Response-2026-08-29 13:47:49
+GET-Guest-Request-2026-08-29 13:48:03
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:03
+GET-Guest-Request-2026-08-29 13:48:07
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:07
+GET-Guest-Request-2026-08-29 13:48:09
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:09
+GET-Guest-Request-2026-08-29 13:48:28
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:28
+GET-Guest-Request-2026-08-29 13:48:37
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:37
+GET-Guest-Request-2026-08-29 13:48:41
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:41
+GET-Guest-Request-2026-08-29 13:48:42
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:42
+GET-Guest-Request-2026-08-29 13:48:42
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:42
+GET-Guest-Request-2026-08-29 13:48:44
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:44
+POST-Guest-Request-2026-08-29 13:48:47
+POST-Mohamed Ibrahim-Request-2026-08-29 13:48:47 | Object {"Items":[{"MenuItemId":20,"Quantity":1}],"PaymentMethodId":4}-2026-08-29 13:48:47
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-29 13:48:48
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-29 13:48:48
+POST-Mohamed Ibrahim-Response-2026-08-29 13:48:48 | OrderId: 96-2026-08-29 13:48:48
+POST-Mohamed Ibrahim-Response-2026-08-29 13:48:48
+GET-Guest-Request-2026-08-29 13:48:53
+GET-Mohamed Ibrahim-Response-2026-08-29 13:48:53
+GET-Guest-Request-2026-08-29 13:49:02
+GET-Mohamed Ibrahim-Response-2026-08-29 13:49:03
