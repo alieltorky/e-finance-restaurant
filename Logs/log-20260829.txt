@@ -73,3 +73,81 @@ Compiling a query which loads related collections for more than one collection n
 POST-Ahmed Khalifa-Response-2026-08-29 11:17:17
 POST-Guest-Request-2026-08-29 11:17:25
 POST-Ahmed Khalifa-Response-2026-08-29 11:17:25
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:34:22
+GET-Guest-Request-2026-08-29 13:34:26
+GET-Ahmed Khalifa-Response-2026-08-29 13:34:26
+GET-Guest-Request-2026-08-29 13:34:43
+GET-Ahmed Khalifa-Response-2026-08-29 13:34:43
+POST-Guest-Request-2026-08-29 13:34:57
+POST-Ahmed Khalifa-Response-2026-08-29 13:34:57
+GET-Guest-Request-2026-08-29 13:34:57
+GET-Guest-Response-2026-08-29 13:34:57
+GET-Guest-Request-2026-08-29 13:34:58
+GET-Guest-Response-2026-08-29 13:34:58
+POST-Guest-Request-2026-08-29 13:36:28
+POST-Mohamed Elsayed-Response-2026-08-29 13:36:30
+GET-Guest-Request-2026-08-29 13:36:30
+GET-Mohamed Elsayed-Response-2026-08-29 13:36:30
+GET-Guest-Request-2026-08-29 13:36:43
+GET-Mohamed Elsayed-Response-2026-08-29 13:36:43
+GET-Guest-Request-2026-08-29 13:37:00
+GET-Mohamed Elsayed-Response-2026-08-29 13:37:01
+GET-Guest-Request-2026-08-29 13:37:10
+GET-Mohamed Elsayed-Response-2026-08-29 13:37:10
+GET-Guest-Request-2026-08-29 13:37:10
+GET-Mohamed Elsayed-Response-2026-08-29 13:37:10
+GET-Guest-Request-2026-08-29 13:37:35
+GET-Mohamed Elsayed-Response-2026-08-29 13:37:35
+POST-Guest-Request-2026-08-29 13:37:39
+POST-Mohamed Elsayed-Request-2026-08-29 13:37:39 | Object {"Items":[{"MenuItemId":2,"Quantity":1},{"MenuItemId":10,"Quantity":1},{"MenuItemId":7,"Quantity":17}],"PaymentMethodId":4}-2026-08-29 13:37:39
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-29 13:37:40
+Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.-2026-08-29 13:37:40
+POST-Mohamed Elsayed-Response-2026-08-29 13:37:40 | OrderId: 94-2026-08-29 13:37:40
+POST-Mohamed Elsayed-Response-2026-08-29 13:37:40
+POST-Guest-Request-2026-08-29 13:37:52
+POST-Mohamed Elsayed-Response-2026-08-29 13:37:52
+GET-Guest-Request-2026-08-29 13:37:52
+GET-Guest-Response-2026-08-29 13:37:52
+GET-Guest-Request-2026-08-29 13:37:53
+GET-Guest-Response-2026-08-29 13:37:54
+POST-Guest-Request-2026-08-29 13:37:57
+POST-Ahmed Khalifa-Response-2026-08-29 13:37:58
+GET-Guest-Request-2026-08-29 13:37:58
+GET-Ahmed Khalifa-Response-2026-08-29 13:37:58
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:37:58
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:37:58
+GET-Guest-Request-2026-08-29 13:38:03
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:03
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:38:03
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:38:03
+GET-Guest-Request-2026-08-29 13:38:05
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:05
+GET-Guest-Request-2026-08-29 13:38:10
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:10
+GET-Guest-Request-2026-08-29 13:38:16
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:16
+GET-Guest-Request-2026-08-29 13:38:19
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:19
+GET-Guest-Request-2026-08-29 13:38:23
+GET-Ahmed Khalifa-Response-2026-08-29 13:38:23
+POST-Guest-Request-2026-08-29 13:38:25
+POST-Ahmed Khalifa-Response-2026-08-29 13:38:25
+GET-Guest-Request-2026-08-29 13:38:25
+GET-Guest-Response-2026-08-29 13:38:25
+GET-Guest-Request-2026-08-29 13:38:27
+GET-Guest-Response-2026-08-29 13:38:27
+POST-Guest-Request-2026-08-29 13:38:33
+POST-Mohamed Elsayed-Response-2026-08-29 13:38:34
+GET-Guest-Request-2026-08-29 13:38:34
+GET-Mohamed Elsayed-Response-2026-08-29 13:38:35
+POST-Guest-Request-2026-08-29 13:38:55
+POST-Mohamed Elsayed-Response-2026-08-29 13:38:55
+GET-Guest-Request-2026-08-29 13:38:55
+GET-Guest-Response-2026-08-29 13:38:55
+GET-Guest-Request-2026-08-29 13:38:56
+GET-Guest-Response-2026-08-29 13:38:56
