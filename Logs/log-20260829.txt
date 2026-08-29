@@ -45,3 +45,96 @@ GET-Guest-Request-2026-08-29 11:48:33
 GET-Ahmed Khalifa-Response-2026-08-29 11:48:37
 Unable to configure Browser Link script injection on the response. -2026-08-29 11:48:37
 Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 11:48:37
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-29 13:40:22
+GET-Guest-Request-2026-08-29 13:40:31
+GET-Guest-Response-2026-08-29 13:40:31
+GET-Guest-Request-2026-08-29 13:40:34
+GET-Guest-Response-2026-08-29 13:40:34
+POST-Guest-Request-2026-08-29 13:40:36
+POST-Ahmed Khalifa-Response-2026-08-29 13:40:38
+GET-Guest-Request-2026-08-29 13:40:38
+GET-Ahmed Khalifa-Response-2026-08-29 13:40:38
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:40:38
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:40:38
+GET-Guest-Request-2026-08-29 13:40:40
+GET-Ahmed Khalifa-Response-2026-08-29 13:40:45
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:40:45
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:40:45
+GET-Guest-Request-2026-08-29 13:43:17
+GET-Ahmed Khalifa-Response-2026-08-29 13:43:18
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:43:18
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:43:18
+GET-Guest-Request-2026-08-29 13:43:23
+GET-Ahmed Khalifa-Response-2026-08-29 13:43:24
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:43:24
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:43:24
+GET-Guest-Request-2026-08-29 13:43:35
+GET-Ahmed Khalifa-Response-2026-08-29 13:43:35
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:43:35
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:43:35
+GET-Guest-Request-2026-08-29 13:43:39
+GET-Ahmed Khalifa-Response-2026-08-29 13:43:39
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:43:39
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:43:39
+GET-Guest-Request-2026-08-29 13:43:42
+GET-Ahmed Khalifa-Response-2026-08-29 13:43:42
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:43:42
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:43:42
+POST-Guest-Request-2026-08-29 13:43:47
+Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.-2026-08-29 13:43:47
+POST-Ahmed Khalifa-Response-2026-08-29 13:43:51
+GET-Guest-Request-2026-08-29 13:45:51
+GET-Ahmed Khalifa-Response-2026-08-29 13:45:51
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:45:51
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:45:51
+GET-Guest-Request-2026-08-29 13:48:52
+GET-Ahmed Khalifa-Response-2026-08-29 13:48:53
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:48:53
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:48:53
+POST-Guest-Request-2026-08-29 13:48:56
+POST-Ahmed Khalifa-Response-2026-08-29 13:49:01
+GET-Guest-Request-2026-08-29 13:50:46
+GET-Ahmed Khalifa-Response-2026-08-29 13:50:46
+GET-Guest-Request-2026-08-29 13:50:49
+GET-Ahmed Khalifa-Response-2026-08-29 13:50:49
+GET-Guest-Request-2026-08-29 13:51:21
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:21
+GET-Guest-Request-2026-08-29 13:51:24
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:24
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:51:24
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:51:24
+GET-Guest-Request-2026-08-29 13:51:32
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:32
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:51:32
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:51:32
+GET-Guest-Request-2026-08-29 13:51:36
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:37
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:51:37
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:51:37
+GET-Guest-Request-2026-08-29 13:51:39
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:39
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:51:39
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:51:39
+GET-Guest-Request-2026-08-29 13:51:42
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:42
+GET-Guest-Request-2026-08-29 13:51:47
+GET-Ahmed Khalifa-Response-2026-08-29 13:51:47
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:51:47
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:51:47
+GET-Guest-Request-2026-08-29 13:52:01
+GET-Ahmed Khalifa-Response-2026-08-29 13:52:02
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:52:02
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:52:02
+GET-Guest-Request-2026-08-29 13:52:06
+GET-Ahmed Khalifa-Response-2026-08-29 13:52:06
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:52:06
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:52:06
+GET-Guest-Request-2026-08-29 13:52:10
+GET-Ahmed Khalifa-Response-2026-08-29 13:52:10
+Unable to configure Browser Link script injection on the response. -2026-08-29 13:52:10
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-29 13:52:10
