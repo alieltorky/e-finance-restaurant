@@ -1,12 +1,18 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Online_Restaurant.Configuration;
 using Online_Restaurant.Data;
-using Online_Restaurant.Middleware;
 using Online_Restaurant.Extensions;
+using Online_Restaurant.Middleware;
 using Online_Restaurant.Models;
+using Online_Restaurant.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 
 builder.AddSerilogLogging();
 
