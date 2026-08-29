@@ -6,10 +6,12 @@ using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 using Online_Restaurant.Models.DTOs;
 using System.Security.Claims;
+using System.Text.Json; // Added JSON serializer namespace
+using Serilog; // Added Serilog logging namespace
 
 namespace Online_Restaurant.Controllers
 {
-    
+
     public class CheckoutController : Controller
     {
         private readonly AppdbContext _context;
@@ -21,7 +23,6 @@ namespace Online_Restaurant.Controllers
             _context = context;
             _userManager = userManager;
         }
-        [HttpGet]
         [HttpGet]
         public async Task<IActionResult> GetCustomerInfo()
         {
@@ -43,6 +44,12 @@ namespace Online_Restaurant.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] CheckoutRequest request)
         {
+            // gharbawy : Serialized request payload to JSON and logged incoming request
+            var userName = User.Identity?.Name ?? "Guest";
+            var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var payload = JsonSerializer.Serialize(request);
+            Log.Information("POST-{User}-Request-{Time} | Object {Payload}", userName, requestTime, payload);
+
             // 1. Validate request data
             if (request == null || request.Items == null || !request.Items.Any())
             {
@@ -173,6 +180,10 @@ namespace Online_Restaurant.Controllers
 
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
+
+                    // gharbawy : Logged successful response with generated OrderId
+                    var responseTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    Log.Information("POST-{User}-Response-{Time} | OrderId: {OrderId}", userName, responseTime, order.OrderId);
 
                     return Json(new
                     {
