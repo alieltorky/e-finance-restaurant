@@ -1,0 +1,249 @@
+﻿@model IEnumerable<Online_Restaurant.ViewModels.EmployeeListItemVM>
+
+@{
+    ViewData["Title"] = "Employees";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+
+    var employeeToEdit = ViewBag.EmployeeToEdit as Online_Restaurant.ViewModels.EmployeeFormVM;
+    var roles = ViewBag.Roles as string[] ?? new[] { "Admin", "Chef", "Delivery" };
+    var currentUserId = ViewBag.CurrentUserId as string;
+
+    bool isEditing = employeeToEdit != null && !string.IsNullOrEmpty(employeeToEdit.Id);
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Employees</h2>
+            <p class="text-muted mb-0">
+                Manage Admin, Chef and Delivery staff accounts
+            </p>
+        </div>
+    </div>
+
+    @if (TempData["EmployeeMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["EmployeeMessage"]</div>
+    }
+    @if (TempData["EmployeeError"] != null)
+    {
+        <div class="alert alert-danger">@TempData["EmployeeError"]</div>
+    }
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <!-- ================= EMPLOYEES TABLE ================= -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">All Employees</h5>
+        </div>
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @employee.UserName
+                                        @if (employee.Id == currentUserId)
+                                        {
+                                            <span class="badge bg-secondary ms-1">You</span>
+                                        }
+                                    </td>
+                                    <td>@employee.Email</td>
+                                    <td>@employee.PhoneNumber</td>
+                                    <td>
+                                        <span class="badge bg-info text-dark">@employee.Role</span>
+                                    </td>
+                                    <td>
+                                        @if (employee.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Deactivated</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <!-- EDIT -->
+                                            <a asp-controller="Employees"
+                                               asp-action="Index"
+                                               asp-route-editId="@employee.Id"
+                                               class="btn btn-sm btn-warning">
+                                                Edit
+                                            </a>
+
+                                            <!-- ACTIVATE / DEACTIVATE -->
+                                            <form asp-controller="Employees"
+                                                  asp-action="ToggleStatus"
+                                                  method="post"
+                                                  onsubmit="return confirm('@(employee.IsActive ? "Deactivate" : "Activate") this employee?');">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@employee.Id" />
+                                                <button type="submit" class="btn btn-sm @(employee.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                                    @(employee.IsActive ? "Deactivate" : "Activate")
+                                                </button>
+                                            </form>
+
+                                            <!-- DELETE -->
+                                            @if (employee.Id != currentUserId)
+                                            {
+                                                <form asp-controller="Employees"
+                                                      asp-action="Delete"
+                                                      method="post"
+                                                      onsubmit="return confirm('Are you sure you want to permanently delete this employee?');">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@employee.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h5 class="text-muted">No employees found</h5>
+                    <p class="text-muted">Add your first employee using the form below.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- ================= ADD / EDIT FORM ================= -->
+    <div class="card shadow-sm" id="employeeForm">
+        <div class="card-header bg-white">
+            @if (isEditing)
+            {
+                <h5 class="mb-0">Edit Employee</h5>
+            }
+            else
+            {
+                <h5 class="mb-0">Add New Employee</h5>
+            }
+        </div>
+
+        <div class="card-body">
+            <form asp-controller="Employees"
+                  asp-action="@(isEditing ? "Edit" : "Create")"
+                  method="post"
+                  autocomplete="off">
+
+                @Html.AntiForgeryToken()
+
+                @if (isEditing)
+                {
+                    <input type="hidden" name="Id" value="@employeeToEdit!.Id" />
+                }
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input name="UserName"
+                               value="@(employeeToEdit?.UserName)"
+                               class="form-control"
+                               placeholder="Enter full name"
+                               required />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email"
+                               name="Email"
+                               value="@(employeeToEdit?.Email)"
+                               class="form-control"
+                               placeholder="Enter email"
+                               autocomplete="off"
+                               required />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Phone</label>
+                        <input name="PhoneNumber"
+                               value="@(employeeToEdit?.PhoneNumber)"
+                               class="form-control"
+                               placeholder="Enter phone number" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Role</label>
+                        <select name="Role" class="form-select" required>
+                            <option value="">-- Choose role --</option>
+                            @foreach (var role in roles)
+                            {
+                                var selected = employeeToEdit != null && employeeToEdit.Role == role;
+                                <option value="@role" selected="@(selected ? "selected" : null)">@role</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="Address" class="form-control" rows="2" placeholder="Enter address">@(employeeToEdit?.Address)</textarea>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Password
+                            @if (isEditing)
+                            {
+                                <span class="text-muted">(leave blank to keep current password)</span>
+                            }
+                        </label>
+                        <input type="password"
+                               name="Password"
+                               class="form-control"
+                               placeholder="@(isEditing ? "New password (optional)" : "At least 6 characters, 1 digit")"
+                               autocomplete="new-password"
+                               required="@(isEditing ? null : "required")" />
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn @(isEditing ? "btn-success" : "btn-primary")">
+                        @(isEditing ? "Save Changes" : "Add Employee")
+                    </button>
+
+                    @if (isEditing)
+                    {
+                        <a asp-controller="Employees" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
