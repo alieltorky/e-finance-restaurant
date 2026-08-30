@@ -1,232 +1,525 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>@ViewData["Title"]</title>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 
-	
+    <style>
+            #navmenu > ul {
+                gap: 25px;
+            }
 
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com" rel="preconnect">
-	<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+                #navmenu > ul > li > a {
+                    padding: 10px 5px;
+                }
 
-	<!-- Vendor CSS Files -->
-	<link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-	<link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-	<link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-	<link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+            .navbar-actions {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
 
-	<!-- Main CSS File -->
-	<link href="~/assets/css/main.css" rel="stylesheet">
+                .navbar-actions .cart-link {
+                    margin-right: 5px;
+                }
 
-	<!-- =======================================================
-  * Template Name: Yummy
-  * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+                .navbar-actions .ms-3 {
+                    margin-left: 0 !important;
+                }
+
+                .navbar-actions .me-2,
+                .navbar-actions .me-1,
+                .navbar-actions .me-0 {
+                    margin-right: 0 !important;
+                }
+    </style>
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Amatic+SC:wght@400;700&display=swap"
+          rel="stylesheet">
+
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+
+    <!-- Main CSS File -->
+    <link href="~/assets/css/main.css" rel="stylesheet">
+
 </head>
+
+
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Interns Restaurant</h1>
-        <span>.</span>
-      </a>
+    <!-- ================= HEADER ================= -->
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-            <li>
-                <a asp-controller="Home" asp-action="Index" class="active">Home</a>
-            </li>
-          <li><a href="#about">About</a></li>
-          <li>
-            <a asp-controller="MenuItemsController1"
-               asp-action="Index">
-                Menu
+    <header id="header"
+            class="header d-flex align-items-center sticky-top">
+
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+
+
+            <!-- ================= LOGO ================= -->
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="logo d-flex align-items-center me-auto me-xl-0">
+
+                <h1 class="sitename">Interns Restaurant</h1>
+                <span>.</span>
+
             </a>
-        </li>
-          <li><a href="#events">Events</a></li>
-                    <!-- Admin Dashboard Link  -->
+
+
+            <!-- ================= NAVBAR ================= -->
+
+            <nav id="navmenu" class="navmenu">
+
+                <ul>
+
+                    <!-- Home -->
+                    <li>
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="active">
+                            Home
+                        </a>
+                    </li>
+
+
+                    <!-- Menu -->
+                    <li>
+                        <a asp-controller="MenuItemsController1"
+                           asp-action="Index">
+                            Menu
+                        </a>
+                    </li>
+
+
+                    <!-- Admin Dashboard -->
                     @if (User.IsInRole("Admin"))
                     {
                         <li>
-                            <a asp-controller="Dashboard" asp-action="Index" class="text-danger fw-bold">
-                                <i class="bi bi-gear-fill me-1"></i> Admin Dashboard
+                            <a asp-controller="Dashboard"
+                               asp-action="Index"
+                               class="text-danger fw-bold">
+
+                                <i class="bi bi-gear-fill me-1"></i>
+                                Admin Dashboard
+
                             </a>
                         </li>
                     }
 
-                    <!-- Delivery Dashboard Link  -->
+
+                    <!-- Delivery Dashboard -->
                     @if (User.IsInRole("Delivery"))
                     {
                         <li>
-                            <a asp-controller="Delivery" asp-action="Index" class="text-warning fw-bold">
-                                <i class="bi bi-bicycle me-1"></i> Delivery Dashboard
+                            <a asp-controller="Delivery"
+                               asp-action="Index"
+                               class="text-warning fw-bold">
+
+                                <i class="bi bi-bicycle me-1"></i>
+                                Delivery Dashboard
+
                             </a>
                         </li>
                     }
 
-                    <!-- Chef Dashboard Link  -->
+
+                    <!-- Chef Dashboard -->
                     @if (User.IsInRole("Chef"))
                     {
                         <li>
-                            <a asp-controller="Chef" asp-action="Index" class="text-success fw-bold">
-                                <i class="bi bi-egg-fried me-1"></i> Chef Dashboard
+                            <a asp-controller="Chef"
+                               asp-action="Index"
+                               class="text-success fw-bold">
+
+                                <i class="bi bi-egg-fried me-1"></i>
+                                Chef Dashboard
+
                             </a>
                         </li>
                     }
-                    <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
 
-            <!--cart icon -->
-            <a asp-controller="Cart"
-               asp-action="Index"
-               class="cart-link position-relative">
+                </ul>
 
-                <i class="bi bi-cart3"></i>
 
-                <span id="cart-count"
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    0
-                </span>
+                <!-- Mobile Menu -->
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 
-            </a>
+            </nav>
 
-            @if (User.Identity != null && User.Identity.IsAuthenticated)
-            {
-                <a asp-controller="Orders" asp-action="Index" class="btn btn-sm btn-outline-secondary ms-3 me-2">My Orders</a>
 
-                <span class="me-2">Hi, @User.Identity.Name</span>
+            <!-- ================= CART + AUTHENTICATION ================= -->
 
-                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
-                </form>
-            }
-            else
-            {
-                <a asp-controller="Account" asp-action="Login" class="btn btn-sm btn-outline-primary ms-3 me-2">Login</a>
-                <a asp-controller="Account" asp-action="Register" class="btn btn-sm btn-primary">Register</a>
-            }
+            <div class="navbar-actions">
+
+
+                <!-- Cart Icon -->
+                <a asp-controller="Cart"
+                   asp-action="Index"
+                   class="cart-link position-relative">
+
+                    <i class="bi bi-cart3"></i>
+
+                    <span id="cart-count"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        0
+                    </span>
+
+                </a>
+
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+
+                    <!-- My Orders -->
+                    <a asp-controller="Orders"
+                       asp-action="Index"
+                       class="btn btn-sm btn-outline-secondary">
+
+                        My Orders
+
+                    </a>
+
+
+                    <!-- Username -->
+                    <span>
+                        Hi, @User.Identity.Name
+                    </span>
+
+
+                    <!-- Logout -->
+                    <form asp-controller="Account"
+                          asp-action="Logout"
+                          method="post"
+                          class="d-inline">
+
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit"
+                                class="btn btn-sm btn-outline-secondary">
+
+                            Logout
+
+                        </button>
+
+                    </form>
+
+                }
+                else
+                {
+
+                    <!-- Login -->
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="btn btn-sm btn-outline-primary">
+
+                        Login
+
+                    </a>
+
+
+                    <!-- Register -->
+                    <a asp-controller="Account"
+                       asp-action="Register"
+                       class="btn btn-sm btn-primary">
+
+                        Register
+
+                    </a>
+
+                }
+
+            </div>
 
         </div>
+
     </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
     <main>
+
         @RenderBody()
+
     </main>
-    <footer id="footer" class="footer dark-background">
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer id="footer"
+            class="footer dark-background">
+
 
         <div class="container">
+
             <div class="row gy-3">
+
+
+                <!-- Address -->
                 <div class="col-lg-3 col-md-6 d-flex">
+
                     <i class="bi bi-geo-alt icon"></i>
+
                     <div class="address">
+
                         <h4>Address</h4>
+
                         <p>A108 Adam Street</p>
+
                         <p>New York, NY 535022</p>
+
                         <p></p>
+
                     </div>
 
                 </div>
 
+
+                <!-- Contact -->
                 <div class="col-lg-3 col-md-6 d-flex">
+
                     <i class="bi bi-telephone icon"></i>
+
                     <div>
+
                         <h4>Contact</h4>
+
                         <p>
-                            <strong>Phone:</strong> <span>+1 5589 55488 55</span><br>
-                            <strong>Email:</strong> <span>info@example.com</span><br>
+
+                            <strong>Phone:</strong>
+                            <span>+1 5589 55488 55</span>
+
+                            <br>
+
+                            <strong>Email:</strong>
+                            <span>info@example.com</span>
+
+                            <br>
+
                         </p>
+
                     </div>
+
                 </div>
 
+
+                <!-- Opening Hours -->
                 <div class="col-lg-3 col-md-6 d-flex">
+
                     <i class="bi bi-clock icon"></i>
+
                     <div>
+
                         <h4>Opening Hours</h4>
+
                         <p>
-                            <strong>Mon-Sat:</strong> <span>11AM - 23PM</span><br>
-                            <strong>Sunday</strong>: <span>Closed</span>
+
+                            <strong>Mon-Sat:</strong>
+                            <span>11AM - 23PM</span>
+
+                            <br>
+
+                            <strong>Sunday:</strong>
+                            <span>Closed</span>
+
                         </p>
+
                     </div>
+
                 </div>
 
+
+                <!-- Social Media -->
                 <div class="col-lg-3 col-md-6">
+
                     <h4>Follow Us</h4>
+
                     <div class="social-links d-flex">
-                        <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+
+                        <a href="#"
+                           class="twitter">
+
+                            <i class="bi bi-twitter-x"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="facebook">
+
+                            <i class="bi bi-facebook"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="instagram">
+
+                            <i class="bi bi-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="linkedin">
+
+                            <i class="bi bi-linkedin"></i>
+
+                        </a>
+
                     </div>
+
                 </div>
 
             </div>
+
         </div>
 
+
+        <!-- Copyright -->
+
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Yummy</strong> <span>All Rights Reserved</span></p>
+
+            <p>
+
+                ©
+
+                <span>Copyright</span>
+
+                <strong class="px-1 sitename">
+                    Yummy
+                </strong>
+
+                <span>
+                    All Rights Reserved
+                </span>
+
+            </p>
+
+
             <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
+
+                Designed by
+
+                <a href="https://bootstrapmade.com/">
+                    BootstrapMade
+                </a>
+
+                Distributed by
+
+                <a href="https://themewagon.com">
+                    ThemeWagon
+                </a>
+
             </div>
+
         </div>
 
     </footer>
-        
-        <!-- Vendor JS Files -->
+
+
+    <!-- ================= VENDOR JS FILES ================= -->
+
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
     <script src="~/assets/vendor/aos/aos.js"></script>
+
     <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+
     <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-    <!-- Main JS File -->
+
+    <!-- ================= MAIN JS ================= -->
+
     <script src="~/assets/js/main.js"></script>
-    <!-- Keep the navbar cart badge in sync with whichever user is logged in -->
+
+
+    <!-- ================= CART BADGE SYNC ================= -->
+
     <script>
-        (async function () {
-            let cartKey = "cart_guest";
 
-            try {
-                const authResponse = await fetch("/Account/IsAuthenticated");
-                const authData = await authResponse.json();
-                cartKey = authData.isAuthenticated ? `cart_${authData.userId}` : "cart_guest";
-            } catch (err) {
-                console.error("Cart badge sync failed:", err);
-            }
+            (async function() {
 
-            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-            let totalItems = 0;
+                let cartKey = "cart_guest";
 
-            cart.forEach(item => {
-                totalItems += item.quantity;
-            });
 
-            const cartCount = document.getElementById("cart-count");
-            if (cartCount) {
-                cartCount.textContent = totalItems;
-            }
-        })();
+                try {
+
+                    const authResponse =
+                        await fetch("/Account/IsAuthenticated");
+
+
+                    const authData =
+                        await authResponse.json();
+
+
+                    cartKey =
+                        authData.isAuthenticated
+                            ? `cart_${authData.userId}`
+                            : "cart_guest";
+
+                }
+                catch (err) {
+
+                    console.error(
+                        "Cart badge sync failed:",
+                        err
+                    );
+
+                }
+
+
+                const cart =
+                    JSON.parse(
+                        localStorage.getItem(cartKey)
+                    ) || [];
+
+
+                let totalItems = 0;
+
+
+                cart.forEach(item => {
+
+                    totalItems += item.quantity;
+
+                });
+
+
+                const cartCount =
+                    document.getElementById("cart-count");
+
+
+                if (cartCount) {
+
+                    cartCount.textContent =
+                        totalItems;
+
+                }
+
+            })();
+
     </script>
+
+
 </body>
+
 </html>

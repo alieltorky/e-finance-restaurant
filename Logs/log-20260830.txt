@@ -1,0 +1,72 @@
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:16:19
+GET-Guest-Request-2026-08-30 09:16:24
+GET-Guest-Response-2026-08-30 09:16:25
+GET-Guest-Request-2026-08-30 09:16:48
+GET-Guest-Response-2026-08-30 09:16:48
+GET-Guest-Request-2026-08-30 09:19:41
+GET-Guest-Response-2026-08-30 09:19:41
+GET-Guest-Request-2026-08-30 09:22:20
+GET-Guest-Response-2026-08-30 09:22:20
+GET-Guest-Request-2026-08-30 09:22:30
+GET-Guest-Response-2026-08-30 09:22:30
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:22:48
+GET-Guest-Request-2026-08-30 09:22:57
+GET-Guest-Response-2026-08-30 09:22:57
+GET-Guest-Request-2026-08-30 09:26:21
+GET-Guest-Response-2026-08-30 09:26:21
+GET-Guest-Request-2026-08-30 09:26:32
+GET-Guest-Response-2026-08-30 09:26:32
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 09:29:54
+GET-Guest-Request-2026-08-30 09:30:17
+GET-Guest-Response-2026-08-30 09:30:18
+GET-Guest-Request-2026-08-30 09:32:56
+GET-Guest-Response-2026-08-30 09:32:56
+GET-Guest-Request-2026-08-30 09:34:10
+GET-Guest-Response-2026-08-30 09:34:10
+GET-Guest-Request-2026-08-30 09:34:21
+GET-Guest-Response-2026-08-30 09:34:21
+GET-Guest-Request-2026-08-30 09:34:24
+GET-Guest-Response-2026-08-30 09:34:24
+GET-Guest-Request-2026-08-30 09:34:34
+GET-Guest-Response-2026-08-30 09:34:34
+GET-Guest-Request-2026-08-30 09:34:38
+GET-Guest-Response-2026-08-30 09:34:38
+GET-Guest-Request-2026-08-30 09:34:51
+GET-Guest-Response-2026-08-30 09:34:51
+POST-Guest-Request-2026-08-30 09:34:53
+POST-Ahmed Khalifa-Response-2026-08-30 09:34:55
+GET-Guest-Request-2026-08-30 09:34:55
+GET-Ahmed Khalifa-Response-2026-08-30 09:34:55
+Unable to configure Browser Link script injection on the response. -2026-08-30 09:34:55
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-30 09:34:55
+GET-Guest-Request-2026-08-30 09:34:57
+GET-Ahmed Khalifa-Response-2026-08-30 09:34:57
+POST-Guest-Request-2026-08-30 09:35:01
+POST-Ahmed Khalifa-Response-2026-08-30 09:35:01
+GET-Guest-Request-2026-08-30 09:35:01
+GET-Guest-Response-2026-08-30 09:35:01
+GET-Guest-Request-2026-08-30 09:35:03
+GET-Guest-Response-2026-08-30 09:35:03
+POST-Guest-Request-2026-08-30 09:35:06
+POST-mariam alaa-Response-2026-08-30 09:35:10
+GET-Guest-Request-2026-08-30 09:35:10
+GET-mariam alaa-Response-2026-08-30 09:35:10
+POST-Guest-Request-2026-08-30 09:35:15
+POST-mariam alaa-Response-2026-08-30 09:35:15
+GET-Guest-Request-2026-08-30 09:35:15
+GET-Guest-Response-2026-08-30 09:35:15
