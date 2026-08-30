@@ -158,8 +158,10 @@
                 <!-- ================= PAGINATION ================= -->
                 @if (Model.TotalPages > 1)
                 {
+                    var orderedPages = GetPagesToShow(Model.PageNumber, Model.TotalPages);
+
                     <nav>
-                        <ul class="pagination justify-content-center mt-3">
+                        <ul class="pagination justify-content-center mt-3 flex-wrap">
 
                             <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
                                 <a class="page-link"
@@ -179,8 +181,18 @@
                                    asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
                             </li>
 
-                            @for (int p = 1; p <= Model.TotalPages; p++)
+                            @{
+                                int? previousPage = null;
+                            }
+                            @foreach (var p in orderedPages)
                             {
+                                if (previousPage.HasValue && p - previousPage.Value > 1)
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                }
+
                                 <li class="page-item @(p == Model.PageNumber ? "active" : "")">
                                     <a class="page-link"
                                        asp-action="Index"
@@ -189,6 +201,8 @@
                                        asp-route-deliveryManId="@Model.DeliveryManId"
                                        asp-route-pageNumber="@p">@p</a>
                                 </li>
+
+                                previousPage = p;
                             }
 
                             <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
@@ -285,7 +299,6 @@
                     allRadios.forEach(r => r.disabled = false);
                 }
             });
-
             function showError(message) {
                 if (!errorAlert) return;
                 errorAlert.textContent = message;
@@ -293,4 +306,34 @@
             }
         });
     </script>
+}
+
+@functions {
+
+    private List<int> GetPagesToShow(int currentPage, int totalPages)
+    {
+        var pages = new List<int> { 1 };
+
+        if (totalPages >= 2)
+        {
+            pages.Add(2);
+        }
+
+        for (int p = currentPage - 2; p <= currentPage + 2; p++)
+        {
+            if (p >= 1 && p <= totalPages)
+            {
+                pages.Add(p);
+            }
+        }
+
+        if (totalPages >= 2)
+        {
+            pages.Add(totalPages - 1);
+        }
+
+        pages.Add(totalPages);
+
+        return pages.Distinct().OrderBy(p => p).ToList();
+    }
 }
