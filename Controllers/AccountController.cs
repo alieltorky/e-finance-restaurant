@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 using System.Security.Claims;
+using System.Text.Json; // gharbawy : Added JSON serializer namespace
+using Serilog; // gharbawy : Added Serilog logging namespace
 
 namespace Online_Restaurant.Controllers
 {
@@ -13,11 +15,11 @@ namespace Online_Restaurant.Controllers
     {
         //private readonly AppdbContext _context;
         //private readonly PasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
-       private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-            
+
         public AccountController(UserManager<ApplicationUser> userManager,
                                 SignInManager<ApplicationUser> signInManager,
                                 RoleManager<IdentityRole> roleManager)
@@ -48,10 +50,16 @@ namespace Online_Restaurant.Controllers
         }
 
         // POST: Account/Register
-        [HttpPost]      
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(string userName, string email, string password, string confirmPassword, string? address, string phonenumber, string? returnUrl = null)
         {
+            // gharbawy : Serialized registration parameters (excluding passwords) and logged incoming request
+            var userLogged = User.Identity?.Name ?? "Guest";
+            var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var jsonData = JsonSerializer.Serialize(new { userName, email, address, phonenumber });
+            Log.Information("POST-{User}-Request-{Time} | {Data}", userLogged, requestTime, jsonData);
+
             // Role is assigned by the server below, not submitted by the form
             ModelState.Remove("Role");
 
@@ -86,6 +94,10 @@ namespace Online_Restaurant.Controllers
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
+                // gharbawy : Logged successful user registration response
+                var responseTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                Log.Information("POST-{User}-Response-{Time} | RegisteredUser: {RegisteredUser}", userLogged, responseTime, userName);
+
                 return RedirectToLocal(returnUrl);
 
             }
@@ -111,7 +123,13 @@ namespace Online_Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password, bool rememberMe, string? returnUrl = null)
         {
-            if(!ModelState.IsValid)
+            // gharbawy : Serialized login parameters (excluding password) and logged incoming request
+            var userLogged = User.Identity?.Name ?? "Guest";
+            var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var jsonData = JsonSerializer.Serialize(new { email, rememberMe });
+            Log.Information("POST-{User}-Request-{Time} | {Data}", userLogged, requestTime, jsonData);
+
+            if (!ModelState.IsValid)
             {
                 ViewBag.ReturnUrl = returnUrl;
                 return View();
@@ -129,6 +147,10 @@ namespace Online_Restaurant.Controllers
 
             if (result.Succeeded)
             {
+                // gharbawy : Logged successful login response
+                var responseTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                Log.Information("POST-{User}-Response-{Time} | LoggedInUser: {LoggedInUser}", userLogged, responseTime, user.UserName);
+
                 return await RedirectAfterLogin(user, returnUrl);
             }
             ModelState.AddModelError("", "Invalid email or password.");
@@ -141,7 +163,17 @@ namespace Online_Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            // gharbawy : Logged incoming logout request
+            var userLogged = User.Identity?.Name ?? "Guest";
+            var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Log.Information("POST-{User}-Request-{Time} | Logout", userLogged, requestTime);
+
             await _signInManager.SignOutAsync();
+
+            // gharbawy : Logged successful logout response
+            var responseTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Log.Information("POST-{User}-Response-{Time} | LoggedOut", userLogged, responseTime);
+
             return RedirectToAction("Index", "Home");
         }
         // GET: Account/AccessDenied

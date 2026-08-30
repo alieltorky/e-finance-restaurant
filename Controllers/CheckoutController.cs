@@ -44,7 +44,7 @@ namespace Online_Restaurant.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceOrder([FromBody] CheckoutRequest request)
         {
-            // gharbawy : Serialized request payload to JSON and logged incoming request
+            // gharbawy : Serialized request  to JSON and logged incoming request
             var userName = User.Identity?.Name ?? "Guest";
             var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var payload = JsonSerializer.Serialize(request);
