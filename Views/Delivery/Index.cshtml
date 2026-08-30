@@ -26,7 +26,7 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Available Orders</h5>
-                    <span class="badge bg-primary">@Model.AvailableOrders.Count Ready</span>
+                    <span class="badge bg-primary">@Model.AvailableTotalCount Ready</span>
                 </div>
                 <div class="card-body p-0 table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -82,6 +82,41 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if (Model.AvailableTotalPages > 1)
+                {
+                    <div class="card-footer bg-white">
+                        <nav>
+                            <ul class="pagination pagination-sm justify-content-center mb-0">
+
+                                <li class="page-item @(Model.AvailablePageNumber == 1 ? "disabled" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-availablePage="@(Model.AvailablePageNumber - 1)"
+                                       asp-route-myOrdersPage="@Model.MyOrdersPageNumber">Previous</a>
+                                </li>
+
+                                @for (int p = 1; p <= Model.AvailableTotalPages; p++)
+                                {
+                                    <li class="page-item @(p == Model.AvailablePageNumber ? "active" : "")">
+                                        <a class="page-link"
+                                           asp-action="Index"
+                                           asp-route-availablePage="@p"
+                                           asp-route-myOrdersPage="@Model.MyOrdersPageNumber">@p</a>
+                                    </li>
+                                }
+
+                                <li class="page-item @(Model.AvailablePageNumber == Model.AvailableTotalPages ? "disabled" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-availablePage="@(Model.AvailablePageNumber + 1)"
+                                       asp-route-myOrdersPage="@Model.MyOrdersPageNumber">Next</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                }
             </div>
         </div>
 
@@ -90,7 +125,7 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">My Orders</h5>
-                    <span class="badge bg-secondary">@Model.MyOrders.Count Total</span>
+                    <span class="badge bg-secondary">@Model.MyOrdersTotalCount Total</span>
                 </div>
                 <div class="card-body p-0 table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -155,6 +190,41 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if (Model.MyOrdersTotalPages > 1)
+                {
+                    <div class="card-footer bg-white">
+                        <nav>
+                            <ul class="pagination pagination-sm justify-content-center mb-0">
+
+                                <li class="page-item @(Model.MyOrdersPageNumber == 1 ? "disabled" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-myOrdersPage="@(Model.MyOrdersPageNumber - 1)"
+                                       asp-route-availablePage="@Model.AvailablePageNumber">Previous</a>
+                                </li>
+
+                                @for (int p = 1; p <= Model.MyOrdersTotalPages; p++)
+                                {
+                                    <li class="page-item @(p == Model.MyOrdersPageNumber ? "active" : "")">
+                                        <a class="page-link"
+                                           asp-action="Index"
+                                           asp-route-myOrdersPage="@p"
+                                           asp-route-availablePage="@Model.AvailablePageNumber">@p</a>
+                                    </li>
+                                }
+
+                                <li class="page-item @(Model.MyOrdersPageNumber == Model.MyOrdersTotalPages ? "disabled" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-myOrdersPage="@(Model.MyOrdersPageNumber + 1)"
+                                       asp-route-availablePage="@Model.AvailablePageNumber">Next</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                }
             </div>
         </div>
     </div>
