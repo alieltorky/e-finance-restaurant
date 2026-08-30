@@ -163,7 +163,7 @@
 
             <!-- ================= USERS ================= -->
 
-            <a href="#usersMenu"
+            @* <a href="#usersMenu"
                data-bs-toggle="collapse"
                aria-expanded="false">
 
@@ -188,7 +188,7 @@
 
                 </a>
 
-            </div>
+            </div> *@
 
 
             <!-- ================= ORDERS ================= -->
@@ -211,12 +211,12 @@
 
                 </a>
 
-                <a asp-controller="OrderDetails"
+                @* <a asp-controller="OrderDetails"
                    asp-action="Index">
 
                     Order Details
 
-                </a>
+                </a> *@
 
                 <a asp-controller="OrderStatus"
                    asp-action="Index">
@@ -378,73 +378,27 @@
 
 
         <!-- ================= TOP NAVBAR ================= -->
-
         <nav class="top-navbar">
-
             <div>
-
                 <strong>
                     @ViewData["Title"]
                 </strong>
-
             </div>
 
+            <!-- User Info & Logout Button -->
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-dark fw-semibold">
+                    @(User.Identity?.Name ?? "Admin")
+                </span>
 
-            <div>
-
-                <div class="dropdown">
-
-                    <button class="btn btn-outline-secondary dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown">
-
-                        Admin
-
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-box-arrow-right me-1"></i> Logout
                     </button>
-
-
-                    <ul class="dropdown-menu dropdown-menu-end">
-
-                        <li>
-
-                            <a class="dropdown-item"
-                               asp-controller="Account"
-                               asp-action="Profile">
-
-                                Profile
-
-                            </a>
-
-                        </li>
-
-
-                        <li>
-
-                            <hr class="dropdown-divider">
-
-                        </li>
-
-
-                        <li>
-
-                            <a class="dropdown-item"
-                               asp-controller="Account"
-                               asp-action="Logout">
-
-                                Logout
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
-                </div>
-
+                </form>
             </div>
-
         </nav>
-
 
         <!-- ================= PAGE CONTENT ================= -->
 
