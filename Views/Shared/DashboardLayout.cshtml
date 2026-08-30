@@ -205,12 +205,6 @@
 
                 </a>
 
-                <a asp-controller="PaymentMethod"
-                   asp-action="Index">
-
-                    Payment Methods
-
-                </a>
 
             </div>
 
@@ -249,44 +243,17 @@
 
                 </a>
 
-                <a asp-controller="MenuIngredients"
-                   asp-action="Index">
-
-                    Menu Ingredients
-
-                </a>
-
             </div>
 
 
             <!-- ================= INVENTORY ================= -->
 
-            <a href="#inventoryMenu"
-               data-bs-toggle="collapse"
-               aria-expanded="false">
+            <a asp-controller="Inventory"
+               asp-action="Index">
 
                 Inventory
 
             </a>
-
-            <div id="inventoryMenu"
-                 class="collapse submenu">
-
-                <a asp-controller="Inventory"
-                   asp-action="Index">
-
-                    Inventory
-
-                </a>
-
-                <a asp-controller="Ingredients"
-                   asp-action="Index">
-
-                    Ingredients
-
-                </a>
-
-            </div>
 
 
             <!-- ================= SUPPLIERS ================= -->
