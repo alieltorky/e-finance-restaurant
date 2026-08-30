@@ -12,6 +12,8 @@ public class DeliveryController : Controller
     private readonly AppdbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
 
+    private const int PageSize = 10;
+
     public DeliveryController(AppdbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
@@ -19,7 +21,7 @@ public class DeliveryController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int availablePage = 1, int myOrdersPage = 1)
     // ExecuteUpdateAsync is used to solve the raceCondition prob between two deliveryMans
     {
         string currentUserId = _userManager.GetUserId(User);
@@ -33,25 +35,45 @@ public class DeliveryController : Controller
         .ExecuteUpdateAsync(setter => setter.SetProperty(o => o.OrderStatusId, 5));
 
         // Fetch available orders (Status 5 = Ready & not assigned yet)
-        var availableOrders = await _context.Orders
+        var availableQuery = _context.Orders
             .Where(o => o.OrderStatusId == 5 && o.DeliveryManId == null)
-            .OrderDescending()
+            .OrderDescending();
+
+        int availableTotalCount = await availableQuery.CountAsync();
+        int availableTotalPages = Math.Max(1, (int)Math.Ceiling(availableTotalCount / (double)PageSize));
+
+        if (availablePage < 1) availablePage = 1;
+        if (availablePage > availableTotalPages) availablePage = availableTotalPages;
+
+        var availableOrders = await availableQuery
+            .Skip((availablePage - 1) * PageSize)
+            .Take(PageSize)
             .Select(o => new DeliveryOrderItemVM
             {
                 OrderId = o.OrderId,
                 Address = o.Address,
                 MobileNumber = o.MobileNumber,
                 Price = o.Price,
-                IsCashOnDelivery = o.PaymentMethodId == 4, 
+                IsCashOnDelivery = o.PaymentMethodId == 4,
                 OrderStatusId = o.OrderStatusId,
                 Items = o.OrderDetails.Select(d => $"{d.Menu_Item.Name} ({d.Quantity})").ToList()
             })
             .ToListAsync();
 
         // Fetch driver's active & completed orders (Status 6 = On Delivery, 2 = Delivered)
-        var myOrders = await _context.Orders
+        var myOrdersQuery = _context.Orders
             .Where(o => o.DeliveryManId == currentUserId)
-            .OrderByDescending(o => o.OrderId)
+            .OrderByDescending(o => o.OrderId);
+
+        int myOrdersTotalCount = await myOrdersQuery.CountAsync();
+        int myOrdersTotalPages = Math.Max(1, (int)Math.Ceiling(myOrdersTotalCount / (double)PageSize));
+
+        if (myOrdersPage < 1) myOrdersPage = 1;
+        if (myOrdersPage > myOrdersTotalPages) myOrdersPage = myOrdersTotalPages;
+
+        var myOrders = await myOrdersQuery
+            .Skip((myOrdersPage - 1) * PageSize)
+            .Take(PageSize)
             .Select(o => new DeliveryOrderItemVM
             {
                 OrderId = o.OrderId,
@@ -67,7 +89,14 @@ public class DeliveryController : Controller
         var viewModel = new DeliveryDashboardViewModel
         {
             AvailableOrders = availableOrders,
-            MyOrders = myOrders
+            AvailableTotalCount = availableTotalCount,
+            AvailablePageNumber = availablePage,
+            AvailableTotalPages = availableTotalPages,
+
+            MyOrders = myOrders,
+            MyOrdersTotalCount = myOrdersTotalCount,
+            MyOrdersPageNumber = myOrdersPage,
+            MyOrdersTotalPages = myOrdersTotalPages
         };
 
         return View(viewModel);

@@ -3,7 +3,14 @@
     public class DeliveryDashboardViewModel
     {
         public List<DeliveryOrderItemVM> AvailableOrders { get; set; } = new();
+        public int AvailableTotalCount { get; set; }
+        public int AvailablePageNumber { get; set; } = 1;
+        public int AvailableTotalPages { get; set; } = 1;
+
         public List<DeliveryOrderItemVM> MyOrders { get; set; } = new();
+        public int MyOrdersTotalCount { get; set; }
+        public int MyOrdersPageNumber { get; set; } = 1;
+        public int MyOrdersTotalPages { get; set; } = 1;
     }
 
     public class DeliveryOrderItemVM

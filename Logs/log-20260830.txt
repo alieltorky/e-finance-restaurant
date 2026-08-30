@@ -141,3 +141,44 @@ POST-Guest-Request-2026-08-30 09:42:01
 POST-DeliveryMan2-Response-2026-08-30 09:42:01
 GET-Guest-Request-2026-08-30 09:42:01
 GET-DeliveryMan2-Response-2026-08-30 09:42:01
+No store type was specified for the decimal property 'Cost' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+No store type was specified for the decimal property 'Quantity' on entity type 'Inventory'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+No store type was specified for the decimal property 'Quantity' on entity type 'Menu_Ingredient'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+No store type was specified for the decimal property 'Price' on entity type 'Menu_Item'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+No store type was specified for the decimal property 'TotalPrice' on entity type 'OrderDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+No store type was specified for the decimal property 'Price' on entity type 'Orders'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.-2026-08-30 10:36:58
+GET-Guest-Request-2026-08-30 10:37:01
+GET-Chef1-Response-2026-08-30 10:37:01
+POST-Guest-Request-2026-08-30 10:37:04
+POST-Chef1-Request-2026-08-30 10:37:04 | Logout-2026-08-30 10:37:04
+POST-Chef1-Response-2026-08-30 10:37:04 | LoggedOut-2026-08-30 10:37:04
+POST-Chef1-Response-2026-08-30 10:37:04
+GET-Guest-Request-2026-08-30 10:37:04
+GET-Guest-Response-2026-08-30 10:37:04
+GET-Guest-Request-2026-08-30 10:37:05
+GET-Guest-Response-2026-08-30 10:37:05
+POST-Guest-Request-2026-08-30 10:37:15
+POST-Guest-Request-2026-08-30 10:37:15 | {"email":"chef1@restaurant.com","rememberMe":false}-2026-08-30 10:37:15
+POST-Guest-Response-2026-08-30 10:37:15 | LoggedInUser: Chef1-2026-08-30 10:37:15
+POST-Chef1-Response-2026-08-30 10:37:15
+GET-Guest-Request-2026-08-30 10:37:15
+Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.-2026-08-30 10:37:15
+GET-Chef1-Response-2026-08-30 10:37:16
+Unable to configure Browser Link script injection on the response. -2026-08-30 10:37:16
+Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.-2026-08-30 10:37:16
+GET-Guest-Request-2026-08-30 10:37:19
+GET-Chef1-Response-2026-08-30 10:37:19
+POST-Guest-Request-2026-08-30 10:37:31
+POST-Chef1-Request-2026-08-30 10:37:31 | {"email":"delivery1@restaurant.com","rememberMe":false}-2026-08-30 10:37:31
+POST-Chef1-Response-2026-08-30 10:37:31 | LoggedInUser: DeliveryMan1-2026-08-30 10:37:31
+POST-DeliveryMan1-Response-2026-08-30 10:37:31
+GET-Guest-Request-2026-08-30 10:37:31
+GET-DeliveryMan1-Response-2026-08-30 10:37:32
+GET-Guest-Request-2026-08-30 10:37:37
+GET-DeliveryMan1-Response-2026-08-30 10:37:38
+GET-Guest-Request-2026-08-30 10:37:39
+GET-DeliveryMan1-Response-2026-08-30 10:37:40
+GET-Guest-Request-2026-08-30 10:37:42
+GET-DeliveryMan1-Response-2026-08-30 10:37:42
+GET-Guest-Request-2026-08-30 10:37:44
+GET-DeliveryMan1-Response-2026-08-30 10:37:45
