@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online_Restaurant.Data;
 using Online_Restaurant.Models;
+using Online_Restaurant.ViewModels;
 
 namespace Online_Restaurant.Controllers
 {
@@ -11,24 +12,42 @@ namespace Online_Restaurant.Controllers
     {
         private readonly AppdbContext _context;
 
+        private const int PageSize = 10;
+
         public InventoryController(AppdbContext context)
         {
             _context = context;
         }
 
 
-        // =====================================================
-        // GET: Inventory
-        // =====================================================
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             // Get all inventory records
-            // and load their related Supplier and Ingredient
+            // and load their related Supplier and Ingredient,
+            // newest first so paging stays stable page over page
 
-            var inventory = await _context.Inventories
+            var query = _context.Inventories
                 .Include(i => i.Supplier)
                 .Include(i => i.Ingredient)
+                .OrderByDescending(i => i.Id);
+
+
+            int totalCount = await query.CountAsync();
+
+            int totalPages = Math.Max(
+                1,
+                (int)Math.Ceiling(totalCount / (double)PageSize));
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageNumber > totalPages)
+                pageNumber = totalPages;
+
+
+            var inventory = await query
+                .Skip((pageNumber - 1) * PageSize)
+                .Take(PageSize)
                 .ToListAsync();
 
 
@@ -44,13 +63,16 @@ namespace Online_Restaurant.Controllers
                 .ToListAsync();
 
 
-            return View(inventory);
+            var viewModel = new InventoryIndexViewModel
+            {
+                InventoryRecords = inventory,
+                PageNumber = pageNumber,
+                TotalPages = totalPages
+            };
+
+            return View(viewModel);
         }
 
-
-        // =====================================================
-        // POST: Inventory/Create
-        // =====================================================
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -81,21 +103,33 @@ namespace Online_Restaurant.Controllers
                     .ToListAsync();
 
 
-                // Reload existing inventory records
+                // Reload existing inventory records (first page)
 
-                var inventories = await _context.Inventories
+                var query = _context.Inventories
                     .Include(i => i.Supplier)
                     .Include(i => i.Ingredient)
+                    .OrderByDescending(i => i.Id);
+
+                int totalCount = await query.CountAsync();
+
+                int totalPages = Math.Max(
+                    1,
+                    (int)Math.Ceiling(totalCount / (double)PageSize));
+
+                var inventories = await query
+                    .Take(PageSize)
                     .ToListAsync();
 
+                var viewModel = new InventoryIndexViewModel
+                {
+                    InventoryRecords = inventories,
+                    PageNumber = 1,
+                    TotalPages = totalPages
+                };
 
-                return View("Index", inventories);
+                return View("Index", viewModel);
             }
 
-
-            // =================================================
-            // Check Supplier
-            // =================================================
 
             var supplier = await _context.Suppliers
                 .FirstOrDefaultAsync(s =>
@@ -108,10 +142,6 @@ namespace Online_Restaurant.Controllers
             }
 
 
-            // =================================================
-            // Check Ingredient
-            // =================================================
-
             var ingredient = await _context.Ingredients
                 .FirstOrDefaultAsync(i =>
                     i.IngredientId == inventory.IngredientId);
@@ -122,10 +152,7 @@ namespace Online_Restaurant.Controllers
                 return NotFound("Ingredient was not found.");
             }
 
-
-            // =================================================
             // Transaction
-            // =================================================
 
             var strategy =
                 _context.Database.CreateExecutionStrategy();
