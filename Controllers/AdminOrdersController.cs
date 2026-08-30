@@ -6,6 +6,8 @@ using Online_Restaurant.Data;
 using Online_Restaurant.Models;
 using Online_Restaurant.Services;
 using Online_Restaurant.ViewModels;
+using System.Text.Json; //  Added JSON serializer namespace
+using Serilog; //  Added Serilog logging namespace
 
 namespace Online_Restaurant.Controllers
 {
@@ -112,6 +114,12 @@ namespace Online_Restaurant.Controllers
         public async Task<IActionResult> UpdateStatus(
             [FromBody] UpdateStatusRequest request)
         {
+            // Serialized update status request data to JSON and logged incoming request
+            var userName = User.Identity?.Name ?? "Guest";
+            var requestTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var jsonData = JsonSerializer.Serialize(request);
+            Log.Information("POST-{User}-Request-{Time} | {Data}", userName, requestTime, jsonData);
+
             if (request == null)
             {
                 return BadRequest(new
@@ -208,6 +216,11 @@ namespace Online_Restaurant.Controllers
                         emailBody);
                 }
             }
+
+            // gharbawy : Logged successful status update response
+            var responseTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Log.Information("POST-{User}-Response-{Time} | OrderId: {OrderId} | Status: {Status}", userName, responseTime, order.OrderId, newStatus.StatusName);
+
             return Json(new
             {
                 success = true,
@@ -289,8 +302,6 @@ namespace Online_Restaurant.Controllers
                 </html>";
         }
     }
-
-
 
     public class UpdateStatusRequest
     {

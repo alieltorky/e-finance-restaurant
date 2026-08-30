@@ -35,6 +35,7 @@ public class DeliveryController : Controller
         // Fetch available orders (Status 5 = Ready & not assigned yet)
         var availableOrders = await _context.Orders
             .Where(o => o.OrderStatusId == 5 && o.DeliveryManId == null)
+            .OrderDescending()
             .Select(o => new DeliveryOrderItemVM
             {
                 OrderId = o.OrderId,
