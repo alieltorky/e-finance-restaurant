@@ -22,21 +22,32 @@ namespace Online_Restaurant.Controllers
 
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            // Get all inventory records
-            // and load their related Supplier and Ingredient,
-            // newest first so paging stays stable page over page
-
-            var query = _context.Inventories
-                .Include(i => i.Supplier)
+            var query = await _context.Inventories
                 .Include(i => i.Ingredient)
-                .OrderByDescending(i => i.Id);
+                .ToListAsync();
+            var groupedInventory = query
+                .GroupBy(i => new
+                {
+                    i.IngredientId
+                })
+                .Select(g => new Inventory
+                {
+                    IngredientId = g.Key.IngredientId,
+                    Ingredient = g.First().Ingredient,
+                    Quantity = g.Sum(i => i.Quantity),
 
+                    // Optional: sum all costs
+                    Cost = g.Sum(i => i.Cost)
+                })
+                .OrderBy(i => i.Ingredient.IngredientName)
+                .ToList();
 
-            int totalCount = await query.CountAsync();
+            int totalCount = groupedInventory.Count;
 
             int totalPages = Math.Max(
                 1,
-                (int)Math.Ceiling(totalCount / (double)PageSize));
+                (int)Math.Ceiling(totalCount / (double)PageSize)
+            );
 
             if (pageNumber < 1)
                 pageNumber = 1;
@@ -44,24 +55,18 @@ namespace Online_Restaurant.Controllers
             if (pageNumber > totalPages)
                 pageNumber = totalPages;
 
-
-            var inventory = await query
+            var inventory = groupedInventory
                 .Skip((pageNumber - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
-
-            // Suppliers dropdown list
-
+            // Suppliers dropdown
             ViewBag.Suppliers = await _context.Suppliers
                 .ToListAsync();
 
-
-            // Ingredients dropdown list
-
+            // Ingredients dropdown
             ViewBag.Ingredients = await _context.Ingredients
                 .ToListAsync();
-
 
             var viewModel = new InventoryIndexViewModel
             {

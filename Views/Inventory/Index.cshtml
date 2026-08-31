@@ -50,19 +50,11 @@
                             </th>
 
                             <th>
-                                Supplier
-                            </th>
-
-                            <th>
                                 Ingredient
                             </th>
 
                             <th>
                                 Quantity
-                            </th>
-
-                            <th>
-                                Date
                             </th>
 
                             <th>
@@ -85,15 +77,9 @@
                                     <!-- ID -->
 
                                     <td>
-                                        @inventory.Id
+                                        @inventory.IngredientId
                                     </td>
 
-
-                                    <!-- SUPPLIER -->
-
-                                    <td>
-                                        @(inventory.Supplier?.CompanyName ?? "Unknown")
-                                    </td>
 
 
                                     <!-- INGREDIENT -->
@@ -107,13 +93,6 @@
 
                                     <td>
                                         @inventory.Quantity
-                                    </td>
-
-
-                                    <!-- DATE -->
-
-                                    <td>
-                                        @inventory.DeliveryDate.ToString("dd/MM/yyyy")
                                     </td>
 
 
